@@ -18,7 +18,7 @@ This repository is the `~/sig-lab` folder of the lab sheet. Every part was run f
 | 4 | Table 2, Table 3 (+ original/modified text), Table 4 | Section 4: Tables 2–4, Screenshots 13–19 |
 | 5 | Seven graphs, Tables 5, 6, 7 | Section 5: Graphs 1–7, Screenshot 20, Tables 5–7 |
 | 6 | Answers to all discussion questions | Section 6: page to attach your **handwritten** answers (text to copy: `ANSWERS_TO_HANDWRITE.md`) |
-| 7 | 200–250 word conclusion | Section 7: page to attach your **handwritten** conclusion (249-word text in `ANSWERS_TO_HANDWRITE.md`) |
+| 7 | 200–250 word conclusion | Section 7: page to attach your **handwritten** conclusion (247-word text in `ANSWERS_TO_HANDWRITE.md`) |
 | 8 | Source code + Dockerfile | Section 8 (files: `sender/*.py`, `Dockerfile`) |
 | 9 | results.csv files (sender, receiver) and UID | Section 9 (files: `results_sender.csv`, `results_receiver.csv`) |
 

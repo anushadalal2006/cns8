@@ -191,7 +191,7 @@ def table_1(d):
     table(d, "Table 1: Execution environment",
           ["CPU model", "Cores / threads", "RAM", "Host OS", "Docker version", "cryptography version",
            "liboqs version"],
-          [[CPU, f"{THREADS} / {THREADS}", RAM, f"{HOST_OS} (kernel {KERNEL})", DOCKER, CRYPTO,
+          [[CPU, f"{THREADS} threads (logical CPUs)", RAM, f"{HOST_OS} (kernel {KERNEL})", DOCKER, CRYPTO,
             f"{OQS} (liboqs-python {OQS_PY})"]], size=9)
     note(d, f"Host OS: {HOST_OS}. Container OS (image sig-lab:1.0, built from the Step C3 Dockerfile, FROM ubuntu:24.04): "
             f"{CTR_OS}, Python {CTR_PY}. Container IPs on sig-net: sender {IPS[0]}, receiver {IPS[1]}.")

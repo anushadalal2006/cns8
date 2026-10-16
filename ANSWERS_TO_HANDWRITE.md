@@ -47,11 +47,11 @@ ECDSA's signature is just two 32-byte numbers (r, s) in DER format, because elli
 
 **6. Which algorithm was fastest to sign and which to verify? Why is SLH-DSA signing much slower than ML-DSA signing?**
 
-- Fastest signing: **ECDSA, 0.056 ms** (ML-DSA 0.104 ms).
-- Fastest verification: **ML-DSA, 0.036 ms** (RSA-PSS 0.059 ms, ECDSA 0.129 ms).
-- SLH-DSA signing took **839.8 ms**, about **8000 ×** ML-DSA.
+- Fastest signing: **ECDSA, 0.044 ms** (ML-DSA 0.066 ms).
+- Fastest verification: **ML-DSA, 0.024 ms** (RSA-PSS 0.034 ms, ECDSA 0.124 ms).
+- SLH-DSA signing took **471.4 ms**, about **7150 ×** ML-DSA.
 
-ML-DSA signing is a few polynomial multiplications (NTT) with occasional rejection-sampling retries. SLH-DSA is stateless, so every signature must recompute, from the secret seed, the FORS trees and the WOTS+ chains and Merkle trees of each hypertree layer. That is hundreds of thousands of SHA-256 calls. The "s" (small) variant uses tall trees to shrink the signature, which makes signing even slower. Verification recomputes only one path, so it stays fast (0.665 ms).
+ML-DSA signing is a few polynomial multiplications (NTT) with occasional rejection-sampling retries. SLH-DSA is stateless, so every signature must recompute, from the secret seed, the FORS trees and the WOTS+ chains and Merkle trees of each hypertree layer. That is hundreds of thousands of SHA-256 calls. The "s" (small) variant uses tall trees to shrink the signature, which makes signing even slower. Verification recomputes only one path, so it stays fast (0.406 ms).
 
 **7. SLH-DSA has a tiny public key (32 B) but a large signature; ML-DSA has a larger public key but a smaller signature. Discuss the trade-off for a system that sends one public key but millions of signatures.**
 
@@ -59,7 +59,7 @@ The total cost is PK + N × |S|:
 - ML-DSA: 1312 + 2420·N bytes.
 - SLH-DSA: 32 + 7856·N bytes.
 
-SLH-DSA's small key only wins if no signature is ever sent. Even at N = 1, ML-DSA is smaller (3732 B vs 7888 B). For one million signatures, ML-DSA needs about **2.42 GB** and SLH-DSA about **7.86 GB** (3.2 × more), so the public-key size becomes irrelevant. SLH-DSA also signs about 8000 × slower. ML-DSA is therefore better for high-volume signing. SLH-DSA's tiny key helps only where the key must be stored in very small memory (boot ROM, a certificate) and few signatures are made.
+SLH-DSA's small key only wins if no signature is ever sent. Even at N = 1, ML-DSA is smaller (3732 B vs 7888 B). For one million signatures, ML-DSA needs about **2.42 GB** and SLH-DSA about **7.86 GB** (3.2 × more), so the public-key size becomes irrelevant. SLH-DSA also signs about 7150 × slower. ML-DSA is therefore better for high-volume signing. SLH-DSA's tiny key helps only where the key must be stored in very small memory (boot ROM, a certificate) and few signatures are made.
 
 **8. The public key was fetched over the same untrusted channel as the document. Explain how a man-in-the-middle could defeat the scheme and how certificates and a PKI solve this.**
 
@@ -73,7 +73,7 @@ Mallory, sitting between the containers or pretending to be "sender", can replac
 
 **No single winner.**
 - **Size:** ECDSA wins. It transmitted 221 B, against 3791 B for ML-DSA (17.2 ×) and 7947 B for SLH-DSA (36 ×).
-- **Speed:** ML-DSA is about as fast as ECDSA or faster: key generation 0.59 ×, signing 1.87 ×, verification 0.28 × ECDSA's time. SLH-DSA signs about 15 000 × slower than ECDSA.
+- **Speed:** ML-DSA is roughly as fast as ECDSA: key generation 0.27 ×, signing 1.49 ×, verification 0.19 × ECDSA's time. SLH-DSA signs about 10 700 × slower than ECDSA.
 - **Maturity:** ECDSA has decades of analysis and support everywhere. ML-DSA and SLH-DSA were only standardised in 2024.
 - **Quantum security:** only ML-DSA and SLH-DSA survive Shor's algorithm, and SLH-DSA rests on the safest assumption (hash functions only).
 
@@ -93,7 +93,7 @@ No. The network affects only the file transfer, not the computation. In bench.py
 - 5 warm-up calls were discarded, and many repetitions gave mean, std, min and max.
 - The last signature was checked so that failed operations were not timed.
 
-A container is a normal process on the host kernel, so CPU-bound code runs at native speed. The sender and receiver results agreed within noise.
+A container is a normal process on the host kernel, so CPU-bound code runs at native speed. The sender and receiver agreed within about 5–15 % for the longer operations (RSA-PSS sign/verify, ML-DSA, SLH-DSA). The tiny ECDSA operations (well under 0.2 ms) were 2–3 × faster on the receiver, which shows how much CPU frequency changes and background load affect very short measurements.
 
 Factors that can still affect timings: CPU frequency scaling or turbo and temperature, background load on the machine (visible as outliers in max_ms), OS scheduling and caches, a container CPU limit (--cpus), Python call overhead, library build options (AVX2), and the random time RSA takes to find primes (hence its large std).
 
@@ -104,6 +104,6 @@ Factors that can still affect timings: CPU frequency scaling or turbo and temper
 
 ---
 
-## 18. Final Conclusion (249 words, within the 200–250 limit)
+## 18. Final Conclusion (247 words, within the 200–250 limit)
 
-A digital signature gives integrity and authentication because only the holder of the private key can produce a signature, while anyone holding the matching public key can check it; the private key never left the sender's container, and only the document, signature and public key crossed the sig-net network. Changing a single character of the document or a single bit of the signature made verification fail for all four algorithms, as did verifying with an unrelated public key. For that wrong-key test ECDSA needed an independent random key, because a key derived from my UID would have been identical to the sender's, showing why low-entropy keys are dangerous. ECDSA had the smallest footprint (71-byte signature, 221 bytes transmitted), RSA-PSS verified quickly but needed slow key generation, ML-DSA-44 was as fast as or faster than ECDSA but transmitted 3,791 bytes, and SLH-DSA had a 32-byte public key but a 7,856-byte signature and 840 ms signing. Post-quantum signatures are necessary because Shor's algorithm would break RSA and ECDSA, letting attackers forge signatures on documents that must stay trustworthy for decades; the price is larger keys and signatures and, for SLH-DSA, slower signing. For today's bandwidth-sensitive applications I would choose ECDSA; for general post-quantum use ML-DSA; and for long-term roots of trust and firmware SLH-DSA, whose security rests only on hash functions. I learned to build one image, run isolated containers on a user-defined network, reach them by name, use bind mounts to keep results, and keep container overhead out of measurements.
+A digital signature gives integrity and authentication because only the holder of the private key can produce a signature, while anyone holding the matching public key can check it; the private key never left the sender's container, and only the document, signature and public key crossed the sig-net network. Changing a single character of the document or a single bit of the signature made verification fail for all four algorithms, as did verifying with an unrelated public key. For that wrong-key test ECDSA needed an independent random key, because a key derived from my UID would have been identical to the sender's, showing why low-entropy keys are dangerous. ECDSA had the smallest footprint (71-byte signature, 221 bytes transmitted), RSA-PSS verified quickly but needed slow key generation, ML-DSA-44 was roughly as fast as ECDSA but transmitted 3,791 bytes, and SLH-DSA had a 32-byte public key but a 7,856-byte signature and 471 ms signing. Post-quantum signatures are necessary because Shor's algorithm would break RSA and ECDSA, letting attackers forge signatures on documents that must stay trustworthy for decades; the price is larger keys and signatures and, for SLH-DSA, slower signing. For today's bandwidth-sensitive applications I would choose ECDSA; for general post-quantum use ML-DSA; and for long-term roots of trust and firmware SLH-DSA, whose security rests only on hash functions. I learned to build one image, run isolated containers on a user-defined network, reach them by name, use bind mounts to keep results, and keep container overhead out of measurements.

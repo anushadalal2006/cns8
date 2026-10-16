@@ -86,7 +86,7 @@ def to_rows(blocks, final_prompt=True):
                     cmd(c, f"cd {m.group(1)}")
                 command = m.group(2)
         cmd(c, command)
-        rows.extend([[(carriage(l), FG)] for l in output])
+        rows.extend([[(carriage(l).expandtabs(8), FG)] for l in output])
     if final_prompt and ctx:
         rows.append(prompt(ctx) + [("\0cursor", FG)])
     return rows
