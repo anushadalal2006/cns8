@@ -4,21 +4,21 @@
 
 This repository is the `~/sig-lab` folder of the lab sheet. Every part was run for real with `STUDENT_UID=2024300032`.
 
-## What to submit (Section 19 order) and where it is
+## What to submit
 
-| # | Submission item | File(s) |
+**The report:** `report/Exp08_Report_2024300032_Anusha_Dalal.docx` (editable) and the matching `.pdf`. It follows the Section 19 order:
+
+| # | Submission item | In the report |
 |---|---|---|
-| 1 | Hand-drawn digital-signature diagram (Part A) | **Draw by hand.** Reference to copy from: `report/partA_reference_diagram.png` |
-| 2 | Table 1 + screenshots of `docker ps`, `docker network inspect sig-net`, ping test | Table 1: `report/Exp08_Tables_and_Graphs_2024300032.docx`; Screenshots 3–5: `report/Exp08_Screenshots_2024300032.docx` |
-| 3 | Screenshots of keygen, signing, transfer (+ sender HTTP log), verification | Screenshots 8–12: `report/Exp08_Screenshots_2024300032.docx` |
-| 4 | Table 2, Table 3 (+ original/modified text), Table 4 | `report/Exp08_Tables_and_Graphs_2024300032.docx` |
-| 5 | Seven graphs, Tables 5, 6, 7 | `report/Exp08_Tables_and_Graphs_2024300032.docx` (PNG files in `graphs/`) |
-| 6 | Answers to all discussion questions | **Handwritten.** Text to copy: `ANSWERS_TO_HANDWRITE.md` |
-| 7 | 200–250 word conclusion | **Handwritten.** Text to copy (249 words): `ANSWERS_TO_HANDWRITE.md` |
-| 8 | Source code + Dockerfile | `sender/common.py keygen.py sign.py verify.py tamper.py bench.py plot.py`, `Dockerfile` |
-| 9 | results.csv files (sender, receiver) and UID | `results_sender.csv`, `results_receiver.csv` (also `sender/results.csv`, `receiver/results.csv`, `sender/results_run1-3.csv`) |
-
-Both Word documents are editable, and each has a matching PDF in `report/`.
+| 1 | Hand-drawn digital-signature diagram (Part A) | Section 1: blank page to attach your **handwritten** sheet. Reference to copy from: `report/partA_reference_diagram.png` |
+| 2 | Table 1 + screenshots of `docker ps`, `docker network inspect sig-net`, ping test | Section 2: Table 1, Screenshots 1–6 |
+| 3 | Screenshots of keygen, signing, transfer (+ sender HTTP log), verification | Section 3: Screenshots 7–12 |
+| 4 | Table 2, Table 3 (+ original/modified text), Table 4 | Section 4: Tables 2–4, Screenshots 13–19 |
+| 5 | Seven graphs, Tables 5, 6, 7 | Section 5: Graphs 1–7, Screenshot 20, Tables 5–7 |
+| 6 | Answers to all discussion questions | Section 6: page to attach your **handwritten** answers (text to copy: `ANSWERS_TO_HANDWRITE.md`) |
+| 7 | 200–250 word conclusion | Section 7: page to attach your **handwritten** conclusion (249-word text in `ANSWERS_TO_HANDWRITE.md`) |
+| 8 | Source code + Dockerfile | Section 8 (files: `sender/*.py`, `Dockerfile`) |
+| 9 | results.csv files (sender, receiver) and UID | Section 9 (files: `results_sender.csv`, `results_receiver.csv`) |
 
 ## Layout
 
@@ -31,7 +31,7 @@ run_experiment.sh       runs Steps C5 to Section 15 and records every command tr
 logs/                   raw transcripts (prompt + real output) of every step
 screenshots/            terminal screenshots rendered from logs/ (tools/render_screenshots.py)
 graphs/                 the seven graphs (copied out with docker cp)
-report/                 the two Word documents + PDFs, Part A reference diagram
+report/                 the lab report (.docx + .pdf), Part A reference diagram
 tools/                  screenshot / document / reference-diagram generators
 ```
 
