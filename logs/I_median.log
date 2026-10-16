@@ -1,13 +1,7 @@
-root@sender:/lab# cd /lab && for r in 1 2 3; do echo "run $r: sum of mean_ms = $(awk -F, 'NR>1{s+=$5} END{printf \"%.2f\", s}' results_run$r.csv)"; done
-awk: 1: unexpected character '\'
-awk: line 1: runaway string constant "%.2f\", s} ...
-run 1: sum of mean_ms = 
-awk: 1: unexpected character '\'
-awk: line 1: runaway string constant "%.2f\", s} ...
-run 2: sum of mean_ms = 
-awk: 1: unexpected character '\'
-awk: line 1: runaway string constant "%.2f\", s} ...
-run 3: sum of mean_ms = 
+root@sender:/lab# cd /lab && for r in 1 2 3; do echo "run $r: sum of mean_ms = $(awk -F, 'NR>1{s+=$5} END{printf "%.2f", s}' results_run$r.csv)"; done
+run 1: sum of mean_ms = 813.49
+run 2: sum of mean_ms = 666.12
+run 3: sum of mean_ms = 727.24
 
 root@sender:/lab# cd /lab && cp results_run3.csv results.csv && cat results.csv
 uid,algorithm,operation,runs,mean_ms,std_ms,min_ms,max_ms,public_key_bytes,private_key_bytes,signature_bytes
