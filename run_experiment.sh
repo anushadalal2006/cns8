@@ -137,7 +137,7 @@ step I_bench_receiver
 c receiver "cd /lab && python3 bench.py results.csv"
 step I_median
 # keep the median run (runs ranked by the sum of all mean times) as results.csv
-c sender 'cd /lab && for r in 1 2 3; do echo "run $r: sum of mean_ms = $(awk -F, '"'"'NR>1{s+=$5} END{printf \"%.2f\", s}'"'"' results_run$r.csv)"; done'
+c sender 'cd /lab && for r in 1 2 3; do echo "run $r: sum of mean_ms = $(awk -F, '"'"'NR>1{s+=$5} END{printf "%.2f", s}'"'"' results_run$r.csv)"; done'
 MED=$(for r in 1 2 3; do echo "$(awk -F, 'NR>1{s+=$5} END{print s}' sender/results_run$r.csv) $r"; done | sort -n | sed -n 2p | cut -d' ' -f2)
 c sender "cd /lab && cp results_run$MED.csv results.csv && cat results.csv"
 
