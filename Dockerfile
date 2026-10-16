@@ -1,0 +1,13 @@
+FROM ubuntu:24.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 python3-pip python3-venv git cmake ninja-build build-essential \
+    libssl-dev curl wget nano iproute2 iputils-ping tcpdump ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --no-cache-dir cryptography matplotlib pandas liboqs-python
+# The first import makes liboqs-python download and build liboqs (a few minutes)
+RUN python3 -c "import oqs; print(oqs.oqs_version())"
+WORKDIR /lab
+CMD ["sleep", "infinity"]

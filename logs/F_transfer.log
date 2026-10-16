@@ -1,0 +1,24 @@
+root@sender:/lab# cd /lab/outbox && python3 -m http.server 8000      # (running, see F_http_server_log)
+
+root@receiver:/lab# mkdir -p /lab/inbox && cd /lab/inbox && curl -O http://sender:8000/document.txt
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    59  100    59    0     0   5880      0 --:--:-- --:--:-- --:--:--  6555
+
+root@receiver:/lab# cd /lab/inbox && for a in ecdsa rsapss mldsa slhdsa; do curl -sO http://sender:8000/${a}.sig; curl -sO http://sender:8000/${a}_public.key; done
+
+root@receiver:/lab# ls -l /lab/inbox
+total 40
+-rw-rw-rw- 1 root root   59 Oct 16 14:17 document.txt
+-rw-rw-rw- 1 root root   71 Oct 16 14:17 ecdsa.sig
+-rw-rw-rw- 1 root root   91 Oct 16 14:17 ecdsa_public.key
+-rw-rw-rw- 1 root root 2420 Oct 16 14:17 mldsa.sig
+-rw-rw-rw- 1 root root 1312 Oct 16 14:17 mldsa_public.key
+-rw-rw-rw- 1 root root  384 Oct 16 14:17 rsapss.sig
+-rw-rw-rw- 1 root root  422 Oct 16 14:17 rsapss_public.key
+-rw-rw-rw- 1 root root 7856 Oct 16 14:17 slhdsa.sig
+-rw-rw-rw- 1 root root   32 Oct 16 14:17 slhdsa_public.key
+
+root@receiver:/lab# sha256sum /lab/inbox/document.txt
+d44e70dfc1a5a1f16b40f91fc9c652fc2a9e60d84dbf74435a3f4deb7cf7f388  /lab/inbox/document.txt
+

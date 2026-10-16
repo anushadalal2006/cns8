@@ -1,0 +1,233 @@
+root@receiver:/lab# cd /lab && python3 tamper.py doc inbox/document.txt
+[tamper] file      : inbox/document.txt (59 bytes)
+[tamper] index     : UID mod 59 = 2
+[tamper] byte      : 0x61 -> 0x60 (bit 0 flipped)
+[tamper] character : 'a' -> '`'
+[tamper] original text:
+Transfer Rs.3032 to Account 0032
+Issued by UID: 2024300032
+[tamper] modified text:
+Tr`nsfer Rs.3032 to Account 0032
+Issued by UID: 2024300032
+[tamper] written   : inbox/document.txt.tampered
+
+root@receiver:/lab# cd /lab && python3 verify.py ecdsa inbox/document.txt inbox/ecdsa_public.key inbox/ecdsa.sig    # Test 1: original
+liboqs-python faulthandler is disabled
+[verify] algorithm : ecdsa
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/ecdsa_public.key
+[verify] signature : inbox/ecdsa.sig
+[verify] time      : 4.987 ms
+[verify] RESULT    : PASS (VALID)
+
+root@receiver:/lab# cd /lab && python3 verify.py rsapss inbox/document.txt inbox/rsapss_public.key inbox/rsapss.sig    # Test 1: original
+liboqs-python faulthandler is disabled
+[verify] algorithm : rsapss
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/rsapss_public.key
+[verify] signature : inbox/rsapss.sig
+[verify] time      : 1.295 ms
+[verify] RESULT    : PASS (VALID)
+
+root@receiver:/lab# cd /lab && python3 verify.py mldsa inbox/document.txt inbox/mldsa_public.key inbox/mldsa.sig    # Test 1: original
+liboqs-python faulthandler is disabled
+[verify] algorithm : mldsa
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/mldsa_public.key
+[verify] signature : inbox/mldsa.sig
+[verify] time      : 0.263 ms
+[verify] RESULT    : PASS (VALID)
+
+root@receiver:/lab# cd /lab && python3 verify.py slhdsa inbox/document.txt inbox/slhdsa_public.key inbox/slhdsa.sig    # Test 1: original
+liboqs-python faulthandler is disabled
+[verify] algorithm : slhdsa
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/slhdsa_public.key
+[verify] signature : inbox/slhdsa.sig
+[verify] time      : 0.872 ms
+[verify] RESULT    : PASS (VALID)
+
+root@receiver:/lab# cd /lab && python3 verify.py ecdsa inbox/document.txt.tampered    # Test 2: modified document
+liboqs-python faulthandler is disabled
+[verify] algorithm : ecdsa
+[verify] document  : inbox/document.txt.tampered
+[verify] public key: inbox/ecdsa_public.key
+[verify] signature : inbox/ecdsa.sig
+[verify] time      : 4.088 ms
+[verify] RESULT    : FAIL (INVALID)
+
+root@receiver:/lab# cd /lab && python3 verify.py rsapss inbox/document.txt.tampered    # Test 2: modified document
+liboqs-python faulthandler is disabled
+[verify] algorithm : rsapss
+[verify] document  : inbox/document.txt.tampered
+[verify] public key: inbox/rsapss_public.key
+[verify] signature : inbox/rsapss.sig
+[verify] time      : 1.755 ms
+[verify] RESULT    : FAIL (INVALID)
+
+root@receiver:/lab# cd /lab && python3 verify.py mldsa inbox/document.txt.tampered    # Test 2: modified document
+liboqs-python faulthandler is disabled
+[verify] algorithm : mldsa
+[verify] document  : inbox/document.txt.tampered
+[verify] public key: inbox/mldsa_public.key
+[verify] signature : inbox/mldsa.sig
+[verify] time      : 0.255 ms
+[verify] RESULT    : FAIL (INVALID)
+
+root@receiver:/lab# cd /lab && python3 verify.py slhdsa inbox/document.txt.tampered    # Test 2: modified document
+liboqs-python faulthandler is disabled
+[verify] algorithm : slhdsa
+[verify] document  : inbox/document.txt.tampered
+[verify] public key: inbox/slhdsa_public.key
+[verify] signature : inbox/slhdsa.sig
+[verify] time      : 0.766 ms
+[verify] RESULT    : FAIL (INVALID)
+
+root@receiver:/lab# cd /lab && python3 tamper.py sig inbox/ecdsa.sig
+[tamper] file      : inbox/ecdsa.sig (71 bytes)
+[tamper] index     : UID mod 71 = 4
+[tamper] byte      : 0x00 -> 0x01 (bit 0 flipped)
+[tamper] written   : inbox/ecdsa.sig.tampered
+
+root@receiver:/lab# cd /lab && python3 verify.py ecdsa inbox/document.txt inbox/ecdsa_public.key inbox/ecdsa.sig.tampered    # Test 3: modified signature
+liboqs-python faulthandler is disabled
+[verify] algorithm : ecdsa
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/ecdsa_public.key
+[verify] signature : inbox/ecdsa.sig.tampered
+[verify] time      : 3.898 ms
+[verify] RESULT    : FAIL (INVALID)
+
+root@receiver:/lab# cd /lab && python3 tamper.py sig inbox/rsapss.sig
+[tamper] file      : inbox/rsapss.sig (384 bytes)
+[tamper] index     : UID mod 384 = 256
+[tamper] byte      : 0x9b -> 0x9a (bit 0 flipped)
+[tamper] written   : inbox/rsapss.sig.tampered
+
+root@receiver:/lab# cd /lab && python3 verify.py rsapss inbox/document.txt inbox/rsapss_public.key inbox/rsapss.sig.tampered    # Test 3: modified signature
+liboqs-python faulthandler is disabled
+[verify] algorithm : rsapss
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/rsapss_public.key
+[verify] signature : inbox/rsapss.sig.tampered
+[verify] time      : 1.162 ms
+[verify] RESULT    : FAIL (INVALID)
+
+root@receiver:/lab# cd /lab && python3 tamper.py sig inbox/mldsa.sig
+[tamper] file      : inbox/mldsa.sig (2420 bytes)
+[tamper] index     : UID mod 2420 = 1492
+[tamper] byte      : 0x09 -> 0x08 (bit 0 flipped)
+[tamper] written   : inbox/mldsa.sig.tampered
+
+root@receiver:/lab# cd /lab && python3 verify.py mldsa inbox/document.txt inbox/mldsa_public.key inbox/mldsa.sig.tampered    # Test 3: modified signature
+liboqs-python faulthandler is disabled
+[verify] algorithm : mldsa
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/mldsa_public.key
+[verify] signature : inbox/mldsa.sig.tampered
+[verify] time      : 0.178 ms
+[verify] RESULT    : FAIL (INVALID)
+
+root@receiver:/lab# cd /lab && python3 tamper.py sig inbox/slhdsa.sig
+[tamper] file      : inbox/slhdsa.sig (7856 bytes)
+[tamper] index     : UID mod 7856 = 5232
+[tamper] byte      : 0x53 -> 0x52 (bit 0 flipped)
+[tamper] written   : inbox/slhdsa.sig.tampered
+
+root@receiver:/lab# cd /lab && python3 verify.py slhdsa inbox/document.txt inbox/slhdsa_public.key inbox/slhdsa.sig.tampered    # Test 3: modified signature
+liboqs-python faulthandler is disabled
+[verify] algorithm : slhdsa
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/slhdsa_public.key
+[verify] signature : inbox/slhdsa.sig.tampered
+[verify] time      : 0.762 ms
+[verify] RESULT    : FAIL (INVALID)
+
+root@receiver:/lab# cd /lab && mkdir -p keys outbox
+
+root@receiver:/lab# cd /lab && python3 keygen.py ecdsa    # Test 4: receiver makes ITS OWN key pair
+liboqs-python faulthandler is disabled
+[keygen] algorithm      : ecdsa (ECDSA)
+[keygen] private key    : keys/ecdsa_private.key          138 bytes
+[keygen] public key     : outbox/ecdsa_public.key          91 bytes
+[keygen] generation time: 0.602 ms
+
+root@receiver:/lab# cd /lab && python3 verify.py ecdsa inbox/document.txt outbox/ecdsa_public.key inbox/ecdsa.sig    # Test 4: wrong public key
+liboqs-python faulthandler is disabled
+[verify] algorithm : ecdsa
+[verify] document  : inbox/document.txt
+[verify] public key: outbox/ecdsa_public.key
+[verify] signature : inbox/ecdsa.sig
+[verify] time      : 3.710 ms
+[verify] RESULT    : PASS (VALID)
+
+root@receiver:/lab# cd /lab && python3 keygen.py rsapss    # Test 4: receiver makes ITS OWN key pair
+liboqs-python faulthandler is disabled
+[keygen] algorithm      : rsapss (RSA-PSS)
+[keygen] private key    : keys/rsapss_private.key        1793 bytes
+[keygen] public key     : outbox/rsapss_public.key        422 bytes
+[keygen] generation time: 290.367 ms
+
+root@receiver:/lab# cd /lab && python3 verify.py rsapss inbox/document.txt outbox/rsapss_public.key inbox/rsapss.sig    # Test 4: wrong public key
+liboqs-python faulthandler is disabled
+[verify] algorithm : rsapss
+[verify] document  : inbox/document.txt
+[verify] public key: outbox/rsapss_public.key
+[verify] signature : inbox/rsapss.sig
+[verify] time      : 1.682 ms
+[verify] RESULT    : FAIL (INVALID)
+
+root@receiver:/lab# cd /lab && python3 keygen.py mldsa    # Test 4: receiver makes ITS OWN key pair
+liboqs-python faulthandler is disabled
+[keygen] algorithm      : mldsa (ML-DSA-44)
+[keygen] private key    : keys/mldsa_private.key         2560 bytes
+[keygen] public key     : outbox/mldsa_public.key        1312 bytes
+[keygen] generation time: 1.096 ms
+
+root@receiver:/lab# cd /lab && python3 verify.py mldsa inbox/document.txt outbox/mldsa_public.key inbox/mldsa.sig    # Test 4: wrong public key
+liboqs-python faulthandler is disabled
+[verify] algorithm : mldsa
+[verify] document  : inbox/document.txt
+[verify] public key: outbox/mldsa_public.key
+[verify] signature : inbox/mldsa.sig
+[verify] time      : 0.244 ms
+[verify] RESULT    : FAIL (INVALID)
+
+root@receiver:/lab# cd /lab && python3 keygen.py slhdsa    # Test 4: receiver makes ITS OWN key pair
+liboqs-python faulthandler is disabled
+[keygen] algorithm      : slhdsa (SLH_DSA_PURE_SHA2_128S)
+[keygen] private key    : keys/slhdsa_private.key          64 bytes
+[keygen] public key     : outbox/slhdsa_public.key         32 bytes
+[keygen] generation time: 95.194 ms
+
+root@receiver:/lab# cd /lab && python3 verify.py slhdsa inbox/document.txt outbox/slhdsa_public.key inbox/slhdsa.sig    # Test 4: wrong public key
+liboqs-python faulthandler is disabled
+[verify] algorithm : slhdsa
+[verify] document  : inbox/document.txt
+[verify] public key: outbox/slhdsa_public.key
+[verify] signature : inbox/slhdsa.sig
+[verify] time      : 1.001 ms
+[verify] RESULT    : FAIL (INVALID)
+
+root@receiver:/lab# cd /lab && for a in ecdsa rsapss mldsa slhdsa; do cmp -s inbox/${a}_public.key outbox/${a}_public.key && echo "$a: receiver key IDENTICAL to sender key" || echo "$a: receiver key differs from sender key"; done
+ecdsa: receiver key IDENTICAL to sender key
+rsapss: receiver key differs from sender key
+mldsa: receiver key differs from sender key
+slhdsa: receiver key differs from sender key
+
+root@receiver:/lab# cd /lab && mkdir -p other && cd other && mkdir -p keys outbox && STUDENT_UID=2024300033 PYTHONPATH=/lab python3 /lab/keygen.py ecdsa    # Test 4b: key of another UID
+liboqs-python faulthandler is disabled
+[keygen] algorithm      : ecdsa (ECDSA)
+[keygen] private key    : keys/ecdsa_private.key          138 bytes
+[keygen] public key     : outbox/ecdsa_public.key          91 bytes
+[keygen] generation time: 0.866 ms
+
+root@receiver:/lab# cd /lab && python3 verify.py ecdsa inbox/document.txt other/outbox/ecdsa_public.key inbox/ecdsa.sig    # Test 4b: wrong public key
+liboqs-python faulthandler is disabled
+[verify] algorithm : ecdsa
+[verify] document  : inbox/document.txt
+[verify] public key: other/outbox/ecdsa_public.key
+[verify] signature : inbox/ecdsa.sig
+[verify] time      : 4.164 ms
+[verify] RESULT    : FAIL (INVALID)
+

@@ -1,0 +1,66 @@
+root@sender:/lab# cd /lab && python3 bench.py results_run1.csv
+liboqs-python faulthandler is disabled
+[bench] UID=2024300032 host=sender python=3.12.3
+[bench] message: 1024 bytes, sha256-prefix=c0aa6017dac0b92a
+[bench] ecdsa   keygen  runs= 20 mean=    0.0531 ms std=   0.0124 min=    0.0465 max=    0.0936
+[bench] ecdsa   sign    runs=100 mean=    0.0324 ms std=   0.0046 min=    0.0307 max=    0.0624
+[bench] ecdsa   verify  runs=100 mean=    0.0827 ms std=   0.0178 min=    0.0746 max=    0.2070
+[bench] ecdsa   sizes: pk=91 B  sk=138 B  sig=70 B  verify-check=PASS
+[bench] rsapss  keygen  runs= 20 mean=  242.5821 ms std= 133.5144 min=   60.2655 max=  508.3913
+[bench] rsapss  sign    runs=100 mean=    3.1595 ms std=   0.8135 min=    1.8585 max=    5.1465
+[bench] rsapss  verify  runs=100 mean=    0.1090 ms std=   0.0227 min=    0.0915 max=    0.2389
+[bench] rsapss  sizes: pk=422 B  sk=1792 B  sig=384 B  verify-check=PASS
+[bench] mldsa   keygen  runs= 20 mean=    0.0800 ms std=   0.0148 min=    0.0709 max=    0.1213
+[bench] mldsa   sign    runs=100 mean=    0.1764 ms std=   0.0932 min=    0.0686 max=    0.5427
+[bench] mldsa   verify  runs=100 mean=    0.0636 ms std=   0.0129 min=    0.0478 max=    0.1204
+[bench] mldsa   sizes: pk=1312 B  sk=2560 B  sig=2420 B  verify-check=PASS
+[bench] slhdsa  keygen  runs= 20 mean=   98.5066 ms std=  12.4914 min=   87.1956 max=  125.0923
+[bench] slhdsa  sign    runs=100 mean=  850.8062 ms std= 117.7786 min=  695.9288 max= 1421.5686
+[bench] slhdsa  verify  runs=100 mean=    1.0275 ms std=   0.2206 min=    0.6399 max=    1.4493
+[bench] slhdsa  sizes: pk=32 B  sk=64 B  sig=7856 B  verify-check=PASS
+[bench] written results_run1.csv
+
+root@sender:/lab# cd /lab && python3 bench.py results_run2.csv
+liboqs-python faulthandler is disabled
+[bench] UID=2024300032 host=sender python=3.12.3
+[bench] message: 1024 bytes, sha256-prefix=c0aa6017dac0b92a
+[bench] ecdsa   keygen  runs= 20 mean=    0.0765 ms std=   0.0187 min=    0.0637 max=    0.1487
+[bench] ecdsa   sign    runs=100 mean=    0.0558 ms std=   0.0225 min=    0.0389 max=    0.1707
+[bench] ecdsa   verify  runs=100 mean=    0.1291 ms std=   0.0261 min=    0.1009 max=    0.2590
+[bench] ecdsa   sizes: pk=91 B  sk=138 B  sig=71 B  verify-check=PASS
+[bench] rsapss  keygen  runs= 20 mean=  215.7596 ms std= 172.9181 min=   34.3285 max=  663.4801
+[bench] rsapss  sign    runs=100 mean=    2.2231 ms std=   0.6104 min=    1.8540 max=    6.9156
+[bench] rsapss  verify  runs=100 mean=    0.0589 ms std=   0.0108 min=    0.0524 max=    0.1047
+[bench] rsapss  sizes: pk=422 B  sk=1793 B  sig=384 B  verify-check=PASS
+[bench] mldsa   keygen  runs= 20 mean=    0.0454 ms std=   0.0099 min=    0.0395 max=    0.0843
+[bench] mldsa   sign    runs=100 mean=    0.1041 ms std=   0.0572 min=    0.0481 max=    0.2921
+[bench] mldsa   verify  runs=100 mean=    0.0357 ms std=   0.0067 min=    0.0331 max=    0.0799
+[bench] mldsa   sizes: pk=1312 B  sk=2560 B  sig=2420 B  verify-check=PASS
+[bench] slhdsa  keygen  runs= 20 mean=  103.7940 ms std=  13.2166 min=   89.0875 max=  129.4558
+[bench] slhdsa  sign    runs=100 mean=  839.7676 ms std= 118.5879 min=  663.9100 max= 1226.1801
+[bench] slhdsa  verify  runs=100 mean=    0.6646 ms std=   0.0175 min=    0.6427 max=    0.7716
+[bench] slhdsa  sizes: pk=32 B  sk=64 B  sig=7856 B  verify-check=PASS
+[bench] written results_run2.csv
+
+root@sender:/lab# cd /lab && python3 bench.py results_run3.csv
+liboqs-python faulthandler is disabled
+[bench] UID=2024300032 host=sender python=3.12.3
+[bench] message: 1024 bytes, sha256-prefix=c0aa6017dac0b92a
+[bench] ecdsa   keygen  runs= 20 mean=    0.0616 ms std=   0.0203 min=    0.0508 max=    0.1227
+[bench] ecdsa   sign    runs=100 mean=    0.0406 ms std=   0.0137 min=    0.0344 max=    0.1079
+[bench] ecdsa   verify  runs=100 mean=    0.0957 ms std=   0.0224 min=    0.0774 max=    0.1783
+[bench] ecdsa   sizes: pk=91 B  sk=138 B  sig=72 B  verify-check=PASS
+[bench] rsapss  keygen  runs= 20 mean=  214.5786 ms std= 160.9760 min=   46.7627 max=  591.4313
+[bench] rsapss  sign    runs=100 mean=    2.4925 ms std=   0.8361 min=    1.8673 max=    6.8476
+[bench] rsapss  verify  runs=100 mean=    0.0592 ms std=   0.0175 min=    0.0528 max=    0.1997
+[bench] rsapss  sizes: pk=422 B  sk=1792 B  sig=384 B  verify-check=PASS
+[bench] mldsa   keygen  runs= 20 mean=    0.0460 ms std=   0.0115 min=    0.0397 max=    0.0881
+[bench] mldsa   sign    runs=100 mean=    0.1051 ms std=   0.0583 min=    0.0483 max=    0.3094
+[bench] mldsa   verify  runs=100 mean=    0.0384 ms std=   0.0256 min=    0.0329 max=    0.2759
+[bench] mldsa   sizes: pk=1312 B  sk=2560 B  sig=2420 B  verify-check=PASS
+[bench] slhdsa  keygen  runs= 20 mean=  113.1117 ms std=  21.1980 min=   93.4412 max=  159.2152
+[bench] slhdsa  sign    runs=100 mean=  809.1426 ms std= 102.8066 min=  666.6040 max= 1193.2926
+[bench] slhdsa  verify  runs=100 mean=    1.3356 ms std=   0.0252 min=    1.2719 max=    1.4094
+[bench] slhdsa  sizes: pk=32 B  sk=64 B  sig=7856 B  verify-check=PASS
+[bench] written results_run3.csv
+

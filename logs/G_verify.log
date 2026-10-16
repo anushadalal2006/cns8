@@ -1,0 +1,36 @@
+root@receiver:/lab# cd /lab && python3 verify.py ecdsa
+liboqs-python faulthandler is disabled
+[verify] algorithm : ecdsa
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/ecdsa_public.key
+[verify] signature : inbox/ecdsa.sig
+[verify] time      : 4.340 ms
+[verify] RESULT    : PASS (VALID)
+
+root@receiver:/lab# cd /lab && python3 verify.py rsapss
+liboqs-python faulthandler is disabled
+[verify] algorithm : rsapss
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/rsapss_public.key
+[verify] signature : inbox/rsapss.sig
+[verify] time      : 1.167 ms
+[verify] RESULT    : PASS (VALID)
+
+root@receiver:/lab# cd /lab && python3 verify.py mldsa
+liboqs-python faulthandler is disabled
+[verify] algorithm : mldsa
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/mldsa_public.key
+[verify] signature : inbox/mldsa.sig
+[verify] time      : 0.221 ms
+[verify] RESULT    : PASS (VALID)
+
+root@receiver:/lab# cd /lab && python3 verify.py slhdsa
+liboqs-python faulthandler is disabled
+[verify] algorithm : slhdsa
+[verify] document  : inbox/document.txt
+[verify] public key: inbox/slhdsa_public.key
+[verify] signature : inbox/slhdsa.sig
+[verify] time      : 0.758 ms
+[verify] RESULT    : PASS (VALID)
+

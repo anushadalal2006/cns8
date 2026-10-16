@@ -1,0 +1,48 @@
+root@sender:/lab# python3 sign.py ecdsa
+liboqs-python faulthandler is disabled
+[sign] created outbox/document.txt
+[sign] algorithm     : ecdsa
+[sign] document      : outbox/document.txt (59 bytes)
+[sign] signature     : outbox/ecdsa.sig (71 bytes)
+[sign] signing time  : 11.142 ms
+
+root@sender:/lab# python3 sign.py rsapss
+liboqs-python faulthandler is disabled
+[sign] algorithm     : rsapss
+[sign] document      : outbox/document.txt (59 bytes)
+[sign] signature     : outbox/rsapss.sig (384 bytes)
+[sign] signing time  : 3.724 ms
+
+root@sender:/lab# python3 sign.py mldsa
+liboqs-python faulthandler is disabled
+[sign] algorithm     : mldsa
+[sign] document      : outbox/document.txt (59 bytes)
+[sign] signature     : outbox/mldsa.sig (2420 bytes)
+[sign] signing time  : 1.080 ms
+
+root@sender:/lab# python3 sign.py slhdsa
+liboqs-python faulthandler is disabled
+[sign] algorithm     : slhdsa
+[sign] document      : outbox/document.txt (59 bytes)
+[sign] signature     : outbox/slhdsa.sig (7856 bytes)
+[sign] signing time  : 777.197 ms
+
+root@sender:/lab# cat outbox/document.txt
+Transfer Rs.3032 to Account 0032
+Issued by UID: 2024300032
+
+root@sender:/lab# ls -l outbox
+total 40
+-rw-rw-rw- 1 root root   59 Oct 16 14:17 document.txt
+-rw-rw-rw- 1 root root   71 Oct 16 14:17 ecdsa.sig
+-rw-rw-rw- 1 root root   91 Oct 16 14:17 ecdsa_public.key
+-rw-rw-rw- 1 root root 2420 Oct 16 14:17 mldsa.sig
+-rw-rw-rw- 1 root root 1312 Oct 16 14:17 mldsa_public.key
+-rw-rw-rw- 1 root root  384 Oct 16 14:17 rsapss.sig
+-rw-rw-rw- 1 root root  422 Oct 16 14:17 rsapss_public.key
+-rw-rw-rw- 1 root root 7856 Oct 16 14:17 slhdsa.sig
+-rw-rw-rw- 1 root root   32 Oct 16 14:17 slhdsa_public.key
+
+root@sender:/lab# sha256sum outbox/document.txt
+d44e70dfc1a5a1f16b40f91fc9c652fc2a9e60d84dbf74435a3f4deb7cf7f388  outbox/document.txt
+

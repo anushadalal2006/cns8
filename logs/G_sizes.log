@@ -1,0 +1,12 @@
+root@sender:/lab# cd /lab && for a in ecdsa rsapss mldsa slhdsa; do echo "$a public=$(stat -c %s outbox/${a}_public.key) private=$(stat -c %s keys/${a}_private.key) sig=$(stat -c %s outbox/${a}.sig) doc=$(stat -c %s outbox/document.txt)"; done
+ecdsa public=91 private=138 sig=71 doc=59
+rsapss public=422 private=1792 sig=384 doc=59
+mldsa public=1312 private=2560 sig=2420 doc=59
+slhdsa public=32 private=64 sig=7856 doc=59
+
+root@receiver:/lab# cd /lab && for a in ecdsa rsapss mldsa slhdsa; do echo "$a received: doc+sig+pk = $(( $(stat -c %s inbox/document.txt) + $(stat -c %s inbox/${a}.sig) + $(stat -c %s inbox/${a}_public.key) )) bytes"; done
+ecdsa received: doc+sig+pk = 221 bytes
+rsapss received: doc+sig+pk = 865 bytes
+mldsa received: doc+sig+pk = 3791 bytes
+slhdsa received: doc+sig+pk = 7947 bytes
+

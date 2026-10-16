@@ -1,0 +1,13 @@
+anusha@host:~/sig-lab$ export STUDENT_UID=2024300032
+
+anusha@host:~/sig-lab$ docker run -dit --name sender   --hostname sender   --network sig-net -e STUDENT_UID=2024300032 -v /home/user/cns8/sender:/lab   sig-lab:1.0
+26c3c6c0a3dfa5459e45d83f4b69c814c99f2997e96dd3e0abd26dce34c4216e
+
+anusha@host:~/sig-lab$ docker run -dit --name receiver --hostname receiver --network sig-net -e STUDENT_UID=2024300032 -v /home/user/cns8/receiver:/lab sig-lab:1.0
+479e1892431dea47068dc938d27c4de070dcbfa620ec9c71485f6351f3a98440
+
+anusha@host:~/sig-lab$ docker ps
+CONTAINER ID   IMAGE         COMMAND            CREATED                  STATUS                  PORTS     NAMES
+479e1892431d   sig-lab:1.0   "sleep infinity"   Less than a second ago   Up Less than a second             receiver
+26c3c6c0a3df   sig-lab:1.0   "sleep infinity"   Less than a second ago   Up Less than a second             sender
+
