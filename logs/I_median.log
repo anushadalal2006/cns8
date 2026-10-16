@@ -1,0 +1,20 @@
+root@sender:/lab# for r in 1 2 3; do echo "run $r: sum of mean_ms = $(awk -F, 'NR>1{s+=$5} END{printf "%.2f", s}' results_run$r.csv)"; done
+run 1: sum of mean_ms = 1196.68
+run 2: sum of mean_ms = 1162.71
+run 3: sum of mean_ms = 1141.11
+
+root@sender:/lab# cp results_run2.csv results.csv && cat results.csv
+uid,algorithm,operation,runs,mean_ms,std_ms,min_ms,max_ms,public_key_bytes,private_key_bytes,signature_bytes
+2024300032,ecdsa,keygen,20,0.0765,0.0187,0.0637,0.1487,91,138,71
+2024300032,ecdsa,sign,100,0.0558,0.0225,0.0389,0.1707,91,138,71
+2024300032,ecdsa,verify,100,0.1291,0.0261,0.1009,0.2590,91,138,71
+2024300032,rsapss,keygen,20,215.7596,172.9181,34.3285,663.4801,422,1793,384
+2024300032,rsapss,sign,100,2.2231,0.6104,1.8540,6.9156,422,1793,384
+2024300032,rsapss,verify,100,0.0589,0.0108,0.0524,0.1047,422,1793,384
+2024300032,mldsa,keygen,20,0.0454,0.0099,0.0395,0.0843,1312,2560,2420
+2024300032,mldsa,sign,100,0.1041,0.0572,0.0481,0.2921,1312,2560,2420
+2024300032,mldsa,verify,100,0.0357,0.0067,0.0331,0.0799,1312,2560,2420
+2024300032,slhdsa,keygen,20,103.7940,13.2166,89.0875,129.4558,32,64,7856
+2024300032,slhdsa,sign,100,839.7676,118.5879,663.9100,1226.1801,32,64,7856
+2024300032,slhdsa,verify,100,0.6646,0.0175,0.6427,0.7716,32,64,7856
+

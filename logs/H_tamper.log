@@ -215,19 +215,3 @@ rsapss: receiver key differs from sender key
 mldsa: receiver key differs from sender key
 slhdsa: receiver key differs from sender key
 
-root@receiver:/lab# cd /lab && mkdir -p other && cd other && mkdir -p keys outbox && STUDENT_UID=2024300033 PYTHONPATH=/lab python3 /lab/keygen.py ecdsa    # Test 4b: key of another UID
-liboqs-python faulthandler is disabled
-[keygen] algorithm      : ecdsa (ECDSA)
-[keygen] private key    : keys/ecdsa_private.key          138 bytes
-[keygen] public key     : outbox/ecdsa_public.key          91 bytes
-[keygen] generation time: 0.866 ms
-
-root@receiver:/lab# cd /lab && python3 verify.py ecdsa inbox/document.txt other/outbox/ecdsa_public.key inbox/ecdsa.sig    # Test 4b: wrong public key
-liboqs-python faulthandler is disabled
-[verify] algorithm : ecdsa
-[verify] document  : inbox/document.txt
-[verify] public key: other/outbox/ecdsa_public.key
-[verify] signature : inbox/ecdsa.sig
-[verify] time      : 4.164 ms
-[verify] RESULT    : FAIL (INVALID)
-

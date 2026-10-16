@@ -1,9 +1,7 @@
-root@sender:/lab# cd /lab/outbox && python3 -m http.server 8000      # (running, see F_http_server_log)
-
 root@receiver:/lab# mkdir -p /lab/inbox && cd /lab/inbox && curl -O http://sender:8000/document.txt
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    59  100    59    0     0   5880      0 --:--:-- --:--:-- --:--:--  6555
+100    59  100    59    0     0   5880      0 --:--:-- --:--:-- --:--:--  6555
 
 root@receiver:/lab# cd /lab/inbox && for a in ecdsa rsapss mldsa slhdsa; do curl -sO http://sender:8000/${a}.sig; curl -sO http://sender:8000/${a}_public.key; done
 

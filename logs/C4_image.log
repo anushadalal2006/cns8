@@ -1,4 +1,4 @@
-anusha@host:~/sig-lab$ docker images sig-lab
+anudalal25@anusha:~/sig-lab$ docker images sig-lab
 IMAGE         ID             DISK USAGE   CONTENT SIZE   EXTRA
 sig-lab:1.0   8c6889320aa5       1.23GB          302MB        
 

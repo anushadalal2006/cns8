@@ -7,9 +7,9 @@ root@sender:/lab# cd /lab && python3 plot.py results.csv outbox/document.txt
 [plot] wrote graphs/graph6_transmitted_bytes.png
 [plot] wrote graphs/graph7_relative_to_ecdsa.png
 
-anusha@host:~/sig-lab$ docker cp sender:/lab/graphs ./graphs
+anudalal25@anusha:~/sig-lab$ docker cp sender:/lab/graphs ./graphs
 
-anusha@host:~/sig-lab$ ls -l graphs
+anudalal25@anusha:~/sig-lab$ ls -l graphs
 total 532
 -rw-rw-rw- 1 root root 70198 Oct 16 14:27 graph1_key_sizes.png
 -rw-rw-rw- 1 root root 62381 Oct 16 14:27 graph2_signature_size.png

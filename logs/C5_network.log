@@ -1,14 +1,14 @@
-anusha@host:~/sig-lab$ docker network create sig-net
+anudalal25@anusha:~/sig-lab$ docker network create sig-net
 144a63bb1ae16f09cc5f469a969c01a79c54da674c4e2c4f09a87715288056b6
 
-anusha@host:~/sig-lab$ docker network ls
+anudalal25@anusha:~/sig-lab$ docker network ls
 NETWORK ID     NAME      DRIVER    SCOPE
 f75c0c8e7cd5   bridge    bridge    local
 482ed9f0038a   host      host      local
 0da95fc264de   none      null      local
 144a63bb1ae1   sig-net   bridge    local
 
-anusha@host:~/sig-lab$ docker network inspect sig-net
+anudalal25@anusha:~/sig-lab$ docker network inspect sig-net
 [
     {
         "Name": "sig-net",

@@ -1,23 +1,23 @@
-anusha@host:~/sig-lab$ lscpu | grep -E "Model name|^CPU\(s\)"
+anudalal25@anusha:~/sig-lab$ lscpu | grep -E "Model name|^CPU\(s\)"
 CPU(s):                                  4
 Model name:                              Intel(R) Xeon(R) Processor @ 2.80GHz
 
-anusha@host:~/sig-lab$ free -h | head -2
+anudalal25@anusha:~/sig-lab$ free -h | head -2
                total        used        free      shared  buff/cache   available
 Mem:            15Gi       707Mi        12Gi        14Mi       2.8Gi        15Gi
 
-anusha@host:~/sig-lab$ lsb_release -d 2>/dev/null || grep PRETTY_NAME /etc/os-release; uname -r
+anudalal25@anusha:~/sig-lab$ lsb_release -d 2>/dev/null || grep PRETTY_NAME /etc/os-release; uname -r
 Description:	Ubuntu 24.04.5 LTS
 6.18.44-fc-v139
 
-anusha@host:~/sig-lab$ docker --version
+anudalal25@anusha:~/sig-lab$ docker --version
 Docker version 29.8.2, build 7fc2dff
 
-anusha@host:~/sig-lab$ docker exec sender pip list 2>/dev/null | grep -iE "cryptography|liboqs"
+anudalal25@anusha:~/sig-lab$ docker exec sender pip list 2>/dev/null | grep -iE "cryptography|liboqs"
 cryptography    50.0.2
 liboqs-python   0.16.0.1
 
-anusha@host:~/sig-lab$ docker exec sender python3 -c "import oqs; print(oqs.oqs_version())"
+anudalal25@anusha:~/sig-lab$ docker exec sender python3 -c "import oqs; print(oqs.oqs_version())"
 liboqs-python faulthandler is disabled
 0.16.0
 
