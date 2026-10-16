@@ -166,13 +166,20 @@ SHOTS = [
      "H_tamper.log", list(range(17, 27)), True),
     ("17_bench_sender.png", "Part I: bench.py on the sender, run three times (results_run1/2/3.csv)",
      "I_bench_sender.log", None, True),
-    ("18_median_run.png", "Part I: the median run (run 2) is kept as results.csv on the sender",
+    ("18_median_run.png", "Part I: the median run (run {MEDIAN}) is kept as results.csv on the sender",
      "I_median.log", None, True),
     ("19_bench_receiver.png", "Part I: bench.py repeated on the receiver container (receiver results.csv)",
      "I_bench_receiver.log", None, True),
     ("20_plot.png", "Section 15: plot.py draws the seven graphs; docker cp copies graphs/ to the host",
      "S15_plot.log", None, True),
 ]
+
+def median_run():
+    m = re.search(r"cp results_run(\d)\.csv results\.csv", open(os.path.join("logs", "I_median.log")).read())
+    return m.group(1) if m else "?"
+
+
+SHOTS = [(n, h.replace("{MEDIAN}", median_run()), *rest) for n, h, *rest in SHOTS]
 
 if __name__ == "__main__":
     os.makedirs("screenshots", exist_ok=True)
