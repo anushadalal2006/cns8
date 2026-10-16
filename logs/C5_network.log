@@ -1,19 +1,19 @@
 anudalal25@anusha:~/sig-lab$ docker network create sig-net
-144a63bb1ae16f09cc5f469a969c01a79c54da674c4e2c4f09a87715288056b6
+660a45e40f472368144f72013868bd63bf10811e4c520680660132ccfbada7a1
 
 anudalal25@anusha:~/sig-lab$ docker network ls
 NETWORK ID     NAME      DRIVER    SCOPE
-f75c0c8e7cd5   bridge    bridge    local
-482ed9f0038a   host      host      local
-0da95fc264de   none      null      local
-144a63bb1ae1   sig-net   bridge    local
+274becbfbf0a   bridge    bridge    local
+18022e9c1a7e   host      host      local
+376444f39845   none      null      local
+660a45e40f47   sig-net   bridge    local
 
 anudalal25@anusha:~/sig-lab$ docker network inspect sig-net
 [
     {
         "Name": "sig-net",
-        "Id": "144a63bb1ae16f09cc5f469a969c01a79c54da674c4e2c4f09a87715288056b6",
-        "Created": "2026-10-16T14:17:25.971919913Z",
+        "Id": "660a45e40f472368144f72013868bd63bf10811e4c520680660132ccfbada7a1",
+        "Created": "2026-10-16T16:38:45.856683978Z",
         "Scope": "local",
         "Driver": "bridge",
         "EnableIPv4": true,
@@ -35,7 +35,10 @@ anudalal25@anusha:~/sig-lab$ docker network inspect sig-net
             "Network": ""
         },
         "ConfigOnly": false,
-        "Options": {},
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
         "Labels": {},
         "Containers": {},
         "Status": {

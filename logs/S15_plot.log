@@ -10,11 +10,12 @@ root@sender:/lab# cd /lab && python3 plot.py results.csv outbox/document.txt
 anudalal25@anusha:~/sig-lab$ docker cp sender:/lab/graphs ./graphs
 
 anudalal25@anusha:~/sig-lab$ ls -l graphs
-total 532
--rw-rw-rw- 1 root root 70198 Oct 16 14:27 graph1_key_sizes.png
--rw-rw-rw- 1 root root 62381 Oct 16 14:27 graph2_signature_size.png
--rw-rw-rw- 1 root root 75605 Oct 16 14:27 graph3_signing_time.png
--rw-rw-rw- 1 root root 81159 Oct 16 14:27 graph4_verification_time.png
--rw-rw-rw- 1 root root 71722 Oct 16 14:27 graph5_keygen_time.png
--rw-rw-rw- 1 root root 81572 Oct 16 14:27 graph6_transmitted_bytes.png
--rw-rw-rw- 1 root root 89367 Oct 16 14:27 graph7_relative_to_ecdsa.png
+total 536
+-rw-r--r-- 1 anudalal25 anudalal25 70651 Oct 16 16:43 graph1_key_sizes.png
+-rw-r--r-- 1 anudalal25 anudalal25 63036 Oct 16 16:43 graph2_signature_size.png
+-rw-r--r-- 1 anudalal25 anudalal25 74949 Oct 16 16:43 graph3_signing_time.png
+-rw-r--r-- 1 anudalal25 anudalal25 80915 Oct 16 16:43 graph4_verification_time.png
+-rw-r--r-- 1 anudalal25 anudalal25 72286 Oct 16 16:43 graph5_keygen_time.png
+-rw-r--r-- 1 anudalal25 anudalal25 82052 Oct 16 16:43 graph6_transmitted_bytes.png
+-rw-r--r-- 1 anudalal25 anudalal25 89924 Oct 16 16:43 graph7_relative_to_ecdsa.png
+

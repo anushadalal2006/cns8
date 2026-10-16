@@ -1,14 +1,14 @@
 anudalal25@anusha:~/sig-lab$ lscpu | grep -E "Model name|^CPU\(s\)"
-CPU(s):                                  4
-Model name:                              Intel(R) Xeon(R) Processor @ 2.80GHz
+CPU(s):                               12
+Model name:                           12th Gen Intel(R) Core(TM) i5-1235U
 
 anudalal25@anusha:~/sig-lab$ free -h | head -2
                total        used        free      shared  buff/cache   available
-Mem:            15Gi       707Mi        12Gi        14Mi       2.8Gi        15Gi
+Mem:           3.7Gi       838Mi        48Mi        49Mi       2.9Gi       2.9Gi
 
 anudalal25@anusha:~/sig-lab$ lsb_release -d 2>/dev/null || grep PRETTY_NAME /etc/os-release; uname -r
 Description:	Ubuntu 24.04.5 LTS
-6.18.44-fc-v139
+6.6.87.2-microsoft-standard-WSL2
 
 anudalal25@anusha:~/sig-lab$ docker --version
 Docker version 29.8.2, build 7fc2dff

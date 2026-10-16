@@ -2,8 +2,8 @@ anudalal25@anusha:~/sig-lab$ docker network inspect sig-net
 [
     {
         "Name": "sig-net",
-        "Id": "144a63bb1ae16f09cc5f469a969c01a79c54da674c4e2c4f09a87715288056b6",
-        "Created": "2026-10-16T14:17:25.971919913Z",
+        "Id": "660a45e40f472368144f72013868bd63bf10811e4c520680660132ccfbada7a1",
+        "Created": "2026-10-16T16:38:45.856683978Z",
         "Scope": "local",
         "Driver": "bridge",
         "EnableIPv4": true,
@@ -25,21 +25,24 @@ anudalal25@anusha:~/sig-lab$ docker network inspect sig-net
             "Network": ""
         },
         "ConfigOnly": false,
-        "Options": {},
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
         "Labels": {},
         "Containers": {
-            "26c3c6c0a3dfa5459e45d83f4b69c814c99f2997e96dd3e0abd26dce34c4216e": {
-                "Name": "sender",
-                "EndpointID": "e2670e9c06aa1e248d73c5515dadecd49d22bc802fc395dd0d035a39ba6ca7e6",
-                "MacAddress": "be:b3:ac:3b:b5:fb",
-                "IPv4Address": "172.18.0.2/16",
+            "25736136c6ad14add4570746823b8948fddad754918f90581658c99493c1bfc7": {
+                "Name": "receiver",
+                "EndpointID": "3618596eb1c25c6b93aa99f10d09b1a5b66a507ee95f48182edc98a70add6b3f",
+                "MacAddress": "16:21:f6:59:f6:e2",
+                "IPv4Address": "172.18.0.3/16",
                 "IPv6Address": ""
             },
-            "479e1892431dea47068dc938d27c4de070dcbfa620ec9c71485f6351f3a98440": {
-                "Name": "receiver",
-                "EndpointID": "4088899ba7d6d6c4c706b7ba642726aaa1139ed3ca7335b26c86cdf92a85a1dd",
-                "MacAddress": "82:47:d7:a2:7c:dc",
-                "IPv4Address": "172.18.0.3/16",
+            "8dbaa8cc900f8db67c867d6a0f5745cfd3480ab997fda144e6052a7c1fb8f41b": {
+                "Name": "sender",
+                "EndpointID": "14c491ab8d1141478efad1411222be6bcb362995d90d503bc17c29590ee7ccdc",
+                "MacAddress": "22:8a:81:e8:d9:7e",
+                "IPv4Address": "172.18.0.2/16",
                 "IPv6Address": ""
             }
         },
@@ -58,13 +61,13 @@ anudalal25@anusha:~/sig-lab$ docker network inspect sig-net
 
 root@sender:/lab# ping -c 3 receiver
 PING receiver (172.18.0.3) 56(84) bytes of data.
-64 bytes from receiver.sig-net (172.18.0.3): icmp_seq=1 ttl=64 time=1.75 ms
-64 bytes from receiver.sig-net (172.18.0.3): icmp_seq=2 ttl=64 time=0.073 ms
-64 bytes from receiver.sig-net (172.18.0.3): icmp_seq=3 ttl=64 time=0.092 ms
+64 bytes from receiver.sig-net (172.18.0.3): icmp_seq=1 ttl=64 time=1.85 ms
+64 bytes from receiver.sig-net (172.18.0.3): icmp_seq=2 ttl=64 time=0.105 ms
+64 bytes from receiver.sig-net (172.18.0.3): icmp_seq=3 ttl=64 time=0.141 ms
 
 --- receiver ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, time 2029ms
-rtt min/avg/max/mdev = 0.073/0.639/1.752/0.787 ms
+3 packets transmitted, 3 received, 0% packet loss, time 2075ms
+rtt min/avg/max/mdev = 0.105/0.697/1.845/0.811 ms
 
 root@sender:/lab# echo $STUDENT_UID
 2024300032
