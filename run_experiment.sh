@@ -118,10 +118,12 @@ for a in ecdsa rsapss mldsa slhdsa; do
 done
 c receiver "cd /lab && mkdir -p keys outbox"
 for a in ecdsa rsapss mldsa slhdsa; do
-  c receiver "cd /lab && python3 keygen.py $a    # Test 4: receiver makes ITS OWN key pair"
+  # ECDSA: an independent random key - the UID-derived one would equal the sender's key
+  opt=""; [ "$a" = ecdsa ] && opt=" --independent"
+  c receiver "cd /lab && python3 keygen.py $a$opt    # Test 4: receiver makes ITS OWN key pair"
   c receiver "cd /lab && python3 verify.py $a inbox/document.txt outbox/${a}_public.key inbox/${a}.sig    # Test 4: wrong public key"
 done
-c receiver "cd /lab && for a in ecdsa rsapss mldsa slhdsa; do cmp -s inbox/\${a}_public.key outbox/\${a}_public.key && echo \"\$a: receiver key IDENTICAL to sender key\" || echo \"\$a: receiver key differs from sender key\"; done"
+c receiver "cd /lab && for a in ecdsa rsapss mldsa slhdsa; do cmp -s inbox/\${a}_public.key outbox/\${a}_public.key && echo \"\$a: receiver key IDENTICAL to sender key (not a wrong key!)\" || echo \"\$a: receiver key differs from sender key\"; done"
 
 # ---------------------------------------------------------------- Part I
 step I_bench_sender

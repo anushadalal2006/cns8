@@ -62,6 +62,32 @@ TAMPERED = open("receiver/inbox/document.txt.tampered", encoding="utf-8").read()
 ENV = "; ".join(l.strip() for l in open("sender/environment.txt") if l.strip())
 
 
+def grab(path, pattern, default="?"):
+    m = re.search(pattern, open(path, encoding="utf-8", errors="replace").read(), re.M)
+    return m.group(1).strip() if m else default
+
+
+C8 = "logs/C8_environment.log"
+CPU = grab(C8, r"^Model name:\s*(.+)$")
+THREADS = grab(C8, r"^CPU\(s\):\s*(\d+)")
+RAM = grab(C8, r"^Mem:\s+(\S+)").replace("Gi", " GiB")
+HOST_OS = grab(C8, r"^(?:Description:|PRETTY_NAME=)\s*\"?([^\"\n]+)")
+KERNEL = grab(C8, r"lsb_release.*\n.*\n(\S+)")
+DOCKER = grab(C8, r"^Docker version ([^,]+)")
+CRYPTO = grab(C8, r"^cryptography\s+(\S+)")
+OQS_PY = grab(C8, r"^liboqs-python\s+(\S+)")
+OQS = grab(C8, r"oqs_version\(\)\)\"\n(?:liboqs-python.*\n)?(\S+)")
+CTR_OS = grab(C8, r'root@sender:/lab# grep PRETTY_NAME.*\nPRETTY_NAME="([^"]+)"')
+CTR_PY = grab(C8, r"^Python (\S+)")
+MEDIAN = grab("logs/I_median.log", r"cp results_run(\d)\.csv results\.csv")
+IPS = re.findall(r"^(\d+\.\d+\.\d+\.\d+)$", open("logs/C7_connectivity.log").read(), re.M)
+
+TAMPER = {}                     # file -> (index, old byte, new byte)
+for m in re.finditer(r"\[tamper\] file\s+: inbox/(\S+) .*\n\[tamper\] index\s+: UID mod \d+ = (\d+)\n"
+                     r"\[tamper\] byte\s+: (0x..) -> (0x..)", open("logs/H_tamper.log").read()):
+    TAMPER[m.group(1)] = m.group(2, 3, 4)
+
+
 # ------------------------------------------------------------------ docx helpers
 def new_doc():
     d = Document()
@@ -156,15 +182,17 @@ header(d, "Tables and Graphs")
 table(d, "Table 1: Execution environment",
       ["CPU model", "Cores / threads", "RAM", "Host OS", "Docker version", "cryptography version",
        "liboqs version"],
-      [["Intel(R) Xeon(R) Processor @ 2.80GHz", "4 / 4", "15 GiB", "Ubuntu 24.04.5 LTS (kernel 6.18.44)",
-        "29.8.2", "50.0.2", "0.16.0 (liboqs-python 0.16.0.1)"]], size=9)
-note(d, "Containers: image sig-lab:1.0 (Ubuntu 24.04.5 LTS, Python 3.12.3); sender 172.18.0.2, receiver 172.18.0.3 on sig-net.")
+      [[CPU, f"{THREADS} / {THREADS}", RAM, f"{HOST_OS} (kernel {KERNEL})", DOCKER, CRYPTO,
+        f"{OQS} (liboqs-python {OQS_PY})"]], size=9)
+note(d, f"Host OS: {HOST_OS}. Container OS (image sig-lab:1.0, built from the Step C3 Dockerfile, FROM ubuntu:24.04): "
+        f"{CTR_OS}, Python {CTR_PY}. Container IPs on sig-net: sender {IPS[0]}, receiver {IPS[1]}.")
 
 table(d, "Table 2: Key, signature and transmission sizes (bytes)",
       ["Algorithm", "Public key", "Private key", "Signature", "Document", "Transmitted (doc + sig + public key)"],
       [[LABEL[a], sizes[a]["pk"], sizes[a]["sk"], sizes[a]["sig"], sizes[a]["doc"], sizes[a]["tx"]] for a in ALGS])
-note(d, "Sizes from stat -c %s. ML-DSA-44 (1312 / 2560 / 2420) and SLH-DSA-SHA2-128s (32 / 64 / 7856) match the "
-        "standards' raw sizes; ECDSA and RSA-PSS keys are DER encoded (PKCS#8 / SubjectPublicKeyInfo).")
+note(d, "Sizes of the files actually written and transferred, measured with stat -c %s. Key formats as prescribed in "
+        "Step D3: ECDSA and RSA-PSS private keys PKCS#8 DER, public keys SubjectPublicKeyInfo DER; ML-DSA and SLH-DSA "
+        "raw keys from liboqs (these match the FIPS 204/205 sizes 1312/2560/2420 and 32/64/7856 B).")
 
 names = {"1": "1. Original document + original signature", "2": "2. One character of document changed",
          "3": "3. One bit of signature changed", "4": "4. Correct document + signature, wrong public key"}
@@ -173,19 +201,23 @@ table(d, "Table 3: Verification results",
       [[nm] + [results3[(t, a)] for a in ALGS] + ["PASS" if t == "1" else "FAIL"] for t, nm in names.items()],
       widths=[6.6, 2, 2, 2, 2, 2])
 para(d, "")
-table(d, None, ["Document", "Text (tamper index = UID mod 59 = 2: 'a' (0x61) changed to '`' (0x60))"],
+di, dold, dnew = TAMPER["document.txt"]
+table(d, None, ["Document", f"Text (tamper index = UID mod {sizes['ecdsa']['doc']} = {di}: "
+                            f"{chr(int(dold, 16))!r} ({dold}) changed to {chr(int(dnew, 16))!r} ({dnew}))"],
       [["Original", f"{DOC_TEXT[0]} / {DOC_TEXT[1]}"], ["Modified", f"{TAMPERED[0]} / {TAMPERED[1]}"]],
       widths=[2.6, 14])
-note(d, "Test 3 flipped bit 0 of byte UID mod length: ECDSA byte 4, RSA-PSS byte 256, ML-DSA byte 1492, "
-        "SLH-DSA byte 5232. Test 4, ECDSA = PASS: the ECDSA private key is derived from the UID (Section 5) and "
-        "both containers have the same UID, so the receiver's key pair is identical to the sender's (confirmed "
-        "with cmp) - the 'wrong' key is actually the right one.")
+note(d, "Test 3 flipped bit 0 of the signature byte at index UID mod length: "
+        + ", ".join(f"{LABEL[a]} byte {TAMPER[a + '.sig'][0]} ({TAMPER[a + '.sig'][1]} -> {TAMPER[a + '.sig'][2]})"
+                    for a in ALGS) + ". "
+        "Test 4: the receiver generated its own key pairs; for ECDSA an independent key from the secure random "
+        "generator was used (keygen.py ecdsa --independent), because a UID-derived key would be identical to the "
+        "sender's key. cmp confirmed all four receiver public keys differ from the sender's.")
 
 table(d, "Table 4: Timing results (milliseconds, mean ± standard deviation)",
       ["Algorithm", "Key generation", "Signing", "Verification", "Sign / Verify ratio"],
       [[LABEL[a]] + [f"{T[(a, op)][0]:.4f} ± {T[(a, op)][1]:.4f}" for op in ("keygen", "sign", "verify")]
        + [f"{ms(a, 'sign') / ms(a, 'verify'):.2f}"] for a in ALGS])
-note(d, "Sender, median of three bench.py runs (run 2); 1024-byte UID-seeded message; 5 warm-up calls, then "
+note(d, f"Sender container, median of three bench.py runs (results.csv = results_run{MEDIAN}.csv); 1024-byte UID-seeded message; 5 warm-up calls, then "
         "key generation x20, signing x100, verification x100, each call timed with time.perf_counter_ns().")
 page_break(d)
 
@@ -247,7 +279,7 @@ table(d, "Table 6: Property comparison",
 table(d, "Table 7: Which algorithm would you choose?",
       ["Scenario", "Chosen algorithm", "Justification"],
       [["Signing a firmware image for a device that stays in the field for 15 years", "SLH-DSA",
-        "Must outlive quantum computers; hash-only security is the most conservative, signing is rare and verification is cheap."],
+        "Must outlive quantum computers; hash-only security is the most conservative, signing is rare and verification was cheap in our tests."],
        ["Authenticating a short sensor message on a very low-bandwidth link", "ECDSA",
         f"Smallest overhead ({sizes['ecdsa']['sig']} B signature, {sizes['ecdsa']['pk']} B key) and the data is short-lived."],
        ["Signing a TLS server certificate in 2026 on a general web server", "ECDSA (P-256)",
@@ -255,8 +287,11 @@ table(d, "Table 7: Which algorithm would you choose?",
        ["Root key of a certificate authority that must remain trusted for 30 years", "SLH-DSA",
         "Rarely signs, so slow signing and large signatures are acceptable; security rests only on hash functions."],
        ["High-volume server that verifies millions of signatures per second", "ML-DSA",
-        f"Fastest verification measured ({f3('mldsa', 'verify')}) and quantum-safe."]],
+        f"Fastest verification in our measurements ({f3('mldsa', 'verify')} per signature on this setup) and quantum-safe."]],
       widths=[5.2, 2.8, 9], size=9)
+
+note(d, "Timings in Tables 4-7 are those measured in this experiment's containers on the machine in Table 1; "
+        "absolute values depend on the hardware and library build, the relative ordering is what the choices rely on.")
 
 os.makedirs("report", exist_ok=True)
 save(d, f"report/Exp08_Tables_and_Graphs_{UID}.docx")

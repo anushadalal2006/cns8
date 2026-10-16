@@ -1,4 +1,8 @@
-"""keygen.py <alg> - generate the key pair of the chosen algorithm (Step D3).
+"""keygen.py <alg> [--independent] - generate the key pair of the chosen algorithm (Step D3).
+
+--independent (wrong-key test, Part H Test 4 only): the ECDSA key comes from the secure random
+generator instead of the UID. Without it, the receiver would re-derive the sender's exact ECDSA
+key from the same STUDENT_UID, and the "wrong" key would really be the right one.
 
 Private key -> keys/<alg>_private.key   (never leaves the container)
 Public key  -> outbox/<alg>_public.key
@@ -23,8 +27,10 @@ def _der_pair(private_key):
     return sk, pk
 
 
-def generate(alg):
+def generate(alg, independent=False):
     """Return (private_key_bytes, public_key_bytes) for alg."""
+    if alg == "ecdsa" and independent:
+        return _der_pair(ec.generate_private_key(ec.SECP256R1()))
     if alg == "ecdsa":
         # private key built from the UID-derived scalar d on curve P-256
         return _der_pair(ec.derive_private_key(ecdsa_private_scalar(), ec.SECP256R1()))
@@ -39,14 +45,16 @@ def generate(alg):
 
 
 def main():
-    if len(sys.argv) != 2:
-        sys.exit("usage: python3 keygen.py <ecdsa|rsapss|mldsa|slhdsa>")
+    if len(sys.argv) not in (2, 3) or (len(sys.argv) == 3 and sys.argv[2] != "--independent"):
+        sys.exit("usage: python3 keygen.py <ecdsa|rsapss|mldsa|slhdsa> [--independent]")
     alg = check_alg(sys.argv[1])
-    (sk, pk), ms = timed_ms(generate, alg)
+    independent = len(sys.argv) == 3
+    (sk, pk), ms = timed_ms(generate, alg, independent)
     write_bytes(private_key_path(alg), sk)
     write_bytes(public_key_path(alg), pk)
     name = ALGS[alg].get("oqs_name", ALGS[alg]["label"])
-    print(f"[keygen] algorithm      : {alg} ({name})")
+    print(f"[keygen] algorithm      : {alg} ({name})"
+          + ("  [independent key from the secure RNG]" if independent and alg == "ecdsa" else ""))
     print(f"[keygen] private key    : {private_key_path(alg):28s} {len(sk):6d} bytes")
     print(f"[keygen] public key     : {public_key_path(alg):28s} {len(pk):6d} bytes")
     print(f"[keygen] generation time: {ms:.3f} ms")

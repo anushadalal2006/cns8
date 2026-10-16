@@ -160,7 +160,7 @@ SHOTS = [
      "H_tamper.log", list(range(0, 9)), True),
     ("15_tamper_test_3.png", "Part H, Test 3: one bit of each signature flipped at index UID mod length; all four FAIL",
      "H_tamper.log", list(range(9, 17)), True),
-    ("16_tamper_test_4.png", "Part H, Test 4: receiver makes its own key pairs and verifies with them (wrong public key)",
+    ("16_tamper_test_4.png", "Part H, Test 4: receiver makes its own key pairs (independent ECDSA key) - verification with the wrong public key FAILS for all four",
      "H_tamper.log", list(range(17, 27)), True),
     ("17_bench_sender.png", "Part I: bench.py on the sender, run three times (results_run1/2/3.csv)",
      "I_bench_sender.log", None, True),

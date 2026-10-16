@@ -145,12 +145,12 @@ liboqs-python faulthandler is disabled
 
 root@receiver:/lab# cd /lab && mkdir -p keys outbox
 
-root@receiver:/lab# cd /lab && python3 keygen.py ecdsa    # Test 4: receiver makes ITS OWN key pair
+root@receiver:/lab# cd /lab && python3 keygen.py ecdsa --independent    # Test 4: receiver makes ITS OWN key pair
 liboqs-python faulthandler is disabled
-[keygen] algorithm      : ecdsa (ECDSA)
+[keygen] algorithm      : ecdsa (ECDSA)  [independent key from the secure RNG]
 [keygen] private key    : keys/ecdsa_private.key          138 bytes
 [keygen] public key     : outbox/ecdsa_public.key          91 bytes
-[keygen] generation time: 0.602 ms
+[keygen] generation time: 35.439 ms
 
 root@receiver:/lab# cd /lab && python3 verify.py ecdsa inbox/document.txt outbox/ecdsa_public.key inbox/ecdsa.sig    # Test 4: wrong public key
 liboqs-python faulthandler is disabled
@@ -158,15 +158,15 @@ liboqs-python faulthandler is disabled
 [verify] document  : inbox/document.txt
 [verify] public key: outbox/ecdsa_public.key
 [verify] signature : inbox/ecdsa.sig
-[verify] time      : 3.710 ms
-[verify] RESULT    : PASS (VALID)
+[verify] time      : 11.863 ms
+[verify] RESULT    : FAIL (INVALID)
 
 root@receiver:/lab# cd /lab && python3 keygen.py rsapss    # Test 4: receiver makes ITS OWN key pair
 liboqs-python faulthandler is disabled
 [keygen] algorithm      : rsapss (RSA-PSS)
-[keygen] private key    : keys/rsapss_private.key        1793 bytes
+[keygen] private key    : keys/rsapss_private.key        1794 bytes
 [keygen] public key     : outbox/rsapss_public.key        422 bytes
-[keygen] generation time: 290.367 ms
+[keygen] generation time: 31.473 ms
 
 root@receiver:/lab# cd /lab && python3 verify.py rsapss inbox/document.txt outbox/rsapss_public.key inbox/rsapss.sig    # Test 4: wrong public key
 liboqs-python faulthandler is disabled
@@ -174,7 +174,7 @@ liboqs-python faulthandler is disabled
 [verify] document  : inbox/document.txt
 [verify] public key: outbox/rsapss_public.key
 [verify] signature : inbox/rsapss.sig
-[verify] time      : 1.682 ms
+[verify] time      : 3.119 ms
 [verify] RESULT    : FAIL (INVALID)
 
 root@receiver:/lab# cd /lab && python3 keygen.py mldsa    # Test 4: receiver makes ITS OWN key pair
@@ -182,7 +182,7 @@ liboqs-python faulthandler is disabled
 [keygen] algorithm      : mldsa (ML-DSA-44)
 [keygen] private key    : keys/mldsa_private.key         2560 bytes
 [keygen] public key     : outbox/mldsa_public.key        1312 bytes
-[keygen] generation time: 1.096 ms
+[keygen] generation time: 94.715 ms
 
 root@receiver:/lab# cd /lab && python3 verify.py mldsa inbox/document.txt outbox/mldsa_public.key inbox/mldsa.sig    # Test 4: wrong public key
 liboqs-python faulthandler is disabled
@@ -190,7 +190,7 @@ liboqs-python faulthandler is disabled
 [verify] document  : inbox/document.txt
 [verify] public key: outbox/mldsa_public.key
 [verify] signature : inbox/mldsa.sig
-[verify] time      : 0.244 ms
+[verify] time      : 0.464 ms
 [verify] RESULT    : FAIL (INVALID)
 
 root@receiver:/lab# cd /lab && python3 keygen.py slhdsa    # Test 4: receiver makes ITS OWN key pair
@@ -198,7 +198,7 @@ liboqs-python faulthandler is disabled
 [keygen] algorithm      : slhdsa (SLH_DSA_PURE_SHA2_128S)
 [keygen] private key    : keys/slhdsa_private.key          64 bytes
 [keygen] public key     : outbox/slhdsa_public.key         32 bytes
-[keygen] generation time: 95.194 ms
+[keygen] generation time: 149.479 ms
 
 root@receiver:/lab# cd /lab && python3 verify.py slhdsa inbox/document.txt outbox/slhdsa_public.key inbox/slhdsa.sig    # Test 4: wrong public key
 liboqs-python faulthandler is disabled
@@ -206,11 +206,11 @@ liboqs-python faulthandler is disabled
 [verify] document  : inbox/document.txt
 [verify] public key: outbox/slhdsa_public.key
 [verify] signature : inbox/slhdsa.sig
-[verify] time      : 1.001 ms
+[verify] time      : 0.963 ms
 [verify] RESULT    : FAIL (INVALID)
 
-root@receiver:/lab# cd /lab && for a in ecdsa rsapss mldsa slhdsa; do cmp -s inbox/${a}_public.key outbox/${a}_public.key && echo "$a: receiver key IDENTICAL to sender key" || echo "$a: receiver key differs from sender key"; done
-ecdsa: receiver key IDENTICAL to sender key
+root@receiver:/lab# cd /lab && for a in ecdsa rsapss mldsa slhdsa; do cmp -s inbox/${a}_public.key outbox/${a}_public.key && echo "$a: receiver key IDENTICAL to sender key (not a wrong key!)" || echo "$a: receiver key differs from sender key"; done
+ecdsa: receiver key differs from sender key
 rsapss: receiver key differs from sender key
 mldsa: receiver key differs from sender key
 slhdsa: receiver key differs from sender key

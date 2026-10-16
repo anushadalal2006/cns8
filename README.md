@@ -47,4 +47,4 @@ python3 tools/render_screenshots.py && python3 tools/make_docs.py
 
 ## Note on Test 4
 
-In Test 4 (wrong public key), **ECDSA gives PASS**. The ECDSA key is derived from the UID (Section 5) and both containers have the same UID, so the receiver's "own" key is identical to the sender's (`cmp` in Screenshot 16 confirms this). RSA-PSS, ML-DSA and SLH-DSA give FAIL as expected.
+The ECDSA key is derived from the UID (Section 5), and both containers have the same UID, so running `keygen.py ecdsa` on the receiver would recreate the sender's exact key. That would not be a wrong key at all. For Test 4 the receiver therefore uses `keygen.py ecdsa --independent`, an ECDSA key from the secure random generator. RSA-PSS, ML-DSA and SLH-DSA keys are random anyway. `cmp` in Screenshot 16 confirms all four receiver keys differ from the sender's, and all four verifications FAIL.
