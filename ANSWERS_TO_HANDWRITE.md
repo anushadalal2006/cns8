@@ -93,7 +93,7 @@ No. The network affects only the file transfer, not the computation. In bench.py
 - 5 warm-up calls were discarded, and many repetitions gave mean, std, min and max.
 - The last signature was checked so that failed operations were not timed.
 
-A container is a normal process on the host kernel, so CPU-bound code runs at native speed. The sender and receiver agreed within about 5–15 % for the longer operations (RSA-PSS sign/verify, ML-DSA, SLH-DSA). The tiny ECDSA operations (well under 0.2 ms) were 2–3 × faster on the receiver, which shows how much CPU frequency changes and background load affect very short measurements.
+A container is a normal process on the host kernel, so CPU-bound code runs at native speed. In my data the sender and receiver agreed within about 15 % for RSA-PSS signing and verification, ML-DSA and SLH-DSA (several within 1–4 %). Two results differed more: RSA key generation (about 40 %, because the time to find random primes varies from run to run) and ECDSA, which was 2–3 × faster on the receiver. Both containers share the same kernel and CPU and no network is involved, so this is not caused by Docker. It shows that repeated runs on the same machine can differ, for example through CPU frequency and turbo changes, the scheduler placing the process on a performance or an efficiency core (my i5-1235U has both), or background load.
 
 Factors that can still affect timings: CPU frequency scaling or turbo and temperature, background load on the machine (visible as outliers in max_ms), OS scheduling and caches, a container CPU limit (--cpus), Python call overhead, library build options (AVX2), and the random time RSA takes to find primes (hence its large std).
 
