@@ -4,6 +4,8 @@
 
 This repository is the `~/sig-lab` folder of the lab sheet. Every part was run for real with `STUDENT_UID=2024300032`.
 
+**To run it on your own PC, follow [RUN_ON_MY_PC.md](RUN_ON_MY_PC.md).**
+
 ## What to submit
 
 **The report:** `report/Exp08_Report_2024300032_Anusha_Dalal.docx` (editable) and the matching `.pdf`. It follows the Section 19 order:

@@ -8,6 +8,7 @@ usage: python3 tools/make_docs.py   (run tools/render_screenshots.py first)
 import csv
 import os
 import re
+import shutil
 import subprocess
 import sys
 
@@ -23,7 +24,8 @@ from PIL import Image
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from render_screenshots import SHOTS  # noqa: E402
 
-NAME, UID, DATE = "Anusha Dalal", "2024300032", "16 October 2026"
+NAME, UID = "Anusha Dalal", "2024300032"
+DATE = os.environ.get("REPORT_DATE") or __import__("datetime").date.today().strftime("%d %B %Y").lstrip("0")
 TITLE = ("Experiment 8: Evaluation of Classical and Post-Quantum Digital Signature Algorithms "
          "using Docker-Based Client-Server Communication")
 ALGS = ["ecdsa", "rsapss", "mldsa", "slhdsa"]
@@ -174,9 +176,14 @@ def page_break(d):
 
 def save(d, path):
     d.save(path)
-    subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir",
+    print("wrote", path)
+    soffice = shutil.which("soffice") or shutil.which("libreoffice")
+    if not soffice:
+        print("LibreOffice not found - open the .docx in Word and use File > Save As > PDF")
+        return
+    subprocess.run([soffice, "--headless", "--convert-to", "pdf", "--outdir",
                     os.path.dirname(path), path], check=True, capture_output=True)
-    print("wrote", path, "and", path.replace(".docx", ".pdf"))
+    print("wrote", path.replace(".docx", ".pdf"))
 
 
 # ================================================================== sections

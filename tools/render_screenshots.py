@@ -1,7 +1,7 @@
 """Render the command transcripts in logs/ as terminal screenshots (screenshots/).
 
 Look: Windows Terminal running Ubuntu (WSL) - Campbell colour scheme, Cascadia Mono,
-prompt "anudalal25@anusha:~/sig-lab$" on the host and "root@<container>:<cwd>#" inside a
+prompt "<user>@<host>:<dir>$" (as recorded by run_experiment.sh) on the host and "root@<container>:<cwd>#" inside a
 container opened with "docker exec -it <container> bash". Each transcript is a sequence of
 command blocks (prompt line + its real output) recorded by run_experiment.sh.
 usage: python3 tools/render_screenshots.py
@@ -15,22 +15,24 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FONT = ImageFont.truetype(os.path.join(HERE, "fonts", "CascadiaMono-Regular.ttf"), 20)
 BG, FG = "#0C0C0C", "#CCCCCC"
 GREEN, BLUE = "#16C60C", "#3B78FF"        # bright green / bright blue (bold PS1 colours)
-USER_HOST, HOST_DIR = "anudalal25@anusha", "~/sig-lab"
+USER_HOST, HOST_DIR = "user@host", "~"      # replaced by the prompt recorded in the logs
 COLS, LINE_H, PAD_X, PAD_Y = 116, 23, 4, 4
 CHAR_W = FONT.getlength("M")
 
-HOST_RE = re.compile(r"^anudalal25@anusha:~/sig-lab\$ (.*)$")
+HOST_RE = re.compile(r"^([\w.-]+@[\w.-]+):(~?[\w/.-]*)\$ (.*)$")
 CTR_RE = re.compile(r"^root@(\w+):(/[\w/]*)# (.*)$")
 CD_PREFIX = re.compile(r"^cd (\S+) && (.*)$")
 
 
 def parse(path):
     """-> list of (context, cwd, command, output_lines); context 'host' or a container name."""
+    global USER_HOST, HOST_DIR
     blocks = []
     for line in open(path, encoding="utf-8", errors="replace", newline="").read().split("\n"):
         m, n = HOST_RE.match(line), CTR_RE.match(line)
         if m:
-            blocks.append(["host", HOST_DIR, m.group(1), []])
+            USER_HOST, HOST_DIR = m.group(1), m.group(2)
+            blocks.append(["host", HOST_DIR, m.group(3), []])
         elif n:
             blocks.append([n.group(1), n.group(2), n.group(3), []])
         elif blocks:

@@ -13,17 +13,22 @@ cd "$LAB"
 
 LOG=/dev/null
 step() { LOG="$LOGS/$1.log"; : > "$LOG"; echo "=== $1 ==="; }
-# host command: "user@host:~/sig-lab$ cmd"
-h() { echo "anudalal25@anusha:~/sig-lab\$ $*" | tee -a "$LOG"; bash -c "$*" 2>&1 | tee -a "$LOG"; echo | tee -a "$LOG" >/dev/null; }
+# host command, shown with this machine's real prompt: "user@host:~/sig-lab$ cmd"
+PROMPT="$(whoami)@$(hostname)"
+case "$LAB" in "$HOME"/*) DIR="~${LAB#$HOME}" ;; "$HOME") DIR="~" ;; *) DIR="$LAB" ;; esac
+h() { echo "$PROMPT:$DIR\$ $*" | tee -a "$LOG"; bash -c "$*" 2>&1 | tee -a "$LOG"; echo | tee -a "$LOG" >/dev/null; }
 # container command: "root@<c>:/lab# cmd"
 c() { local ctr=$1; shift; echo "root@$ctr:/lab# $*" | tee -a "$LOG"
       docker exec -e COLUMNS=150 "$ctr" bash -c "$*" 2>&1 | tee -a "$LOG"; echo | tee -a "$LOG" >/dev/null; }
 
 # ---------------------------------------------------------------- clean start
+docker image inspect sig-lab:1.0 >/dev/null 2>&1 || { echo "Build the image first: docker build -t sig-lab:1.0 ."; exit 1; }
 docker rm -f sender receiver >/dev/null 2>&1
 docker network rm sig-net >/dev/null 2>&1
-rm -rf sender/keys sender/outbox sender/results*.csv sender/graphs sender/http_server.log \
-       receiver/inbox receiver/keys receiver/outbox receiver/results*.csv graphs
+# files written by the containers belong to root, so remove them from inside a container
+docker run --rm -v "$LAB":/w sig-lab:1.0 bash -c 'cd /w && rm -rf sender/keys sender/outbox sender/results*.csv \
+       sender/graphs sender/http_server.log receiver/inbox receiver/keys receiver/outbox receiver/results*.csv graphs logs/*.log'
+mkdir -p "$LOGS"
 cp sender/*.py receiver/                                    # Step D2: common.py (+ programs) on both sides
 
 # ---------------------------------------------------------------- Part C
@@ -37,8 +42,8 @@ h "docker network inspect sig-net"
 
 step C6_containers
 h "export STUDENT_UID=$STUDENT_UID"
-h "docker run -dit --name sender   --hostname sender   --network sig-net -e STUDENT_UID=$STUDENT_UID -v $LAB/sender:/lab   sig-lab:1.0"
-h "docker run -dit --name receiver --hostname receiver --network sig-net -e STUDENT_UID=$STUDENT_UID -v $LAB/receiver:/lab sig-lab:1.0"
+h "docker run -dit --name sender   --hostname sender   --network sig-net -e STUDENT_UID=$STUDENT_UID -v $DIR/sender:/lab   sig-lab:1.0"
+h "docker run -dit --name receiver --hostname receiver --network sig-net -e STUDENT_UID=$STUDENT_UID -v $DIR/receiver:/lab sig-lab:1.0"
 h "docker ps"
 
 step C7_connectivity
