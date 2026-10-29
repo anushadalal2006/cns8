@@ -1,0 +1,32 @@
+anush@anusha:~/pki-lab$ cp intermediate/crl/combined.crl.pem intermediate/crl/combined.crl.pem.bak
+
+anush@anusha:~/pki-lab$ cp intermediate/crl/intermediate.crl.pem intermediate/crl/combined.crl.pem
+
+anush@anusha:~/pki-lab$ nginx -p $PKI/nginx -c $PKI/nginx/nginx.conf -s reload
+2026/10/29 10:24:44 [notice] 1346#1346: signal process started
+
+anush@anusha:~/pki-lab$ curl --cacert intermediate/certs/ca-chain.cert.pem \
+  --cert client/alice.cert.pem --key client/alice.key.pem https://server.lab.local:8443/
+<html>
+<head><title>400 The SSL certificate error</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>The SSL certificate error</center>
+<hr><center>nginx/1.24.0 (Ubuntu)</center>
+</body>
+</html>
+
+anush@anusha:~/pki-lab$ tail -n +35 nginx/error.log
+2026/10/29 10:24:46 [info] 1347#1347: *7 client SSL certificate verify error: (3:unable to get certificate CRL) while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+
+anush@anusha:~/pki-lab$ mv intermediate/crl/combined.crl.pem.bak intermediate/crl/combined.crl.pem
+
+anush@anusha:~/pki-lab$ nginx -p $PKI/nginx -c $PKI/nginx/nginx.conf -s reload
+2026/10/29 10:24:46 [notice] 1383#1383: signal process started
+
+anush@anusha:~/pki-lab$ curl --cacert intermediate/certs/ca-chain.cert.pem \
+  --cert client/alice.cert.pem --key client/alice.key.pem https://server.lab.local:8443/
+Hello CN=alice,O=CSE Lab | verify=SUCCESS | proto=TLSv1.3
+anush@anusha:~/pki-lab$ echo
+
+

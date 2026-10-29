@@ -1,0 +1,62 @@
+anush@anusha:~/pki-lab$ cat > intermediate/openssl.cnf <<'EOF'
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+dir               = $ENV::PKI/intermediate
+certs             = $dir/certs
+crl_dir           = $dir/crl
+new_certs_dir     = $dir/newcerts
+database          = $dir/index.txt
+serial            = $dir/serial
+crlnumber         = $dir/crlnumber
+private_key       = $dir/private/intermediate.key.pem
+certificate       = $dir/certs/intermediate.cert.pem
+crl               = $dir/crl/intermediate.crl.pem
+default_md        = sha256
+default_days      = 365
+default_crl_days  = 30
+policy            = policy_loose
+unique_subject    = no
+copy_extensions   = none
+
+[ policy_loose ]
+countryName             = optional
+organizationName        = optional
+organizationalUnitName  = optional
+commonName              = supplied
+
+[ req ]
+default_md          = sha256
+distinguished_name  = req_dn
+prompt              = no
+
+[ req_dn ]
+CN = placeholder
+
+[ server_cert ]
+basicConstraints       = CA:FALSE
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid,issuer:always
+keyUsage               = critical, digitalSignature, keyEncipherment
+extendedKeyUsage       = serverAuth
+subjectAltName         = @alt_names
+authorityInfoAccess    = OCSP;URI:http://127.0.0.1:2560
+
+[ client_cert ]
+basicConstraints       = CA:FALSE
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid,issuer:always
+keyUsage               = critical, digitalSignature
+extendedKeyUsage       = clientAuth
+authorityInfoAccess    = OCSP;URI:http://127.0.0.1:2560
+
+[ alt_names ]
+DNS.1 = server.lab.local
+DNS.2 = localhost
+IP.1  = 127.0.0.1
+
+[ crl_ext ]
+authorityKeyIdentifier = keyid:always
+EOF
+

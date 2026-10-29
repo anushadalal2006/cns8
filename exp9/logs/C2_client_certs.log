@@ -1,0 +1,29 @@
+anush@anusha:~/pki-lab$ for u in alice bob; do
+  openssl genrsa -out client/$u.key.pem 2048
+  openssl req -new -key client/$u.key.pem \
+    -subj "/O=CSE Lab/CN=$u" -out client/$u.csr.pem
+  openssl ca -batch -config intermediate/openssl.cnf -extensions client_cert \
+    -days 365 -notext -md sha256 \
+    -in client/$u.csr.pem -out client/$u.cert.pem
+done
+Using configuration from intermediate/openssl.cnf
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+organizationName      :ASN.1 12:'CSE Lab'
+commonName            :ASN.1 12:'alice'
+Certificate is to be certified until Oct 29 10:24:38 2027 GMT (365 days)
+
+Write out database with 1 new entries
+Database updated
+Using configuration from intermediate/openssl.cnf
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+organizationName      :ASN.1 12:'CSE Lab'
+commonName            :ASN.1 12:'bob'
+Certificate is to be certified until Oct 29 10:24:39 2027 GMT (365 days)
+
+Write out database with 1 new entries
+Database updated
+

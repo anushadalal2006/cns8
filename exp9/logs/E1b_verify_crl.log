@@ -1,0 +1,10 @@
+anush@anusha:~/pki-lab$ openssl verify -crl_check -CAfile intermediate/certs/ca-chain.cert.pem \
+  -CRLfile intermediate/crl/combined.crl.pem client/bob.cert.pem
+O = CSE Lab, CN = bob
+error 23 at 0 depth lookup: certificate revoked
+error client/bob.cert.pem: verification failed
+
+anush@anusha:~/pki-lab$ openssl verify -crl_check -CAfile intermediate/certs/ca-chain.cert.pem \
+  -CRLfile intermediate/crl/combined.crl.pem client/alice.cert.pem
+client/alice.cert.pem: OK
+

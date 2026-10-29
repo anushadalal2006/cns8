@@ -1,0 +1,52 @@
+anush@anusha:~/pki-lab$ tshark -r captures/tls13.pcapng -o tls.keylog_file:captures/keys.log -Y tls.handshake
+    4 0.005792596    127.0.0.1 → 127.0.0.1    TLSv1 583 Client Hello (SNI=server.lab.local)
+    6 0.007646621    127.0.0.1 → 127.0.0.1    TLSv1.3 3435 Server Hello, Change Cipher Spec, Encrypted Extensions, Certificate Request, Certificate, Certificate Verify, Finished
+    8 0.011264088    127.0.0.1 → 127.0.0.1    TLSv1.3 3025 Change Cipher Spec, Certificate, Certificate Verify, Finished
+   11 0.013447144    127.0.0.1 → 127.0.0.1    TLSv1.3 1569 New Session Ticket
+   12 0.013932191    127.0.0.1 → 127.0.0.1    TLSv1.3 1569 New Session Ticket
+
+anush@anusha:~/pki-lab$ tshark -r captures/tls13.pcapng -o tls.keylog_file:captures/keys.log -Y 'tls.handshake.type == 11'
+    6 0.007646621    127.0.0.1 → 127.0.0.1    TLSv1.3 3435 Server Hello, Change Cipher Spec, Encrypted Extensions, Certificate Request, Certificate, Certificate Verify, Finished
+    8 0.011264088    127.0.0.1 → 127.0.0.1    TLSv1.3 3025 Change Cipher Spec, Certificate, Certificate Verify, Finished
+
+anush@anusha:~/pki-lab$ tshark -r captures/tls13.pcapng -o tls.keylog_file:captures/keys.log -Y 'tls.handshake.type == 11' -V | grep -E 'Handshake Type|rdnSequence'
+            Handshake Type: Server Hello (2)
+            Handshake Type: Encrypted Extensions (8)
+            Handshake Type: Certificate Request (13)
+            Handshake Type: Certificate (11)
+                        issuer: rdnSequence (0)
+                            rdnSequence: 2 items (id-at-commonName=CSE Lab Intermediate CA,id-at-organizationName=CSE Lab)
+                        subject: rdnSequence (0)
+                            rdnSequence: 2 items (id-at-commonName=server.lab.local,id-at-organizationName=CSE Lab)
+                                            directoryName: rdnSequence (0)
+                                                rdnSequence: 2 items (id-at-commonName=CSE Lab Root CA,id-at-organizationName=CSE Lab)
+                        issuer: rdnSequence (0)
+                            rdnSequence: 2 items (id-at-commonName=CSE Lab Root CA,id-at-organizationName=CSE Lab)
+                        subject: rdnSequence (0)
+                            rdnSequence: 2 items (id-at-commonName=CSE Lab Intermediate CA,id-at-organizationName=CSE Lab)
+            Handshake Type: Certificate Verify (15)
+            Handshake Type: Finished (20)
+            Handshake Type: Certificate (11)
+                        issuer: rdnSequence (0)
+                            rdnSequence: 2 items (id-at-commonName=CSE Lab Intermediate CA,id-at-organizationName=CSE Lab)
+                        subject: rdnSequence (0)
+                            rdnSequence: 2 items (id-at-commonName=alice,id-at-organizationName=CSE Lab)
+                                            directoryName: rdnSequence (0)
+                                                rdnSequence: 2 items (id-at-commonName=CSE Lab Root CA,id-at-organizationName=CSE Lab)
+                        issuer: rdnSequence (0)
+                            rdnSequence: 2 items (id-at-commonName=CSE Lab Root CA,id-at-organizationName=CSE Lab)
+                        subject: rdnSequence (0)
+                            rdnSequence: 2 items (id-at-commonName=CSE Lab Intermediate CA,id-at-organizationName=CSE Lab)
+            Handshake Type: Certificate Verify (15)
+            Handshake Type: Finished (20)
+
+anush@anusha:~/pki-lab$ tshark -r captures/tls13.pcapng -o tls.keylog_file:captures/keys.log -Y 'tls.handshake.type == 13 || tls.handshake.type == 15'
+    6 0.007646621    127.0.0.1 → 127.0.0.1    TLSv1.3 3435 Server Hello, Change Cipher Spec, Encrypted Extensions, Certificate Request, Certificate, Certificate Verify, Finished
+    8 0.011264088    127.0.0.1 → 127.0.0.1    TLSv1.3 3025 Change Cipher Spec, Certificate, Certificate Verify, Finished
+
+anush@anusha:~/pki-lab$ ls -l captures
+total 32
+-rw-r--r-- 1 anush anush   938 Oct 29 10:24 keys.log
+-rw------- 1 anush anush  8752 Oct 29 10:24 tls12.pcapng
+-rw------- 1 anush anush 12448 Oct 29 10:24 tls13.pcapng
+

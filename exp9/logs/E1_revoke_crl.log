@@ -1,0 +1,109 @@
+anush@anusha:~/pki-lab$ openssl ca -config intermediate/openssl.cnf -revoke client/bob.cert.pem -crl_reason keyCompromise
+Using configuration from intermediate/openssl.cnf
+Revoking Certificate 1002.
+Database updated
+
+anush@anusha:~/pki-lab$ openssl ca -config intermediate/openssl.cnf -gencrl -out intermediate/crl/intermediate.crl.pem
+Using configuration from intermediate/openssl.cnf
+
+anush@anusha:~/pki-lab$ openssl ca -config root/openssl.cnf -gencrl -out root/crl/root.crl.pem
+Using configuration from root/openssl.cnf
+
+anush@anusha:~/pki-lab$ cat intermediate/crl/intermediate.crl.pem root/crl/root.crl.pem > intermediate/crl/combined.crl.pem
+
+anush@anusha:~/pki-lab$ openssl crl -in intermediate/crl/intermediate.crl.pem -noout -text
+Certificate Revocation List (CRL):
+        Version 2 (0x1)
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: O = CSE Lab, CN = CSE Lab Intermediate CA
+        Last Update: Oct 29 10:24:42 2026 GMT
+        Next Update: Nov 28 10:24:42 2026 GMT
+        CRL extensions:
+            X509v3 CRL Number: 
+                4096
+Revoked Certificates:
+    Serial Number: 1002
+        Revocation Date: Oct 29 10:24:42 2026 GMT
+        CRL entry extensions:
+            X509v3 CRL Reason Code: 
+                Key Compromise
+    Signature Algorithm: sha256WithRSAEncryption
+    Signature Value:
+        00:8f:3c:ad:45:75:01:e1:7e:b7:4e:00:fb:40:cc:16:84:aa:
+        55:66:a7:66:60:be:6a:2d:11:9b:04:6e:bb:60:8c:19:36:78:
+        4c:26:2e:b8:43:87:5d:0b:4c:96:3a:e7:99:d7:68:7e:e0:4a:
+        80:84:11:8b:44:04:7e:0f:9b:fc:82:99:e9:e9:93:c9:ba:85:
+        44:d1:b8:df:37:94:3c:6b:d7:1e:b0:4e:be:dd:2e:1a:38:9b:
+        65:93:d6:c3:ea:30:9e:27:8e:ca:18:a8:57:a1:c8:d7:ca:ce:
+        b2:9e:70:fc:3a:aa:00:b4:44:56:62:77:f8:f8:db:37:eb:b9:
+        b2:40:6d:88:6d:3d:14:b4:d7:69:9f:50:0b:7c:f9:b4:89:38:
+        75:8e:09:c0:fb:09:b1:04:db:60:2c:30:1a:6b:7f:dc:af:50:
+        7e:45:a8:da:81:37:fc:c1:6e:8a:44:aa:43:01:af:7d:d5:9f:
+        13:5d:66:a2:05:67:df:d3:3c:15:79:76:ab:de:73:3f:d2:9b:
+        13:58:e6:f6:f2:4b:f8:fa:e2:65:98:96:58:4f:4d:eb:a1:88:
+        e1:62:25:89:e9:b6:42:cc:2d:06:2a:e8:fc:33:79:03:f8:6c:
+        e6:25:6a:59:6f:25:88:47:d1:48:90:f0:b2:f9:52:6c:48:d1:
+        f8:1e:a2:67:5f:71:c1:c8:3b:0e:76:7c:7f:63:5f:84:71:e8:
+        41:bb:4a:7c:f2:24:e3:dc:6a:1f:ed:10:4e:67:6a:53:4e:02:
+        6a:70:52:67:37:7d:71:46:39:80:ef:54:11:0d:de:09:fd:b0:
+        69:17:e2:92:e2:2d:c0:df:b5:16:81:8c:3f:d5:40:c4:b2:8a:
+        be:d6:f7:6f:61:31:0f:f8:a8:90:d8:2f:80:4b:57:82:ed:4f:
+        31:b9:5b:96:14:08:e4:2c:f8:29:cc:d3:c0:c7:df:88:4b:a9:
+        b7:46:be:66:8c:3c:25:1e:26:06:2d:b7:31:b1:8b:61:05:58:
+        27:fb:10:1d:2a:15:4a:e4:f7:e0:bb:58:d3:08:2f:73:fa:88:
+        cc:f1:50:de:5c:b1:42:57:57:3f:14:57:42:9b:7e:42:f5:ad:
+        18:9d:94:35:0f:32:69:c0:2b:99:b8:13:fc:03:3a:e3:28:63:
+        33:cb:e4:eb:5e:f5:80:23:5e:25:be:49:d1:6e:09:93:88:f5:
+        f7:ac:35:e2:c3:86:61:fb:b5:71:8b:05:42:a8:e9:53:b6:d4:
+        99:60:67:6a:25:ef:01:bb:a8:f4:18:d1:2d:d7:7b:48:8b:ad:
+        06:2b:93:22:13:23:c2:76:44:5f:2e:f0:3c:46:e9:b5:81:0c:
+        0a:33:12:10:e9:ce:f5:1a
+
+anush@anusha:~/pki-lab$ openssl crl -in root/crl/root.crl.pem -noout -text
+Certificate Revocation List (CRL):
+        Version 2 (0x1)
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: O = CSE Lab, CN = CSE Lab Root CA
+        Last Update: Oct 29 10:24:42 2026 GMT
+        Next Update: Nov 28 10:24:42 2026 GMT
+        CRL extensions:
+            X509v3 CRL Number: 
+                4096
+No Revoked Certificates.
+    Signature Algorithm: sha256WithRSAEncryption
+    Signature Value:
+        71:1f:61:fd:09:b4:5c:f7:da:29:29:68:30:d7:73:ff:ca:36:
+        16:7c:d5:d9:bd:b9:b5:2c:c6:15:dd:0f:ec:36:42:b2:e9:fb:
+        cb:e9:2a:06:dd:45:e9:d0:ae:63:89:cd:78:92:ee:db:03:6d:
+        7e:09:46:6e:c1:0f:fa:78:9c:b4:a2:e6:d5:2b:cf:af:32:5e:
+        6b:48:5f:c7:45:0b:2e:aa:dc:c7:68:d1:1b:1a:d5:9a:d1:ae:
+        a1:6a:39:cd:57:6c:0f:8f:e5:ab:93:96:ad:4c:fb:87:4c:73:
+        16:69:45:67:32:f0:ea:95:eb:67:5d:31:e8:31:dd:41:cc:be:
+        1c:b1:82:aa:18:7c:6d:ea:6e:66:f5:b5:2a:3b:6b:00:92:2f:
+        88:69:58:85:b1:9b:47:e6:ab:40:37:ea:f4:73:62:6a:9c:ce:
+        12:fa:e8:f5:45:6c:52:b5:56:cb:02:5a:b9:76:b8:cf:8b:d5:
+        e5:d1:41:7d:03:da:6c:69:99:87:28:e7:e0:31:1e:cc:6a:fe:
+        10:e1:03:81:d6:a0:df:98:61:12:0f:d7:34:dd:a5:55:95:fc:
+        16:7c:e9:84:26:d8:30:88:21:23:c3:4e:d5:22:e7:f1:0f:bf:
+        67:d3:9c:2f:73:95:52:3a:a5:6d:49:67:e8:3e:59:dd:89:a4:
+        c6:a7:c7:84:eb:59:11:af:f7:0a:ec:d9:34:e3:7c:e9:14:bb:
+        f6:34:08:51:92:20:c6:da:ef:fc:bd:ae:93:18:03:70:91:49:
+        af:67:a8:dc:63:65:b0:57:60:87:85:34:87:6d:ba:47:23:65:
+        ed:82:f8:a7:31:3a:8a:6c:fe:7e:07:01:61:72:76:f3:c1:42:
+        a2:36:8d:74:e5:a4:7d:74:2a:53:06:fe:be:4c:04:51:b2:f2:
+        56:58:b6:f8:f6:77:88:85:fc:f3:83:2f:5a:2a:9c:21:63:f2:
+        70:70:8e:95:ea:b4:9b:d7:c7:79:26:f6:e0:12:dc:88:c4:59:
+        cb:6c:4c:f4:13:79:c5:ca:39:db:52:6e:1c:f0:3c:fb:01:12:
+        89:95:19:0c:41:52:7c:b1:7d:6a:b5:51:ab:48:09:13:08:c8:
+        a0:27:74:9d:17:bc:1c:07:98:5c:df:30:0c:46:31:bb:4e:4a:
+        e6:bc:bc:fd:5f:e1:61:52:67:c6:a9:4a:a0:94:d5:0a:69:d0:
+        3c:8d:80:49:c7:15:ab:cb:b4:2f:34:90:94:a9:e0:ce:21:eb:
+        91:93:f7:a4:20:ab:9a:fa:fa:82:46:91:39:db:fd:42:c8:98:
+        4e:a2:33:a3:df:2e:83:cb:c1:8b:98:30:bc:05:18:5d:41:de:
+        ae:34:c1:de:b3:fa:05:c7
+
+anush@anusha:~/pki-lab$ cat intermediate/index.txt
+V	271029102438Z		1000	unknown	/O=CSE Lab/CN=server.lab.local
+V	271029102438Z		1001	unknown	/O=CSE Lab/CN=alice
+R	271029102439Z	261029102442Z,keyCompromise	1002	unknown	/O=CSE Lab/CN=bob
+

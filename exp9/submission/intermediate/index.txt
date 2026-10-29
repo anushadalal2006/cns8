@@ -1,0 +1,4 @@
+V	271029102438Z		1000	unknown	/O=CSE Lab/CN=server.lab.local
+V	271029102438Z		1001	unknown	/O=CSE Lab/CN=alice
+R	271029102439Z	261029102442Z,keyCompromise	1002	unknown	/O=CSE Lab/CN=bob
+V	240102000000Z		1003	unknown	/O=CSE Lab/CN=eve

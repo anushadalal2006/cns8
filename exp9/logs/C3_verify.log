@@ -1,0 +1,9 @@
+anush@anusha:~/pki-lab$ openssl verify -CAfile intermediate/certs/ca-chain.cert.pem server/server.cert.pem
+server/server.cert.pem: OK
+
+anush@anusha:~/pki-lab$ openssl verify -CAfile intermediate/certs/ca-chain.cert.pem client/alice.cert.pem
+client/alice.cert.pem: OK
+
+anush@anusha:~/pki-lab$ openssl verify -CAfile intermediate/certs/ca-chain.cert.pem -purpose sslclient client/alice.cert.pem
+client/alice.cert.pem: OK
+

@@ -1,0 +1,21 @@
+anush@anusha:~/pki-lab$ openssl genrsa -out server/server.key.pem 2048
+
+anush@anusha:~/pki-lab$ openssl req -new -key server/server.key.pem \
+  -subj '/O=CSE Lab/CN=server.lab.local' -out server/server.csr.pem
+
+anush@anusha:~/pki-lab$ openssl ca -batch -config intermediate/openssl.cnf -extensions server_cert \
+  -days 365 -notext -md sha256 \
+  -in server/server.csr.pem -out server/server.cert.pem
+Using configuration from intermediate/openssl.cnf
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+organizationName      :ASN.1 12:'CSE Lab'
+commonName            :ASN.1 12:'server.lab.local'
+Certificate is to be certified until Oct 29 10:24:38 2027 GMT (365 days)
+
+Write out database with 1 new entries
+Database updated
+
+anush@anusha:~/pki-lab$ cat server/server.cert.pem intermediate/certs/intermediate.cert.pem > server/server.fullchain.pem
+

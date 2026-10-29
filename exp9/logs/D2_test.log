@@ -1,0 +1,43 @@
+anush@anusha:~/pki-lab$ curl --cacert intermediate/certs/ca-chain.cert.pem \
+  --cert client/alice.cert.pem --key client/alice.key.pem \
+  https://server.lab.local:8443/
+Hello CN=alice,O=CSE Lab | verify=SUCCESS | proto=TLSv1.3
+anush@anusha:~/pki-lab$ echo
+
+
+anush@anusha:~/pki-lab$ curl --cacert intermediate/certs/ca-chain.cert.pem https://server.lab.local:8443/
+<html>
+<head><title>400 No required SSL certificate was sent</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>No required SSL certificate was sent</center>
+<hr><center>nginx/1.24.0 (Ubuntu)</center>
+</body>
+</html>
+
+anush@anusha:~/pki-lab$ curl -i --cacert intermediate/certs/ca-chain.cert.pem https://server.lab.local:8443/
+HTTP/1.1 400 Bad Request
+[1mServer[0m: nginx/1.24.0 (Ubuntu)
+[1mDate[0m: Thu, 29 Oct 2026 10:24:42 GMT
+[1mContent-Type[0m: text/html
+[1mContent-Length[0m: 246
+[1mConnection[0m: close
+
+<html>
+<head><title>400 No required SSL certificate was sent</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>No required SSL certificate was sent</center>
+<hr><center>nginx/1.24.0 (Ubuntu)</center>
+</body>
+</html>
+
+anush@anusha:~/pki-lab$ tail -n +8 nginx/error.log
+2026/10/29 10:24:42 [info] 1114#1114: *2 client sent no required SSL certificate while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+2026/10/29 10:24:42 [info] 1114#1114: *3 client sent no required SSL certificate while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+
+anush@anusha:~/pki-lab$ tail -n 3 nginx/access.log
+127.0.0.1 - - [29/Oct/2026:10:24:42 +0000] "GET / HTTP/1.1" 200 57 "-" "curl/8.5.0"
+127.0.0.1 - - [29/Oct/2026:10:24:42 +0000] "GET / HTTP/1.1" 400 246 "-" "curl/8.5.0"
+127.0.0.1 - - [29/Oct/2026:10:24:42 +0000] "GET / HTTP/1.1" 400 246 "-" "curl/8.5.0"
+

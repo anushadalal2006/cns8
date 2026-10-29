@@ -1,0 +1,18 @@
+anush@anusha:~/pki-lab$ openssl version
+exp9/run_lab9.sh: line 24: cd: /home/anush/pki-lab: No such file or directory
+
+anush@anusha:~/pki-lab$ nginx -v
+exp9/run_lab9.sh: line 24: cd: /home/anush/pki-lab: No such file or directory
+
+anush@anusha:~/pki-lab$ curl --version | head -1
+exp9/run_lab9.sh: line 24: cd: /home/anush/pki-lab: No such file or directory
+
+anush@anusha:~/pki-lab$ tshark --version | head -1
+exp9/run_lab9.sh: line 24: cd: /home/anush/pki-lab: No such file or directory
+
+anush@anusha:~/pki-lab$ lsb_release -d 2>/dev/null || grep PRETTY_NAME /etc/os-release; uname -r
+exp9/run_lab9.sh: line 24: cd: /home/anush/pki-lab: No such file or directory
+
+anush@anusha:~/pki-lab$ grep server.lab.local /etc/hosts
+exp9/run_lab9.sh: line 24: cd: /home/anush/pki-lab: No such file or directory
+

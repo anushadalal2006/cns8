@@ -1,0 +1,49 @@
+anush@anusha:~/pki-lab$ sed -i 's#server/server.fullchain.pem;#server/server.cert.pem;#' nginx/nginx.conf
+
+anush@anusha:~/pki-lab$ grep -n "ssl_certificate " nginx/nginx.conf
+10:    ssl_certificate         /home/anush/pki-lab/server/server.cert.pem;
+
+anush@anusha:~/pki-lab$ nginx -p $PKI/nginx -c $PKI/nginx/nginx.conf -s reload
+2026/10/29 10:25:03 [notice] 1944#1944: signal process started
+
+anush@anusha:~/pki-lab$ curl --cacert intermediate/certs/ca-chain.cert.pem --cert client/alice.cert.pem --key client/alice.key.pem https://server.lab.local:8443/
+Hello CN=alice,O=CSE Lab | verify=SUCCESS | proto=TLSv1.3
+anush@anusha:~/pki-lab$ echo
+
+
+anush@anusha:~/pki-lab$ curl --cacert root/certs/root.cert.pem --cert client/alice.cert.pem --key client/alice.key.pem https://server.lab.local:8443/
+curl: (60) SSL certificate problem: unable to get local issuer certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+
+anush@anusha:~/pki-lab$ tail -n +67 nginx/error.log
+2026/10/29 10:25:05 [info] 1945#1945: *17 SSL_do_handshake() failed (SSL: error:0A000418:SSL routines::tlsv1 alert unknown ca:SSL alert number 48) while SSL handshaking, client: 127.0.0.1, server: 0.0.0.0:8443
+
+anush@anusha:~/pki-lab$ openssl s_client -connect server.lab.local:8443 -CAfile root/certs/root.cert.pem \
+  -cert client/alice.cert.pem -key client/alice.key.pem < /dev/null 2>&1 | grep -E 'depth|verify error|Verify return code|Certificate chain| s:| i:'
+depth=0 O = CSE Lab, CN = server.lab.local
+verify error:num=20:unable to get local issuer certificate
+depth=0 O = CSE Lab, CN = server.lab.local
+verify error:num=21:unable to verify the first certificate
+depth=0 O = CSE Lab, CN = server.lab.local
+Certificate chain
+ 0 s:O = CSE Lab, CN = server.lab.local
+   i:O = CSE Lab, CN = CSE Lab Intermediate CA
+Verify return code: 21 (unable to verify the first certificate)
+
+anush@anusha:~/pki-lab$ sed -i 's#server/server.cert.pem;#server/server.fullchain.pem;#' nginx/nginx.conf
+
+anush@anusha:~/pki-lab$ grep -n "ssl_certificate " nginx/nginx.conf
+10:    ssl_certificate         /home/anush/pki-lab/server/server.fullchain.pem;
+
+anush@anusha:~/pki-lab$ nginx -p $PKI/nginx -c $PKI/nginx/nginx.conf -s reload
+2026/10/29 10:25:05 [notice] 2018#2018: signal process started
+
+anush@anusha:~/pki-lab$ curl --cacert root/certs/root.cert.pem --cert client/alice.cert.pem --key client/alice.key.pem https://server.lab.local:8443/
+Hello CN=alice,O=CSE Lab | verify=SUCCESS | proto=TLSv1.3
+anush@anusha:~/pki-lab$ echo
+
+

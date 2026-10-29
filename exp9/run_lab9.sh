@@ -392,16 +392,18 @@ capture() {  # capture <file> <curl command>   (tshark on lo, filter tcp port 84
   local tlog=$LOGS/.tshark.$$
   local term2=$LOGS/${LOG##*/}; term2=${term2%.log}_tshark_terminal.log
   echo "$PROMPT ${SUDO:+$SUDO }tshark -i lo -f \"tcp port 8443\" -w captures/$out" > "$term2"
-  $SUDO tshark -i lo -f "tcp port 8443" -w "$PKI/captures/$out" > "$tlog" 2>&1 &
+  $SUDO rm -f "/tmp/$out"
+  $SUDO tshark -i lo -f "tcp port 8443" -w "/tmp/$out" > "$tlog" 2>&1 &
   local tpid=$!
   for _ in $(seq 1 40); do grep -q "Capturing on" "$tlog" 2>/dev/null && break; sleep 0.25; done
   sleep 1
   run "$*"
   sleep 1.5
-  $SUDO pkill -INT -f "tshark -i lo -f tcp port 8443 -w $PKI/captures/$out" 2>/dev/null
+  $SUDO kill -INT "$tpid" 2>/dev/null
   wait $tpid 2>/dev/null
+  $SUDO cp "/tmp/$out" "$PKI/captures/$out"
+  $SUDO chown "$(id -u):$(id -g)" "$PKI/captures/$out"
   grep -v "Running as user" "$tlog" >> "$term2"; rm -f "$tlog"
-  $SUDO chown "$(id -u):$(id -g)" "$PKI/captures/$out" 2>/dev/null
 }
 
 step F1_tls12

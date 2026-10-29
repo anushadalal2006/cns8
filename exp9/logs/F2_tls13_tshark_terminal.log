@@ -1,0 +1,3 @@
+anush@anusha:~/pki-lab$ sudo tshark -i lo -f "tcp port 8443" -w captures/tls13.pcapng
+Capturing on 'Loopback: lo'
+18 packets captured

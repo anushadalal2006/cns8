@@ -1,0 +1,18 @@
+anush@anusha:~/pki-lab$ curl --resolve wrong.lab.local:8443:127.0.0.1 --cacert intermediate/certs/ca-chain.cert.pem \
+  --cert client/alice.cert.pem --key client/alice.key.pem https://wrong.lab.local:8443/
+curl: (60) SSL: no alternative certificate subject name matches target host name 'wrong.lab.local'
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+
+anush@anusha:~/pki-lab$ tail -n +53 nginx/error.log
+2026/10/29 10:25:03 [info] 1384#1384: *14 client closed connection while waiting for request, client: 127.0.0.1, server: 0.0.0.0:8443
+
+anush@anusha:~/pki-lab$ openssl s_client -connect 127.0.0.1:8443 -servername wrong.lab.local -verify_hostname wrong.lab.local \
+  -CAfile intermediate/certs/ca-chain.cert.pem -cert client/alice.cert.pem -key client/alice.key.pem < /dev/null 2>&1 | grep -E 'verify error|Verify return code|Verification'
+verify error:num=62:hostname mismatch
+Verification error: hostname mismatch
+Verify return code: 62 (hostname mismatch)
+

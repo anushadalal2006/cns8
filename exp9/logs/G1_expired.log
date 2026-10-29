@@ -1,0 +1,36 @@
+anush@anusha:~/pki-lab$ openssl genrsa -out client/eve.key.pem 2048
+
+anush@anusha:~/pki-lab$ openssl req -new -key client/eve.key.pem -subj '/O=CSE Lab/CN=eve' -out client/eve.csr.pem
+
+anush@anusha:~/pki-lab$ openssl ca -batch -config intermediate/openssl.cnf -extensions client_cert \
+  -startdate 20240101000000Z -enddate 20240102000000Z -notext -md sha256 \
+  -in client/eve.csr.pem -out client/eve.cert.pem
+Using configuration from intermediate/openssl.cnf
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+organizationName      :ASN.1 12:'CSE Lab'
+commonName            :ASN.1 12:'eve'
+Certificate is to be certified until Jan  2 00:00:00 2024 GMT (-1031 days)
+
+Write out database with 1 new entries
+Database updated
+
+anush@anusha:~/pki-lab$ curl --cacert intermediate/certs/ca-chain.cert.pem --cert client/eve.cert.pem --key client/eve.key.pem https://server.lab.local:8443/
+<html>
+<head><title>400 The SSL certificate error</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>The SSL certificate error</center>
+<hr><center>nginx/1.24.0 (Ubuntu)</center>
+</body>
+</html>
+
+anush@anusha:~/pki-lab$ tail -n +50 nginx/error.log
+2026/10/29 10:25:02 [info] 1384#1384: *11 client SSL certificate verify error: (10:certificate has expired) while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+
+anush@anusha:~/pki-lab$ openssl verify -CAfile intermediate/certs/ca-chain.cert.pem client/eve.cert.pem
+O = CSE Lab, CN = eve
+error 10 at 0 depth lookup: certificate has expired
+error client/eve.cert.pem: verification failed
+

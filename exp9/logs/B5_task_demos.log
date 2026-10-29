@@ -1,0 +1,45 @@
+anush@anusha:~/pki-lab$ mkdir -p demo
+
+anush@anusha:~/pki-lab$ openssl req -new -newkey rsa:2048 -nodes -keyout demo/evil.key.pem \
+  -subj '/O=Evil/CN=evil' -out demo/evil.csr.pem 2>/dev/null
+
+anush@anusha:~/pki-lab$ openssl x509 -req -in demo/evil.csr.pem -CA client/alice.cert.pem -CAkey client/alice.key.pem \
+  -CAcreateserial -days 30 -out demo/evil.cert.pem
+Certificate request self-signature ok
+subject=O = Evil, CN = evil
+
+anush@anusha:~/pki-lab$ openssl verify -CAfile intermediate/certs/ca-chain.cert.pem -untrusted client/alice.cert.pem demo/evil.cert.pem
+O = CSE Lab, CN = alice
+error 79 at 1 depth lookup: invalid CA certificate
+O = CSE Lab, CN = CSE Lab Intermediate CA
+error 25 at 2 depth lookup: path length constraint exceeded
+O = CSE Lab, CN = alice
+error 32 at 1 depth lookup: key usage does not include certificate signing
+error demo/evil.cert.pem: verification failed
+
+anush@anusha:~/pki-lab$ printf 'basicConstraints=critical,CA:true\nkeyUsage=critical,keyCertSign,cRLSign\n' > demo/subca.ext
+
+anush@anusha:~/pki-lab$ openssl req -new -newkey rsa:2048 -nodes -keyout demo/subca.key.pem \
+  -subj '/O=CSE Lab/CN=Sub CA' -out demo/subca.csr.pem 2>/dev/null
+
+anush@anusha:~/pki-lab$ openssl x509 -req -in demo/subca.csr.pem -CA intermediate/certs/intermediate.cert.pem \
+  -CAkey intermediate/private/intermediate.key.pem -CAcreateserial -days 30 \
+  -extfile demo/subca.ext -out demo/subca.cert.pem
+Certificate request self-signature ok
+subject=O = CSE Lab, CN = Sub CA
+
+anush@anusha:~/pki-lab$ openssl req -new -newkey rsa:2048 -nodes -keyout demo/leaf.key.pem \
+  -subj '/O=CSE Lab/CN=leaf' -out demo/leaf.csr.pem 2>/dev/null
+
+anush@anusha:~/pki-lab$ openssl x509 -req -in demo/leaf.csr.pem -CA demo/subca.cert.pem -CAkey demo/subca.key.pem \
+  -CAcreateserial -days 30 -out demo/leaf.cert.pem
+Certificate request self-signature ok
+subject=O = CSE Lab, CN = leaf
+
+anush@anusha:~/pki-lab$ cat demo/subca.cert.pem intermediate/certs/intermediate.cert.pem > demo/sub+intermediate.pem
+
+anush@anusha:~/pki-lab$ openssl verify -CAfile root/certs/root.cert.pem -untrusted demo/sub+intermediate.pem demo/leaf.cert.pem
+O = CSE Lab, CN = CSE Lab Intermediate CA
+error 25 at 2 depth lookup: path length constraint exceeded
+error demo/leaf.cert.pem: verification failed
+

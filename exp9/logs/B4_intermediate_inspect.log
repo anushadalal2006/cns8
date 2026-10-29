@@ -1,0 +1,92 @@
+anush@anusha:~/pki-lab$ openssl x509 -in intermediate/certs/intermediate.cert.pem -noout -text
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 4096 (0x1000)
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: O = CSE Lab, CN = CSE Lab Root CA
+        Validity
+            Not Before: Oct 29 10:24:37 2026 GMT
+            Not After : Oct 28 10:24:37 2031 GMT
+        Subject: O = CSE Lab, CN = CSE Lab Intermediate CA
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (4096 bit)
+                Modulus:
+                    00:83:1b:e1:e6:cc:4e:08:21:30:db:69:3d:b3:08:
+                    3c:25:2c:6b:fa:41:50:10:a4:5f:2f:4a:08:6e:d0:
+                    2f:f5:bf:39:bc:a2:f7:f0:eb:99:d3:c3:7f:88:7c:
+                    ee:05:dd:44:fb:09:d8:d3:73:b9:4a:8c:1b:73:64:
+                    fe:c0:0e:ef:99:30:9b:49:f5:d4:71:36:5c:ba:01:
+                    48:a3:2e:55:d8:76:e4:b9:43:66:17:26:ae:6b:2c:
+                    29:dc:07:e2:d9:77:4d:f3:72:fb:0c:a9:3e:6d:ce:
+                    86:e5:29:d4:f6:52:3f:5d:33:75:cf:f3:e8:b7:f8:
+                    ee:e5:4c:b6:3d:57:18:09:08:b2:79:1c:bb:e4:de:
+                    0a:e8:76:7d:13:06:1e:83:72:b9:89:6c:59:c4:49:
+                    61:58:c3:8c:f1:0d:5b:05:01:10:7f:d0:ef:a4:7f:
+                    73:3c:77:6c:3e:a4:c7:3f:48:ea:f2:d4:02:a1:d6:
+                    79:04:73:6c:61:08:b4:b2:04:a3:f7:1e:b7:8d:ec:
+                    af:df:26:bc:a7:7b:e8:ed:c2:36:e2:ae:b3:8d:0f:
+                    24:86:4a:f7:c7:43:7f:34:70:20:28:c7:b9:8f:8f:
+                    d8:3d:14:6a:af:70:bd:61:8a:5c:01:ac:d8:aa:53:
+                    d7:97:1a:f0:74:de:11:5c:e2:d4:fa:92:57:ec:a0:
+                    4a:6f:15:d2:96:2a:1f:5c:ff:6c:da:6d:32:84:d7:
+                    03:49:8b:63:00:c9:d1:2b:8d:7e:90:0b:73:d9:44:
+                    31:7a:ca:a5:d9:43:b0:1b:7e:d8:e4:e9:e8:fd:a3:
+                    be:83:e9:fc:8c:32:64:3e:56:11:11:ac:15:49:a4:
+                    ce:ec:3e:97:77:42:c8:f7:d7:5d:13:4a:48:9f:21:
+                    b3:df:d0:6b:9e:76:09:e7:ff:2f:a0:d2:bb:c7:9a:
+                    a2:cf:1b:3b:50:f2:1b:e7:25:c6:00:df:22:30:10:
+                    a0:32:ae:71:26:f2:e7:ac:c0:96:58:a6:51:7a:c6:
+                    8d:87:b8:dc:0b:f6:fc:c0:8d:46:8c:58:1f:18:b3:
+                    0d:73:4a:8c:39:a7:16:e3:ec:0f:37:f5:39:17:29:
+                    ca:dc:92:5c:96:84:cc:33:54:01:05:b0:f9:43:f0:
+                    0e:9b:07:89:ce:f1:85:b4:66:69:51:e8:6e:27:a2:
+                    8a:69:dc:2d:75:cd:db:de:41:61:ee:ae:1e:7b:b8:
+                    53:d9:81:95:7d:5a:d6:6b:8f:df:fb:77:b0:0a:4c:
+                    21:3a:21:72:c8:b5:a7:3e:0e:03:bb:33:91:f2:4e:
+                    02:bd:e2:d3:60:e4:12:8f:d4:67:87:87:29:bc:09:
+                    a9:da:b4:83:e4:d1:53:fc:f2:05:7a:c8:4f:26:a6:
+                    21:c2:c1
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Key Identifier: 
+                BD:83:59:3B:51:56:9C:24:A6:A1:A8:6E:5B:4B:04:69:1B:9A:71:EA
+            X509v3 Authority Key Identifier: 
+                A6:97:F7:D3:A1:E4:FF:BA:EF:92:50:38:29:47:CD:55:5F:44:8A:5F
+            X509v3 Basic Constraints: critical
+                CA:TRUE, pathlen:0
+            X509v3 Key Usage: critical
+                Certificate Sign, CRL Sign
+    Signature Algorithm: sha256WithRSAEncryption
+    Signature Value:
+        78:a4:f4:b6:c1:4d:95:fa:07:d3:71:f8:1a:e9:5e:34:7c:0d:
+        c8:ed:f3:fb:8a:2f:05:95:ac:fe:36:a2:d0:be:eb:cf:44:f4:
+        aa:5a:fa:27:82:20:74:93:3c:e9:32:0a:1f:a4:73:61:f4:2c:
+        0e:d8:dc:3d:22:ac:3c:ef:97:b2:9b:11:cb:1b:5e:19:84:b8:
+        8b:df:44:56:9e:f4:e7:f1:84:4c:dd:66:04:5a:61:f7:6c:3b:
+        c6:b6:dc:3a:2a:94:00:c4:dc:dd:75:37:1e:ef:3f:ab:06:5f:
+        86:0d:94:ae:29:36:41:6c:4f:82:7e:4b:b6:52:89:21:3a:44:
+        a0:5b:60:9f:d2:51:34:f4:d7:f7:de:89:0d:f1:dd:78:9d:19:
+        2d:a6:e1:4b:4a:e1:17:51:7b:e9:1d:38:0e:ec:2b:f8:29:69:
+        bf:76:6b:37:4f:e4:46:69:98:32:7e:c3:bb:46:de:df:22:b6:
+        68:6b:ed:49:15:77:f1:62:e4:9d:3f:c9:70:95:3b:d2:ec:27:
+        1c:1b:1e:e7:06:8e:02:b4:a5:86:6e:37:6c:5d:c1:63:5c:c6:
+        91:67:73:ef:36:a4:03:72:4f:53:c2:8b:bb:f5:57:ea:dc:27:
+        d8:0e:5a:fb:eb:a4:b4:61:68:98:18:23:36:98:13:00:4b:0e:
+        f5:dc:c1:52:94:7a:9a:02:dd:3c:00:38:aa:e8:69:bd:e6:ac:
+        ed:43:a1:1c:db:ee:d9:c6:52:55:6c:63:f2:2b:50:b8:34:b2:
+        a3:15:cf:eb:65:8f:ca:bb:8f:ce:58:80:6f:81:9a:78:ac:70:
+        ac:4a:34:ac:b4:87:06:19:f2:48:68:7b:04:a7:11:2a:b4:70:
+        11:40:ca:7a:b1:dc:a5:2d:c4:5a:5d:ac:7f:d1:4f:b0:b4:28:
+        bd:c8:0a:59:2c:27:65:7b:6d:ca:f1:ab:f0:65:b4:c3:fa:bf:
+        43:5b:ba:f5:a5:ed:de:3a:ab:df:74:2b:bc:43:f4:b3:36:c7:
+        21:81:e4:ae:fe:29:3c:7d:8e:54:52:d4:fb:98:15:a1:7d:a0:
+        bd:fc:60:76:09:73:c2:fa:73:90:ec:38:9a:e2:6c:10:ad:20:
+        86:87:a1:0a:01:28:f1:3d:20:d2:8e:b3:bc:74:5f:8f:2f:7a:
+        98:a5:97:70:db:5e:45:32:66:6c:e4:0d:64:cc:1d:59:fe:0e:
+        29:27:c6:f9:27:7e:9c:e4:05:36:eb:b8:bc:44:fc:f9:fe:4f:
+        3d:33:a8:0a:25:c3:57:c4:6d:5a:69:9e:ab:bb:62:24:54:df:
+        ee:26:42:70:bd:2f:5f:ce:8c:47:53:6f:22:20:6a:d0:e7:1e:
+        10:7b:96:64:aa:2e:d0:8b
+

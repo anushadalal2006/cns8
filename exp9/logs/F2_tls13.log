@@ -1,0 +1,34 @@
+anush@anusha:~/pki-lab$ export SSLKEYLOGFILE=$PKI/captures/keys.log
+
+anush@anusha:~/pki-lab$ curl --tlsv1.3 --cacert intermediate/certs/ca-chain.cert.pem \
+  --cert client/alice.cert.pem --key client/alice.key.pem https://server.lab.local:8443/
+Hello CN=alice,O=CSE Lab | verify=SUCCESS | proto=TLSv1.3
+anush@anusha:~/pki-lab$ cut -d" " -f1 captures/keys.log
+SERVER_HANDSHAKE_TRAFFIC_SECRET
+EXPORTER_SECRET
+SERVER_TRAFFIC_SECRET_0
+CLIENT_HANDSHAKE_TRAFFIC_SECRET
+CLIENT_TRAFFIC_SECRET_0
+
+anush@anusha:~/pki-lab$ tshark -r captures/tls13.pcapng -Y tls.handshake
+    4 0.005792596    127.0.0.1 → 127.0.0.1    TLSv1 583 Client Hello (SNI=server.lab.local)
+    6 0.007646621    127.0.0.1 → 127.0.0.1    TLSv1.3 3435 Server Hello, Change Cipher Spec, Application Data, Application Data, Application Data, Application Data, Application Data
+
+anush@anusha:~/pki-lab$ tshark -r captures/tls13.pcapng -Y tls
+    4 0.005792596    127.0.0.1 → 127.0.0.1    TLSv1 583 Client Hello (SNI=server.lab.local)
+    6 0.007646621    127.0.0.1 → 127.0.0.1    TLSv1.3 3435 Server Hello, Change Cipher Spec, Application Data, Application Data, Application Data, Application Data, Application Data
+    8 0.011264088    127.0.0.1 → 127.0.0.1    TLSv1.3 3025 Change Cipher Spec, Application Data, Application Data, Application Data
+    9 0.011609148    127.0.0.1 → 127.0.0.1    TLSv1.3 172 Application Data
+   11 0.013447144    127.0.0.1 → 127.0.0.1    TLSv1.3 1569 Application Data
+   12 0.013932191    127.0.0.1 → 127.0.0.1    TLSv1.3 1569 Application Data
+   14 0.014095215    127.0.0.1 → 127.0.0.1    TLSv1.3 302 Application Data
+   15 0.014586131    127.0.0.1 → 127.0.0.1    TLSv1.3 90 Application Data
+
+anush@anusha:~/pki-lab$ tshark -r captures/tls13.pcapng -Y 'tls.handshake.type == 11'
+
+anush@anusha:~/pki-lab$ tshark -r captures/tls13.pcapng -Y 'tls.handshake.type == 2' -V | grep -E 'Cipher Suite:|Supported Version:|Group:'
+            Cipher Suite: TLS_AES_256_GCM_SHA384 (0x1302)
+                Supported Version: TLS 1.3 (0x0304)
+                    Key Share Entry: Group: x25519, Key Exchange length: 32
+                        Group: x25519 (29)
+

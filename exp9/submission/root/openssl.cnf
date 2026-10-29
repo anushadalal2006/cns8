@@ -1,0 +1,49 @@
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+dir               = $ENV::PKI/root
+certs             = $dir/certs
+crl_dir           = $dir/crl
+new_certs_dir     = $dir/newcerts
+database          = $dir/index.txt
+serial            = $dir/serial
+crlnumber         = $dir/crlnumber
+private_key       = $dir/private/root.key.pem
+certificate       = $dir/certs/root.cert.pem
+crl               = $dir/crl/root.crl.pem
+default_md        = sha256
+default_days      = 365
+default_crl_days  = 30
+policy            = policy_loose
+unique_subject    = no
+copy_extensions   = none
+
+[ policy_loose ]
+countryName             = optional
+organizationName        = optional
+organizationalUnitName  = optional
+commonName              = supplied
+
+[ req ]
+default_md          = sha256
+distinguished_name  = req_dn
+prompt              = no
+
+[ req_dn ]
+CN = placeholder
+
+[ v3_root_ca ]
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints       = critical, CA:true
+keyUsage               = critical, keyCertSign, cRLSign
+
+[ v3_intermediate_ca ]
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints       = critical, CA:true, pathlen:0
+keyUsage               = critical, keyCertSign, cRLSign
+
+[ crl_ext ]
+authorityKeyIdentifier = keyid:always

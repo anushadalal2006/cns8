@@ -1,0 +1,19 @@
+anush@anusha:~/pki-lab$ openssl genrsa -out root/private/root.key.pem 4096
+
+anush@anusha:~/pki-lab$ chmod 400 root/private/root.key.pem
+
+anush@anusha:~/pki-lab$ openssl req -config root/openssl.cnf -new -x509 -days 3650 -sha256 \
+  -extensions v3_root_ca \
+  -key root/private/root.key.pem \
+  -subj '/O=CSE Lab/CN=CSE Lab Root CA' \
+  -out root/certs/root.cert.pem
+
+anush@anusha:~/pki-lab$ ls -l root/private root/certs
+root/certs:
+total 4
+-rw-r--r-- 1 anush anush 1895 Oct 29 10:24 root.cert.pem
+
+root/private:
+total 4
+-r-------- 1 anush anush 3268 Oct 29 10:24 root.key.pem
+

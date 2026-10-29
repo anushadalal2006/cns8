@@ -1,0 +1,24 @@
+anush@anusha:~/pki-lab$ openssl genrsa -out intermediate/private/intermediate.key.pem 4096
+
+anush@anusha:~/pki-lab$ chmod 400 intermediate/private/intermediate.key.pem
+
+anush@anusha:~/pki-lab$ openssl req -config intermediate/openssl.cnf -new -sha256 \
+  -key intermediate/private/intermediate.key.pem \
+  -subj '/O=CSE Lab/CN=CSE Lab Intermediate CA' \
+  -out intermediate/csr/intermediate.csr.pem
+
+anush@anusha:~/pki-lab$ openssl ca -batch -config root/openssl.cnf -extensions v3_intermediate_ca \
+  -days 1825 -notext -md sha256 \
+  -in intermediate/csr/intermediate.csr.pem \
+  -out intermediate/certs/intermediate.cert.pem
+Using configuration from root/openssl.cnf
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+organizationName      :ASN.1 12:'CSE Lab'
+commonName            :ASN.1 12:'CSE Lab Intermediate CA'
+Certificate is to be certified until Oct 28 10:24:37 2031 GMT (1825 days)
+
+Write out database with 1 new entries
+Database updated
+

@@ -1,0 +1,9 @@
+anush@anusha:~/pki-lab$ cat intermediate/certs/intermediate.cert.pem root/certs/root.cert.pem \
+  > intermediate/certs/ca-chain.cert.pem
+
+anush@anusha:~/pki-lab$ openssl verify -CAfile root/certs/root.cert.pem intermediate/certs/intermediate.cert.pem
+intermediate/certs/intermediate.cert.pem: OK
+
+anush@anusha:~/pki-lab$ cat root/index.txt
+V	311028102437Z		1000	unknown	/O=CSE Lab/CN=CSE Lab Intermediate CA
+

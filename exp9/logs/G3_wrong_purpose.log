@@ -1,0 +1,18 @@
+anush@anusha:~/pki-lab$ curl --cacert intermediate/certs/ca-chain.cert.pem --cert server/server.cert.pem --key server/server.key.pem https://server.lab.local:8443/
+<html>
+<head><title>400 The SSL certificate error</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>The SSL certificate error</center>
+<hr><center>nginx/1.24.0 (Ubuntu)</center>
+</body>
+</html>
+
+anush@anusha:~/pki-lab$ tail -n +52 nginx/error.log
+2026/10/29 10:25:03 [info] 1384#1384: *13 client SSL certificate verify error: (26:unsuitable certificate purpose) while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+
+anush@anusha:~/pki-lab$ openssl verify -CAfile intermediate/certs/ca-chain.cert.pem -purpose sslclient server/server.cert.pem
+O = CSE Lab, CN = server.lab.local
+error 26 at 0 depth lookup: unsuitable certificate purpose
+error server/server.cert.pem: verification failed
+

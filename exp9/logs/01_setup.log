@@ -1,0 +1,42 @@
+anush@anusha:~/pki-lab$ export PKI=$HOME/pki-lab
+
+anush@anusha:~/pki-lab$ mkdir -p $PKI/{root,intermediate,server,client,nginx,captures}
+
+anush@anusha:~/pki-lab$ cd $PKI && mkdir -p root/{certs,crl,newcerts,private}
+
+anush@anusha:~/pki-lab$ mkdir -p intermediate/{certs,crl,csr,newcerts,private}
+
+anush@anusha:~/pki-lab$ chmod 700 root/private intermediate/private
+
+anush@anusha:~/pki-lab$ touch root/index.txt intermediate/index.txt
+
+anush@anusha:~/pki-lab$ echo 1000 > root/serial
+
+anush@anusha:~/pki-lab$ echo 1000 > intermediate/serial
+
+anush@anusha:~/pki-lab$ echo 1000 > root/crlnumber
+
+anush@anusha:~/pki-lab$ echo 1000 > intermediate/crlnumber
+
+anush@anusha:~/pki-lab$ ls -R root intermediate | head -20
+intermediate:
+certs
+crl
+crlnumber
+csr
+index.txt
+newcerts
+private
+serial
+
+intermediate/certs:
+
+intermediate/crl:
+
+intermediate/csr:
+
+intermediate/newcerts:
+
+intermediate/private:
+
+

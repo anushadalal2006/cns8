@@ -1,0 +1,33 @@
+anush@anusha:~/pki-lab$ cat > nginx/nginx.conf <<'EOF'
+pid /home/anush/pki-lab/nginx/nginx.pid;
+error_log /home/anush/pki-lab/nginx/error.log info;
+events {}
+http {
+  access_log /home/anush/pki-lab/nginx/access.log;
+  server {
+    listen 8443 ssl;
+    server_name server.lab.local;
+
+    ssl_certificate         /home/anush/pki-lab/server/server.fullchain.pem;
+    ssl_certificate_key     /home/anush/pki-lab/server/server.key.pem;
+    ssl_protocols           TLSv1.2 TLSv1.3;
+
+    ssl_client_certificate  /home/anush/pki-lab/intermediate/certs/ca-chain.cert.pem;
+    ssl_verify_client       on;
+    ssl_verify_depth        2;
+
+    location / {
+      return 200 'Hello $ssl_client_s_dn | verify=$ssl_client_verify | proto=$ssl_protocol';
+    }
+  }
+}
+EOF
+
+anush@anusha:~/pki-lab$ echo $HOME
+/home/anush
+
+anush@anusha:~/pki-lab$ nginx -p $PKI/nginx -c $PKI/nginx/nginx.conf
+
+anush@anusha:~/pki-lab$ ss -ltnp 2>/dev/null | grep 8443 || netstat -ltn | grep 8443
+LISTEN 0      511           0.0.0.0:8443      0.0.0.0:*    users:(("nginx",pid=1114,fd=5),("nginx",pid=1113,fd=5))
+

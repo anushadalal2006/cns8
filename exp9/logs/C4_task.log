@@ -1,0 +1,26 @@
+anush@anusha:~/pki-lab$ cat intermediate/index.txt
+V	271029102438Z		1000	unknown	/O=CSE Lab/CN=server.lab.local
+V	271029102438Z		1001	unknown	/O=CSE Lab/CN=alice
+V	271029102439Z		1002	unknown	/O=CSE Lab/CN=bob
+
+anush@anusha:~/pki-lab$ ls intermediate/newcerts
+1000.pem  1001.pem  1002.pem
+
+anush@anusha:~/pki-lab$ openssl verify -CAfile intermediate/certs/ca-chain.cert.pem -purpose sslserver client/alice.cert.pem
+O = CSE Lab, CN = alice
+error 26 at 0 depth lookup: unsuitable certificate purpose
+error client/alice.cert.pem: verification failed
+
+anush@anusha:~/pki-lab$ openssl x509 -in client/alice.cert.pem -noout -ext extendedKeyUsage,keyUsage
+X509v3 Key Usage: critical
+    Digital Signature
+X509v3 Extended Key Usage: 
+    TLS Web Client Authentication
+
+anush@anusha:~/pki-lab$ openssl x509 -in server/server.cert.pem -noout -subject -ext subjectAltName,extendedKeyUsage
+subject=O = CSE Lab, CN = server.lab.local
+X509v3 Extended Key Usage: 
+    TLS Web Server Authentication
+X509v3 Subject Alternative Name: 
+    DNS:server.lab.local, DNS:localhost, IP Address:127.0.0.1
+

@@ -1,0 +1,87 @@
+2026/10/29 10:24:40 [notice] 1112#1112: using the "epoll" event method
+2026/10/29 10:24:40 [notice] 1112#1112: nginx/1.24.0 (Ubuntu)
+2026/10/29 10:24:40 [notice] 1112#1112: OS: Linux 6.6.87.2-microsoft-standard-WSL2
+2026/10/29 10:24:40 [notice] 1112#1112: getrlimit(RLIMIT_NOFILE): 10240:1048576
+2026/10/29 10:24:40 [notice] 1113#1113: start worker processes
+2026/10/29 10:24:40 [notice] 1113#1113: start worker process 1114
+2026/10/29 10:24:42 [info] 1114#1114: *1 client 127.0.0.1 closed keepalive connection
+2026/10/29 10:24:42 [info] 1114#1114: *2 client sent no required SSL certificate while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+2026/10/29 10:24:42 [info] 1114#1114: *3 client sent no required SSL certificate while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+2026/10/29 10:24:42 [info] 1114#1114: *4 client closed connection while waiting for request, client: 127.0.0.1, server: 0.0.0.0:8443
+2026/10/29 10:24:42 [notice] 1113#1113: signal 1 (SIGHUP) received from 1284, reconfiguring
+2026/10/29 10:24:42 [notice] 1113#1113: reconfiguring
+2026/10/29 10:24:42 [notice] 1113#1113: using the "epoll" event method
+2026/10/29 10:24:42 [notice] 1113#1113: start worker processes
+2026/10/29 10:24:42 [notice] 1113#1113: start worker process 1285
+2026/10/29 10:24:42 [notice] 1114#1114: gracefully shutting down
+2026/10/29 10:24:42 [notice] 1114#1114: exiting
+2026/10/29 10:24:42 [notice] 1114#1114: exit
+2026/10/29 10:24:42 [notice] 1113#1113: signal 17 (SIGCHLD) received from 1114
+2026/10/29 10:24:42 [notice] 1113#1113: worker process 1114 exited with code 0
+2026/10/29 10:24:42 [notice] 1113#1113: signal 29 (SIGIO) received
+2026/10/29 10:24:44 [info] 1285#1285: *5 client 127.0.0.1 closed keepalive connection
+2026/10/29 10:24:44 [info] 1285#1285: *6 client SSL certificate verify error: (23:certificate revoked) while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+2026/10/29 10:24:44 [notice] 1113#1113: signal 1 (SIGHUP) received from 1346, reconfiguring
+2026/10/29 10:24:44 [notice] 1113#1113: reconfiguring
+2026/10/29 10:24:44 [notice] 1113#1113: using the "epoll" event method
+2026/10/29 10:24:44 [notice] 1113#1113: start worker processes
+2026/10/29 10:24:44 [notice] 1113#1113: start worker process 1347
+2026/10/29 10:24:44 [notice] 1285#1285: gracefully shutting down
+2026/10/29 10:24:44 [notice] 1285#1285: exiting
+2026/10/29 10:24:44 [notice] 1285#1285: exit
+2026/10/29 10:24:44 [notice] 1113#1113: signal 17 (SIGCHLD) received from 1285
+2026/10/29 10:24:44 [notice] 1113#1113: worker process 1285 exited with code 0
+2026/10/29 10:24:44 [notice] 1113#1113: signal 29 (SIGIO) received
+2026/10/29 10:24:46 [info] 1347#1347: *7 client SSL certificate verify error: (3:unable to get certificate CRL) while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+2026/10/29 10:24:46 [notice] 1113#1113: signal 1 (SIGHUP) received from 1383, reconfiguring
+2026/10/29 10:24:46 [notice] 1113#1113: reconfiguring
+2026/10/29 10:24:46 [notice] 1113#1113: using the "epoll" event method
+2026/10/29 10:24:46 [notice] 1113#1113: start worker processes
+2026/10/29 10:24:46 [notice] 1113#1113: start worker process 1384
+2026/10/29 10:24:46 [notice] 1347#1347: gracefully shutting down
+2026/10/29 10:24:46 [notice] 1347#1347: exiting
+2026/10/29 10:24:46 [notice] 1347#1347: exit
+2026/10/29 10:24:46 [notice] 1113#1113: signal 17 (SIGCHLD) received from 1347
+2026/10/29 10:24:46 [notice] 1113#1113: worker process 1347 exited with code 0
+2026/10/29 10:24:46 [notice] 1113#1113: signal 29 (SIGIO) received
+2026/10/29 10:24:47 [info] 1384#1384: *8 client 127.0.0.1 closed keepalive connection
+2026/10/29 10:24:52 [info] 1384#1384: *9 client 127.0.0.1 closed keepalive connection
+2026/10/29 10:24:58 [info] 1384#1384: *10 client 127.0.0.1 closed keepalive connection
+2026/10/29 10:25:02 [info] 1384#1384: *11 client SSL certificate verify error: (10:certificate has expired) while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+2026/10/29 10:25:03 [info] 1384#1384: *12 client SSL certificate verify error: (3:unable to get certificate CRL) while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+2026/10/29 10:25:03 [info] 1384#1384: *13 client SSL certificate verify error: (26:unsuitable certificate purpose) while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+2026/10/29 10:25:03 [info] 1384#1384: *14 client closed connection while waiting for request, client: 127.0.0.1, server: 0.0.0.0:8443
+2026/10/29 10:25:03 [info] 1384#1384: *15 client closed connection while waiting for request, client: 127.0.0.1, server: 0.0.0.0:8443
+2026/10/29 10:25:03 [notice] 1113#1113: signal 1 (SIGHUP) received from 1944, reconfiguring
+2026/10/29 10:25:03 [notice] 1113#1113: reconfiguring
+2026/10/29 10:25:03 [notice] 1113#1113: using the "epoll" event method
+2026/10/29 10:25:03 [notice] 1113#1113: start worker processes
+2026/10/29 10:25:03 [notice] 1113#1113: start worker process 1945
+2026/10/29 10:25:03 [notice] 1384#1384: gracefully shutting down
+2026/10/29 10:25:03 [notice] 1384#1384: exiting
+2026/10/29 10:25:03 [notice] 1384#1384: exit
+2026/10/29 10:25:03 [notice] 1113#1113: signal 17 (SIGCHLD) received from 1384
+2026/10/29 10:25:03 [notice] 1113#1113: worker process 1384 exited with code 0
+2026/10/29 10:25:03 [notice] 1113#1113: signal 29 (SIGIO) received
+2026/10/29 10:25:05 [info] 1945#1945: *16 client 127.0.0.1 closed keepalive connection
+2026/10/29 10:25:05 [info] 1945#1945: *17 SSL_do_handshake() failed (SSL: error:0A000418:SSL routines::tlsv1 alert unknown ca:SSL alert number 48) while SSL handshaking, client: 127.0.0.1, server: 0.0.0.0:8443
+2026/10/29 10:25:05 [info] 1945#1945: *18 client closed connection while waiting for request, client: 127.0.0.1, server: 0.0.0.0:8443
+2026/10/29 10:25:05 [notice] 1113#1113: signal 1 (SIGHUP) received from 2018, reconfiguring
+2026/10/29 10:25:05 [notice] 1113#1113: reconfiguring
+2026/10/29 10:25:05 [notice] 1113#1113: using the "epoll" event method
+2026/10/29 10:25:05 [notice] 1113#1113: start worker processes
+2026/10/29 10:25:05 [notice] 1113#1113: start worker process 2019
+2026/10/29 10:25:05 [notice] 1945#1945: gracefully shutting down
+2026/10/29 10:25:05 [notice] 1945#1945: exiting
+2026/10/29 10:25:05 [notice] 1945#1945: exit
+2026/10/29 10:25:05 [notice] 1113#1113: signal 17 (SIGCHLD) received from 1945
+2026/10/29 10:25:05 [notice] 1113#1113: worker process 1945 exited with code 0
+2026/10/29 10:25:05 [notice] 1113#1113: signal 29 (SIGIO) received
+2026/10/29 10:25:06 [info] 2019#2019: *19 client 127.0.0.1 closed keepalive connection
+2026/10/29 10:25:07 [info] 2019#2019: *20 client SSL certificate verify error: (23:certificate revoked) while reading client request headers, client: 127.0.0.1, server: server.lab.local, request: "GET / HTTP/1.1", host: "server.lab.local:8443"
+2026/10/29 10:25:07 [notice] 1113#1113: signal 15 (SIGTERM) received from 2080, exiting
+2026/10/29 10:25:07 [notice] 2019#2019: exiting
+2026/10/29 10:25:07 [notice] 2019#2019: exit
+2026/10/29 10:25:07 [notice] 1113#1113: signal 17 (SIGCHLD) received from 2019
+2026/10/29 10:25:07 [notice] 1113#1113: worker process 2019 exited with code 0
+2026/10/29 10:25:07 [notice] 1113#1113: exit
