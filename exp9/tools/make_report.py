@@ -126,6 +126,88 @@ def answers_box(title):
     doc.add_paragraph()
 
 
+
+ANSWERS = open(os.path.join(EXP9, "ANSWERS_TO_HANDWRITE_LAB9.md"), encoding="utf-8").read()
+
+
+def rich(p, text, size=10.5):
+    """add **bold**, *italic* and `code` runs to paragraph p"""
+    for tok in re.split(r"(\*\*[^*]+\*\*|`[^`]+`|\*[^*]+\*)", text):
+        if not tok:
+            continue
+        if tok.startswith("**"):                      # bold, possibly containing `code`
+            for k, part_ in enumerate(re.split(r"`([^`]+)`", tok[2:-2])):
+                if not part_:
+                    continue
+                r = p.add_run(part_); r.bold = True; r.font.size = Pt(size)
+                if k % 2:
+                    r.font.name = "Consolas"
+                    r._element.rPr.rFonts.set(qn("w:eastAsia"), "Consolas")
+            continue
+        elif tok.startswith("`"):
+            r = p.add_run(tok[1:-1]); r.font.name = "Consolas"
+            r._element.rPr.rFonts.set(qn("w:eastAsia"), "Consolas")
+        elif tok.startswith("*"):
+            r = p.add_run(tok[1:-1]); r.italic = True
+        else:
+            r = p.add_run(tok)
+        r.font.size = Pt(size)
+
+
+def answers(task):
+    """render the '## Task X ...' section of the answers file into the report"""
+    m = re.search(r"^## (" + re.escape(task) + r"[^\n]*)\n(.*?)(?=^---$|^## )", ANSWERS, re.S | re.M)
+    doc.add_heading(f"Answers: {m.group(1)}", level=2)
+    lines = m.group(2).strip("\n").split("\n")
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if not line.strip():
+            i += 1
+            continue
+        if line.startswith("|"):                       # markdown table
+            tbl = []
+            while i < len(lines) and lines[i].startswith("|"):
+                cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
+                if not all(re.fullmatch(r"-+", c) for c in cells):
+                    tbl.append(cells)
+                i += 1
+            n = len(tbl[0])
+            t = doc.add_table(rows=0, cols=n)
+            t.style = "Table Grid"
+            t.alignment = WD_TABLE_ALIGNMENT.CENTER
+            for r_i, cells in enumerate(tbl):
+                row = t.add_row().cells
+                for c_i, val in enumerate(cells):
+                    rich(row[c_i].paragraphs[0], val, 9)
+                    if r_i == 0:
+                        for run in row[c_i].paragraphs[0].runs:
+                            run.bold = True
+                        shade(row[c_i], "D9E2F3")
+            widths = [3.6] + [(17 - 3.6) / (n - 1)] * (n - 1)
+            t.autofit = False
+            for c_i, w in enumerate(widths):
+                t._tbl.tblGrid.gridCol_lst[c_i].w = Cm(w)
+                for r in t.rows:
+                    r.cells[c_i].width = Cm(w)
+            doc.add_paragraph()
+            continue
+        mb = re.match(r"^(\s*)- (.*)$", line)
+        mn = re.match(r"^(\d+)\. (.*)$", line)
+        if mb:
+            p = doc.add_paragraph(style="List Bullet 2" if mb.group(1) else "List Bullet")
+            rich(p, mb.group(2))
+        elif mn:
+            p = doc.add_paragraph()
+            rich(p, mn.group(1) + ". " + mn.group(2))
+            p.paragraph_format.left_indent = Cm(0.6)
+        else:
+            p = doc.add_paragraph()
+            rich(p, line)
+        p.paragraph_format.space_after = Pt(3)
+        i += 1
+
+
 def part(title, intro):
     page_break()
     doc.add_heading(title, level=1)
@@ -159,8 +241,8 @@ table(["Section", "Contents"],
        ["Part G", "Six failure scenarios with curl, OpenSSL and nginx error.log evidence"],
        ["Reflection", "Handwritten (150–250 words)"],
        ["Submission", "Files included in the zip (no private keys)"]], [3, 14], size=10)
-para("Answers to the Task questions of each Part and the reflection are handwritten and attached at the "
-     "marked places.", italic=True, size=10)
+para("The answers to the Task questions follow each Part. The reflection is handwritten and attached at the "
+     "marked place.", italic=True, size=10)
 
 part("Setup", "Working directory $PKI = ~/pki-lab with separate folders for the Root and the Intermediate CA. "
      "index.txt is each CA's database, serial the next serial number and crlnumber the next CRL number.")
@@ -173,8 +255,7 @@ part("Part A — Root CA", "root/openssl.cnf defines the Root CA (files, policy,
 term("A1_root_config")
 term("A2_root_key_cert")
 term("A3_root_inspect")
-answers_box("Task A — serial number, validity, signature algorithm, key size, extensions; why basicConstraints "
-            "is critical; why a Root CA is self-signed")
+answers("Task A")
 
 # ------------------------------------------------------------------ Part B
 part("Part B — Intermediate CA", "The Intermediate creates its own 4096-bit key and a CSR, and the Root signs it "
@@ -185,7 +266,7 @@ term("B2_intermediate_sign")
 term("B3_chain_verify")
 term("B4_intermediate_inspect")
 term("B5_task_demos")
-answers_box("Task B — Root vs Intermediate comparison; what pathlen:0 does; issuing a certificate from a leaf")
+answers("Task B")
 
 # ------------------------------------------------------------------ Part C
 part("Part C — Server and client certificates", "The Intermediate signs a 2048-bit server certificate "
@@ -196,7 +277,7 @@ term("C2_client_certs")
 term("C3_verify")
 term("C4_task")
 term("C5_server_inspect")
-answers_box("Task C — index.txt columns; Alice with -purpose sslserver; why the server needs a SAN")
+answers("Task C")
 
 # ------------------------------------------------------------------ Part D
 part("Part D — Mutual TLS with nginx", "nginx listens on 8443 with the server full chain, requires a client "
@@ -205,8 +286,7 @@ part("Part D — Mutual TLS with nginx", "nginx listens on 8443 with the server 
 term("D1_nginx_config")
 term("D2_test")
 term("D3_s_client")
-answers_box("Task D — outputs and HTTP status of both tests; what identifies the client; why "
-            "ssl_client_certificate and ssl_verify_depth 2")
+answers("Task D")
 
 # ------------------------------------------------------------------ Part E
 part("Part E — Revocation (CRL and OCSP)", "Bob's certificate (serial 1002) is revoked with reason "
@@ -222,8 +302,7 @@ term("E3_alice_end")
 term("E3_bob_top")
 term("E3_bob_end")
 term("E3_aia")
-answers_box("Task E — status of Alice and Bob; CRL vs OCSP comparison; OCSP stapling; where the OCSP URL is "
-            "stored")
+answers("Task E")
 
 # ------------------------------------------------------------------ Part F
 part("Part F — TLS handshake analysis", "Both handshakes were captured on the loopback interface (lo) with the "
@@ -258,8 +337,7 @@ figure(os.path.join(WS, "F3_07_tls13_decrypted.png"), "Wireshark view: tls13.pca
        "tls.handshake - Certificate, Certificate Verify and Finished decrypted", max_h=7)
 figure(os.path.join(WS, "F3_08_tls13_certificate.png"), "Wireshark view: frame 8 with keys.log - client "
        "Certificate (CN=alice, clientAuth) and Certificate Verify", max_h=21.5)
-answers_box("Task F — TLS 1.2 vs TLS 1.3 comparison table; privacy gain of the encrypted client certificate; "
-            "message that proves possession of the private key")
+answers("Task F")
 
 # ------------------------------------------------------------------ Part G
 part("Part G — Failure scenarios", "Each failure was created on purpose and tested with curl, OpenSSL and the "
@@ -282,7 +360,7 @@ table(["#", "Scenario", "curl", "nginx error.log", "OpenSSL"],
        ["6", "Revoked (bob)", "HTTP 400 The SSL certificate error", "23: certificate revoked",
         "verify -crl_check: error 23"]],
       [0.7, 3.6, 4.4, 4.3, 4.0], size=8.5)
-answers_box("Task G — root cause of each failure (one or two sentences each)")
+answers("Task G")
 
 # ------------------------------------------------------------------ reflection and submission
 part("Reflection", "What is the single most common reason real-world TLS deployments fail certificate validation, "

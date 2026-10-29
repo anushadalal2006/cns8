@@ -1,4 +1,4 @@
-# Lab 9 — Answers to handwrite
+# Lab 9 — Answers (Tasks A–G in the report; reflection handwritten)
 
 **Name:** Anusha Dalal **UID:** 2024300032
 
@@ -113,7 +113,7 @@ All values below are from your own run (29 Oct 2026).
 
 **3. Which message proves the client owns the private key?** **CertificateVerify**: the client signs the handshake transcript with its private key, and the server checks it with the public key in the certificate. (A certificate alone proves nothing, since certificates are public.)
 
-**4.** Your Wireshark screenshots go here (they are in the report).
+**4. Screenshots:** see the Part F figures above: ClientHello and ServerHello, the server Certificate, CertificateRequest and CertificateVerify (TLS 1.2); the encrypted TLS 1.3 handshake; and the TLS 1.3 handshake decrypted with keys.log, with the relevant packet or field selected.
 
 ---
 
