@@ -44,6 +44,7 @@ fi
 nginx -p "$PKI/nginx" -c "$PKI/nginx/nginx.conf" -s stop >/dev/null 2>&1
 pkill -f "openssl ocsp -index" >/dev/null 2>&1
 if [ -d "$PKI" ]; then mv "$PKI" "$PKI.old.$(date +%s)"; fi
+mkdir -p "$PKI"
 
 # ---------------------------------------------------------------- 0. environment and setup
 step 00_environment

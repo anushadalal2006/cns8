@@ -2,15 +2,15 @@
 
 **Name:** Anusha Dalal **UID:** 2024300032
 
-Values marked **[from your run]** will be filled in from your own outputs once your run is pushed.
+All values below are from your own run (29 Oct 2026).
 
 ---
 
 ## Task A — Root CA
 
 **Recorded values**
-- Serial number: **[from your run]** (a random 20-byte value; OpenSSL 3 makes it random for self-signed certificates)
-- Validity: **10 years (3650 days)**, **[Not Before] to [Not After] — from your run**
+- Serial number: **04:6d:bf:53:f3:58:1f:56:a2:96:8f:58:d6:bb:62:c4:a1:27:47:0a** (a random 20-byte value; OpenSSL 3 makes it random for self-signed certificates)
+- Validity: **10 years (3650 days)**: **Oct 29 10:24:35 2026 GMT** to **Oct 26 10:24:35 2036 GMT**
 - Signature algorithm: **sha256WithRSAEncryption**
 - Key size: **RSA 4096 bits**
 - Extensions:
@@ -79,7 +79,7 @@ Values marked **[from your run]** will be filled in from your own outputs once y
 
 **1. Status.**
 - Alice: **good**
-- Bob: **revoked**, revocation time **[from your run]**, reason **keyCompromise**
+- Bob: **revoked**, revocation time **Oct 29 10:24:42 2026 GMT**, reason **keyCompromise**
 
 **2. CRL vs OCSP**
 
