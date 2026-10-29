@@ -136,4 +136,4 @@ Values marked **[from your run]** will be filled in from your own outputs once y
 >
 > To prevent expiry, I would **automate issuance and renewal** with an ACME client such as certbot, and use short lifetimes so that renewal runs often and any failure is noticed early. I would keep an **inventory** of all certificates and their owners, and set up **monitoring and alerts** at 30, 14 and 7 days before expiry. Finally, before each deployment I would test the server from a clean client that trusts only the Root, for example with `openssl s_client`, to confirm that the full chain is sent and that the certificate is still valid.
 
-*(about 205 words)*
+*(200 words)*
