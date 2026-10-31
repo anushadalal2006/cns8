@@ -1,14 +1,14 @@
-root@vm:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+anush@anusha:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
 Name: Anusha Dalal | UID: 2024300032
 
-root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/bob/gnupg
+anush@anusha:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/bob/gnupg
 
-root@vm:~/cns-pgp-smime$ gpg --verify ~/cns-pgp-smime/transfer/message.txt.asc ~/cns-pgp-smime/transfer/message.txt
-gpg: Signature made Sat Oct 31 16:27:53 2026 UTC
-gpg:                using RSA key B350D8CB3960E304F4ECD9CB01BC8D44B88947A0
+anush@anusha:~/cns-pgp-smime$ gpg --verify ~/cns-pgp-smime/transfer/message.txt.asc ~/cns-pgp-smime/transfer/message.txt
+gpg: Signature made Sat Oct 31 16:35:41 2026 UTC
+gpg:                using RSA key 2EB7F49C23F32EA04E65C5B841C1BACD4CEEF430
 gpg:                issuer "alice-lab@example.test"
 gpg: Good signature from "Alice CNS Lab <alice-lab@example.test>" [unknown]
 gpg: WARNING: The key's User ID is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
-Primary key fingerprint: B350 D8CB 3960 E304 F4EC  D9CB 01BC 8D44 B889 47A0
+Primary key fingerprint: 2EB7 F49C 23F3 2EA0 4E65  C5B8 41C1 BACD 4CEE F430
 

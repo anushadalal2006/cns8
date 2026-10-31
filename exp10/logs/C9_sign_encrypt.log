@@ -1,25 +1,25 @@
-root@vm:~/cns-pgp-smime/smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+anush@anusha:~/cns-pgp-smime/smime$ echo "Name: Anusha Dalal | UID: 2024300032"
 Name: Anusha Dalal | UID: 2024300032
 
-root@vm:~/cns-pgp-smime/smime$ openssl smime -sign -in message.txt -text -signer alice.crt -inkey alice.key -out signed_for_encryption.eml
+anush@anusha:~/cns-pgp-smime/smime$ openssl smime -sign -in message.txt -text -signer alice.crt -inkey alice.key -out signed_for_encryption.eml
 
-root@vm:~/cns-pgp-smime/smime$ openssl smime -encrypt -in signed_for_encryption.eml -out signed_encrypted.eml bob.crt
+anush@anusha:~/cns-pgp-smime/smime$ openssl smime -encrypt -in signed_for_encryption.eml -out signed_encrypted.eml bob.crt
 
-root@vm:~/cns-pgp-smime/smime$ head -n 8 signed_encrypted.eml
+anush@anusha:~/cns-pgp-smime/smime$ head -n 8 signed_encrypted.eml
 MIME-Version: 1.0
 Content-Disposition: attachment; filename="smime.p7m"
 Content-Type: application/x-pkcs7-mime; smime-type=enveloped-data; name="smime.p7m"
 Content-Transfer-Encoding: base64
 
 MIIL5AYJKoZIhvcNAQcDoIIL1TCCC9ECAQAxggFJMIIBRQIBADAtMBUxEzARBgNV
-BAMMCkNOUyBMYWIgQ0ECFH/3W41Gx6trpj3fUWAPwOJDibHfMA0GCSqGSIb3DQEB
-AQUABIIBAIgbPMS/PZjwIFDwE+i1VqhynfdhzocYCKCsgZEOg4KbD5Vu03J2sCeg
+BAMMCkNOUyBMYWIgQ0ECFCQbfNPoMeszd2r1T5eNd7BOquT4MA0GCSqGSIb3DQEB
+AQUABIIBADJBYfAoCzWutMMwkfWM4s7gLcyOhAPOn0f1mY0HE3STmwoNvK3FOUZu
 
-root@vm:~/cns-pgp-smime/smime$ openssl smime -decrypt -in signed_encrypted.eml -recip bob.crt -inkey bob.key -out recovered_signed.eml
+anush@anusha:~/cns-pgp-smime/smime$ openssl smime -decrypt -in signed_encrypted.eml -recip bob.crt -inkey bob.key -out recovered_signed.eml
 
-root@vm:~/cns-pgp-smime/smime$ openssl smime -verify -in recovered_signed.eml -CAfile ca.crt -out recovered_original.txt
+anush@anusha:~/cns-pgp-smime/smime$ openssl smime -verify -in recovered_signed.eml -CAfile ca.crt -out recovered_original.txt
 Verification successful
 
-root@vm:~/cns-pgp-smime/smime$ tail -n +3 recovered_original.txt | tr -d '\r' | diff - message.txt && echo 'message body is identical to message.txt'
+anush@anusha:~/cns-pgp-smime/smime$ tail -n +3 recovered_original.txt | tr -d '\r' | diff - message.txt && echo 'message body is identical to message.txt'
 message body is identical to message.txt
 

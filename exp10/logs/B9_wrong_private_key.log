@@ -1,18 +1,18 @@
-root@vm:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+anush@anusha:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
 Name: Anusha Dalal | UID: 2024300032
 
-root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/alice/gnupg
+anush@anusha:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/alice/gnupg
 
-root@vm:~/cns-pgp-smime$ gpg --output ~/cns-pgp-smime/alice_attempt.txt --decrypt ~/cns-pgp-smime/transfer/message.txt.pgp
-gpg: encrypted with rsa3072 key, ID A4EEA39E12CE23D3, created 2026-10-31
+anush@anusha:~/cns-pgp-smime$ gpg --output ~/cns-pgp-smime/alice_attempt.txt --decrypt ~/cns-pgp-smime/transfer/message.txt.pgp
+gpg: encrypted with rsa3072 key, ID 06368238FB4528ED, created 2026-10-31
       "Bob CNS Lab <bob-lab@example.test>"
 gpg: public key decryption failed: No secret key
 gpg: decryption failed: No secret key
 
-root@vm:~/cns-pgp-smime$ ls -l ~/cns-pgp-smime/transfer
+anush@anusha:~/cns-pgp-smime$ ls -l ~/cns-pgp-smime/transfer
 total 16
--rw-r--r-- 1 root root   57 Oct 31 16:27 message.txt
--rw-r--r-- 1 root root  691 Oct 31 16:27 message.txt.asc
--rw-r--r-- 1 root root  785 Oct 31 16:27 message.txt.pgp
--rw-r--r-- 1 root root 1439 Oct 31 16:27 signed_encrypted.pgp
+-rw-r--r-- 1 anush anush   57 Oct 31 16:35 message.txt
+-rw-r--r-- 1 anush anush  691 Oct 31 16:35 message.txt.asc
+-rw-r--r-- 1 anush anush  785 Oct 31 16:35 message.txt.pgp
+-rw-r--r-- 1 anush anush 1439 Oct 31 16:35 signed_encrypted.pgp
 

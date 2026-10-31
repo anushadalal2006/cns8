@@ -1,29 +1,29 @@
-root@vm:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+anush@anusha:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
 Name: Anusha Dalal | UID: 2024300032
 
-root@vm:~/cns-pgp-smime$ printf 'CNS Lab: PGP secure e-mail test. Message ID: CNS-PGP-01.\n' > ~/cns-pgp-smime/message.txt
+anush@anusha:~/cns-pgp-smime$ printf 'CNS Lab: PGP secure e-mail test. Message ID: CNS-PGP-01.\n' > ~/cns-pgp-smime/message.txt
 
-root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/alice/gnupg
+anush@anusha:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/alice/gnupg
 
-root@vm:~/cns-pgp-smime$ gpg --armor --local-user alice-lab@example.test --detach-sign --output ~/cns-pgp-smime/message.txt.asc ~/cns-pgp-smime/message.txt
+anush@anusha:~/cns-pgp-smime$ gpg --armor --local-user alice-lab@example.test --detach-sign --output ~/cns-pgp-smime/message.txt.asc ~/cns-pgp-smime/message.txt
 Enter passphrase:                   
 
-root@vm:~/cns-pgp-smime$ cp ~/cns-pgp-smime/message.txt* ~/cns-pgp-smime/transfer/
+anush@anusha:~/cns-pgp-smime$ cp ~/cns-pgp-smime/message.txt* ~/cns-pgp-smime/transfer/
 
-root@vm:~/cns-pgp-smime$ cat ~/cns-pgp-smime/transfer/message.txt ~/cns-pgp-smime/transfer/message.txt.asc
+anush@anusha:~/cns-pgp-smime$ cat ~/cns-pgp-smime/transfer/message.txt ~/cns-pgp-smime/transfer/message.txt.asc
 CNS Lab: PGP secure e-mail test. Message ID: CNS-PGP-01.
 -----BEGIN PGP SIGNATURE-----
 
-iQHLBAABCgA1FiEEs1DYyzlg4wT07NnLAbyNRLiJR6AFAmrmFwkXHGFsaWNlLWxh
-YkBleGFtcGxlLnRlc3QACgkQAbyNRLiJR6BqAwv+J14wTa8mh+u/Va+TPaQjMJcK
-RJL5aHtMWmC2IJy5wC52QMkQHCC5P8pkzJhrha3TEL/56wFiJdlDSn/dMN9i+m1I
-Um08JNJtbMv2v7vAwWEHmdDHpYPgZZwwWz/C0Es3Ry6V+eBykSr+pjmMgfyMQsQ4
-RqzE4MctDY7K6fB7oZiKr6NwBoSnxKgK+MNJXKx3Y2vy9sBm6tiVD6/cuJ4cxRwu
-j6jOa5zSWXF3zMMOAg745Qb8XTPfpw5mO08i99kdjVie4xPOKo+Xt7vjBPO8gArF
-l03OR4+oRPvskDg+5W/jY9GF9KrcVwhOi+Z7CH3+8+XLESEXUE4DZH0nwlbnwUxh
-/pkq79efxwIkwFZ0fJMqqUApHVKPTBc4R4dbne63JCIV2YIMOS5V3BnTx98j88qz
-FOF7lGBv7xVUdVe7eTZeljgQ0vb4eNAWD9/uOo8lMt7dTom+DOiQM4JLOUvGXuKk
-++0F/gvOcOiGomQjPd5e8mj9YYq8iLxEj6ca8MtJ
-=oiBr
+iQHLBAABCgA1FiEELrf0nCPzLqBOZcW4QcG6zUzu9DAFAmrmGN0XHGFsaWNlLWxh
+YkBleGFtcGxlLnRlc3QACgkQQcG6zUzu9DCLLAv/UGuwuRz7in98HrywxpzTNfUz
+ZQG17syHs80qbcwKx9iQtLxtsnAJ6a4kj17Vo4GoMbK6qUXxPEmPgzlBPOYhKaG1
+RzyKq9p4ckq95cKyfpDGdE2HkLsldpRHNWYTCs+MDjea33yjzWhcUugtIG+z0N2I
+xRBBV0PnNU6mdzIRBGmvWE/CKZoFlCChR17TxhRXUN82mgzj28ZyROBcETFWLlr+
+LXCr8zdSi2frTdi4y+p76gTSdJP+ixYNxbnC5C7Uk8/5q4gWcvZMlv22P2wigxpd
+PtSxA0MlGjYoQW5M7QMTcuZ30t4pHfuxR0KM2J5iKrRUwwoPcp3m3+r3KcmXPyHA
+WQKdMRPQyEwg0bca8xIBrh/uWvlIzI9LkRAMMPFFDDjey2kOqsn1uGH/TrqkQiOH
+BpMYPP1b/hHNcXBirH38e4zvGXfp7BckSYs48FCPXQvTr993s0O6nUf2m9RoyXRW
+VKBDOFk7/KVb6IWWequ3XVuN48shcz3BpKOJU3NQ
+=djEY
 -----END PGP SIGNATURE-----
 

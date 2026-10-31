@@ -1,7 +1,7 @@
-root@vm:~$ echo "Name: Anusha Dalal | UID: 2024300032"
+anush@anusha:~$ echo "Name: Anusha Dalal | UID: 2024300032"
 Name: Anusha Dalal | UID: 2024300032
 
-root@vm:~$ gpg --version
+anush@anusha:~$ gpg --version
 gpg (GnuPG) 2.4.4
 libgcrypt 1.10.3
 Copyright (C) 2024 g10 Code GmbH
@@ -9,7 +9,7 @@ License GNU GPL-3.0-or-later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
-Home: /root/.gnupg
+Home: /home/anush/.gnupg
 Supported algorithms:
 Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
 Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,

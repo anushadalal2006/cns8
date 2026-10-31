@@ -1,14 +1,14 @@
-root@vm:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+anush@anusha:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
 Name: Anusha Dalal | UID: 2024300032
 
-root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/bob/gnupg
+anush@anusha:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/bob/gnupg
 
-root@vm:~/cns-pgp-smime$ gpg --full-generate-key
+anush@anusha:~/cns-pgp-smime$ gpg --full-generate-key
 gpg (GnuPG) 2.4.4; Copyright (C) 2024 g10 Code GmbH
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
-gpg: keybox '/root/cns-pgp-smime/bob/gnupg/pubring.kbx' created
+gpg: keybox '/home/anush/cns-pgp-smime/bob/gnupg/pubring.kbx' created
 Please select what kind of key you want:
    (1) RSA and RSA
    (2) DSA and Elgamal
@@ -28,7 +28,7 @@ Please specify how long the key should be valid.
       <n>m = key expires in n months
       <n>y = key expires in n years
 Key is valid for? (0) 1y
-Key expires at Sun Oct 31 16:27:48 2027 UTC
+Key expires at Sun Oct 31 16:35:37 2027 UTC
 Is this correct? (y/N) y
 
 GnuPG needs to construct a user ID to identify your key.
@@ -44,30 +44,30 @@ We need to generate a lot of random bytes. It is a good idea to perform
 some other action (type on the keyboard, move the mouse, utilize the
 disks) during the prime generation; this gives the random number
 generator a better chance to gain enough entropy.
-Enter passphrase:                   
-We need to generate a lot of random bytes. It is a good idea to perform
+Enter passphrase:                   We need to generate a lot of random bytes. It is a good idea to perform
 some other action (type on the keyboard, move the mouse, utilize the
 disks) during the prime generation; this gives the random number
 generator a better chance to gain enough entropy.
-gpg: /root/cns-pgp-smime/bob/gnupg/trustdb.gpg: trustdb created
-gpg: directory '/root/cns-pgp-smime/bob/gnupg/openpgp-revocs.d' created
-gpg: revocation certificate stored as '/root/cns-pgp-smime/bob/gnupg/openpgp-revocs.d/7A850240F9ECA7B028E82D4CC1905678CBE1BC88.rev'
+
+gpg: /home/anush/cns-pgp-smime/bob/gnupg/trustdb.gpg: trustdb created
+gpg: directory '/home/anush/cns-pgp-smime/bob/gnupg/openpgp-revocs.d' created
+gpg: revocation certificate stored as '/home/anush/cns-pgp-smime/bob/gnupg/openpgp-revocs.d/61B4DEFA64CB87B479DE9CB704376E3027539C54.rev'
 public and secret key created and signed.
 
 pub   rsa3072 2026-10-31 [SC] [expires: 2027-10-31]
-      7A850240F9ECA7B028E82D4CC1905678CBE1BC88
+      61B4DEFA64CB87B479DE9CB704376E3027539C54
 uid                      Bob CNS Lab <bob-lab@example.test>
 sub   rsa3072 2026-10-31 [E] [expires: 2027-10-31]
 
-root@vm:~/cns-pgp-smime$ gpg --list-keys
+anush@anusha:~/cns-pgp-smime$ gpg --list-keys
 gpg: checking the trustdb
 gpg: marginals needed: 3  completes needed: 1  trust model: pgp
 gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
 gpg: next trustdb check due at 2027-10-31
-/root/cns-pgp-smime/bob/gnupg/pubring.kbx
------------------------------------------
+/home/anush/cns-pgp-smime/bob/gnupg/pubring.kbx
+-----------------------------------------------
 pub   rsa3072 2026-10-31 [SC] [expires: 2027-10-31]
-      7A850240F9ECA7B028E82D4CC1905678CBE1BC88
+      61B4DEFA64CB87B479DE9CB704376E3027539C54
 uid           [ultimate] Bob CNS Lab <bob-lab@example.test>
 sub   rsa3072 2026-10-31 [E] [expires: 2027-10-31]
 

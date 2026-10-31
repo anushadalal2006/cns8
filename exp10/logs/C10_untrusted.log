@@ -1,47 +1,47 @@
-root@vm:~/cns-pgp-smime/smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+anush@anusha:~/cns-pgp-smime/smime$ echo "Name: Anusha Dalal | UID: 2024300032"
 Name: Anusha Dalal | UID: 2024300032
 
-root@vm:~/cns-pgp-smime/smime$ openssl req -x509 -newkey rsa:2048 -keyout other_ca.key -out other_ca.crt -nodes -days 30 -subj '/CN=Some Other CA'
-...........+............+......+.+.....+.+.....+...+......+.........+....+..+....+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+...+........+...+......+....+.....+....+..+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+..+...+....+.....+......+................+......+.....+.......+...........+......+......+....+.....+......+.......+.....+..........+...+..............+...+.+.........+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-...+.......+...+.....+...+....+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...............+.+...+...+..+......+.......+..............+.+..+......+.+.....+.+.....+...+....+........+........................+...+...+...+.+...........+.......+..+.+...+..............+......+.+.....+......+...............+.......+...+..+.+......+.....+......+..........+...+..+...+.......+...+...........+.+........+.+...+...+.....+....+......+...+...........+.+..+...+....+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+anush@anusha:~/cns-pgp-smime/smime$ openssl req -x509 -newkey rsa:2048 -keyout other_ca.key -out other_ca.crt -nodes -days 30 -subj '/CN=Some Other CA'
+.+........+.+......+...+..+.........+.+.........+........+.+......+........+...+...+....+..+...+......+.+.....+.+........+.+...........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+.........+..+.+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*........+.......+.....+.+.........+...............+............+......+...+............+..+.......+...+..+....+.........+......+......+........+.......+........+.............+..+.+...........+.+...+..+...+.+.....+.+.....+.......+..+.........+....+..............................+.....+.+..+.........+....+......+........+...+....+.....+......+....+......+........+.......+...+...........................+...+...........+.+...............+...+........................+......+..+...+..........+.................+...+.......+...............+..+.............+...+.................+.........+......+.......+..+..........+...+..+....+...............+.........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.....+.+.................+..........+.....+.+.........+...+..+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*......+....+..+.+........+......+...............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.........+...........+................+..+......+.+...+.................+.+............+...+...+...............+..+...+.......+.........+...+...+...............+..+.+......+......+........+......+....+.....+....+.....+............+...+..................+....+......+...+......+.....+...+...+.......+.....+...+...+..........+.............................+.+......+......+..+...+...+....+...........+.......+........+......+...+............+....+.....+......+.+...+...........+.........+....+......+.........+..+.+........+.+...............+...........+...+......................+...+..+.........+...+.+............+..+.+...........+....+.....+......+...+............+.+..+...+....+....................+.+..+.+..+.........+.............+...........+.......+...+............+...+.....+.......+..+............+.............+..+.+..+.+......+...............+......+........+.+........+.......+......+..+..........+...+.....+.......+........+.........+.+..+.+......+..............+.+...+...+.....+...+.......+.........+......+..+......+...................+......+.........+...............+........+...+.........+.............+..+......+......+.........+....+...+.....+.......+..+.+...+.....+.......+.........+........+.+......+......+.............................+...+.+..+....+......+..+......+....+...........+....+........+...................+......+...+..+...+.+........+.+.....+.........+......+......+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -----
 
-root@vm:~/cns-pgp-smime/smime$ openssl smime -verify -in signed.eml -CAfile other_ca.crt -out untrusted_output.txt
+anush@anusha:~/cns-pgp-smime/smime$ openssl smime -verify -in signed.eml -CAfile other_ca.crt -out untrusted_output.txt
 Verification failure
-40A748849B7F0000:error:10800075:PKCS7 routines:PKCS7_verify:certificate verify error:../crypto/pkcs7/pk7_smime.c:296:Verify error: unable to get local issuer certificate
+4007334F0B770000:error:10800075:PKCS7 routines:PKCS7_verify:certificate verify error:../crypto/pkcs7/pk7_smime.c:296:Verify error: unable to get local issuer certificate
 
-root@vm:~/cns-pgp-smime/smime$ openssl smime -verify -in signed.eml -out no_cafile_output.txt
+anush@anusha:~/cns-pgp-smime/smime$ openssl smime -verify -in signed.eml -out no_cafile_output.txt
 Verification failure
-407786F6C27F0000:error:10800075:PKCS7 routines:PKCS7_verify:certificate verify error:../crypto/pkcs7/pk7_smime.c:296:Verify error: unable to get local issuer certificate
+40A7DA00F77D0000:error:10800075:PKCS7 routines:PKCS7_verify:certificate verify error:../crypto/pkcs7/pk7_smime.c:296:Verify error: unable to get local issuer certificate
 
-root@vm:~/cns-pgp-smime/smime$ openssl smime -verify -in signed.eml -noverify -out noverify_output.txt
+anush@anusha:~/cns-pgp-smime/smime$ openssl smime -verify -in signed.eml -noverify -out noverify_output.txt
 Verification successful
 
-root@vm:~/cns-pgp-smime/smime$ ls -l ~/cns-pgp-smime/smime
+anush@anusha:~/cns-pgp-smime/smime$ ls -l ~/cns-pgp-smime/smime
 total 96
--rw-r--r-- 1 root root 1224 Oct 31 16:28 alice.crt
--rw-r--r-- 1 root root 1017 Oct 31 16:28 alice.csr
--rw------- 1 root root 1700 Oct 31 16:28 alice.key
--rw-r--r-- 1 root root 1220 Oct 31 16:28 bob.crt
--rw-r--r-- 1 root root 1013 Oct 31 16:28 bob.csr
--rw------- 1 root root 1704 Oct 31 16:28 bob.key
--rw-r--r-- 1 root root 1484 Oct 31 16:28 ca.crt
--rw------- 1 root root 2484 Oct 31 16:28 ca.key
--rw-r--r-- 1 root root   41 Oct 31 16:28 ca.srl
--rw-r--r-- 1 root root  863 Oct 31 16:28 encrypted.eml
--rw-r--r-- 1 root root   62 Oct 31 16:28 message.txt
--rw-r--r-- 1 root root    0 Oct 31 16:28 no_cafile_output.txt
--rw-r--r-- 1 root root   91 Oct 31 16:28 noverify_output.txt
--rw-r--r-- 1 root root 1123 Oct 31 16:28 other_ca.crt
--rw------- 1 root root 1704 Oct 31 16:28 other_ca.key
--rw-r--r-- 1 root root   91 Oct 31 16:28 recovered_original.txt
--rw-r--r-- 1 root root 2640 Oct 31 16:28 recovered_signed.eml
--rw-r--r-- 1 root root 2593 Oct 31 16:28 signed.eml
--rw-r--r-- 1 root root 4320 Oct 31 16:28 signed_encrypted.eml
--rw-r--r-- 1 root root 2593 Oct 31 16:28 signed_for_encryption.eml
--rw-r--r-- 1 root root 2593 Oct 31 16:28 signed_tampered.eml
--rw-r--r-- 1 root root   91 Oct 31 16:28 smime_decrypted.txt
--rw-r--r-- 1 root root   91 Oct 31 16:28 tampered_output.txt
--rw-r--r-- 1 root root    0 Oct 31 16:28 untrusted_output.txt
--rw-r--r-- 1 root root   91 Oct 31 16:28 verified_message.txt
+-rw-r--r-- 1 anush anush 1224 Oct 31 16:35 alice.crt
+-rw-r--r-- 1 anush anush 1017 Oct 31 16:35 alice.csr
+-rw------- 1 anush anush 1704 Oct 31 16:35 alice.key
+-rw-r--r-- 1 anush anush 1220 Oct 31 16:35 bob.crt
+-rw-r--r-- 1 anush anush 1013 Oct 31 16:35 bob.csr
+-rw------- 1 anush anush 1704 Oct 31 16:35 bob.key
+-rw-r--r-- 1 anush anush 1484 Oct 31 16:35 ca.crt
+-rw------- 1 anush anush 2484 Oct 31 16:35 ca.key
+-rw-r--r-- 1 anush anush   41 Oct 31 16:35 ca.srl
+-rw-r--r-- 1 anush anush  863 Oct 31 16:35 encrypted.eml
+-rw-r--r-- 1 anush anush   62 Oct 31 16:35 message.txt
+-rw-r--r-- 1 anush anush    0 Oct 31 16:35 no_cafile_output.txt
+-rw-r--r-- 1 anush anush   91 Oct 31 16:35 noverify_output.txt
+-rw-r--r-- 1 anush anush 1123 Oct 31 16:35 other_ca.crt
+-rw------- 1 anush anush 1704 Oct 31 16:35 other_ca.key
+-rw-r--r-- 1 anush anush   91 Oct 31 16:35 recovered_original.txt
+-rw-r--r-- 1 anush anush 2640 Oct 31 16:35 recovered_signed.eml
+-rw-r--r-- 1 anush anush 2593 Oct 31 16:35 signed.eml
+-rw-r--r-- 1 anush anush 4320 Oct 31 16:35 signed_encrypted.eml
+-rw-r--r-- 1 anush anush 2593 Oct 31 16:35 signed_for_encryption.eml
+-rw-r--r-- 1 anush anush 2593 Oct 31 16:35 signed_tampered.eml
+-rw-r--r-- 1 anush anush   91 Oct 31 16:35 smime_decrypted.txt
+-rw-r--r-- 1 anush anush   91 Oct 31 16:35 tampered_output.txt
+-rw-r--r-- 1 anush anush    0 Oct 31 16:35 untrusted_output.txt
+-rw-r--r-- 1 anush anush   91 Oct 31 16:35 verified_message.txt
 

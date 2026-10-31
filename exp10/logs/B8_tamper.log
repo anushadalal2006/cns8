@@ -1,19 +1,19 @@
-root@vm:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+anush@anusha:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
 Name: Anusha Dalal | UID: 2024300032
 
-root@vm:~/cns-pgp-smime$ cp ~/cns-pgp-smime/message.txt ~/cns-pgp-smime/tampered.txt
+anush@anusha:~/cns-pgp-smime$ cp ~/cns-pgp-smime/message.txt ~/cns-pgp-smime/tampered.txt
 
-root@vm:~/cns-pgp-smime$ printf 'ALTERED' >> ~/cns-pgp-smime/tampered.txt
+anush@anusha:~/cns-pgp-smime$ printf 'ALTERED' >> ~/cns-pgp-smime/tampered.txt
 
-root@vm:~/cns-pgp-smime$ cat ~/cns-pgp-smime/tampered.txt; echo
+anush@anusha:~/cns-pgp-smime$ cat ~/cns-pgp-smime/tampered.txt; echo
 CNS Lab: PGP secure e-mail test. Message ID: CNS-PGP-01.
 ALTERED
 
-root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/bob/gnupg
+anush@anusha:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/bob/gnupg
 
-root@vm:~/cns-pgp-smime$ gpg --verify ~/cns-pgp-smime/transfer/message.txt.asc ~/cns-pgp-smime/tampered.txt
-gpg: Signature made Sat Oct 31 16:27:53 2026 UTC
-gpg:                using RSA key B350D8CB3960E304F4ECD9CB01BC8D44B88947A0
+anush@anusha:~/cns-pgp-smime$ gpg --verify ~/cns-pgp-smime/transfer/message.txt.asc ~/cns-pgp-smime/tampered.txt
+gpg: Signature made Sat Oct 31 16:35:41 2026 UTC
+gpg:                using RSA key 2EB7F49C23F32EA04E65C5B841C1BACD4CEEF430
 gpg:                issuer "alice-lab@example.test"
 gpg: BAD signature from "Alice CNS Lab <alice-lab@example.test>" [unknown]
 

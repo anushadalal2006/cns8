@@ -1,18 +1,18 @@
-root@vm:~/cns-pgp-smime/smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+anush@anusha:~/cns-pgp-smime/smime$ echo "Name: Anusha Dalal | UID: 2024300032"
 Name: Anusha Dalal | UID: 2024300032
 
-root@vm:~/cns-pgp-smime/smime$ cp signed.eml signed_tampered.eml
+anush@anusha:~/cns-pgp-smime/smime$ cp signed.eml signed_tampered.eml
 
-root@vm:~/cns-pgp-smime/smime$ sed -i 's/S\/MIME secure e-mail test/S\/MIME secure e-mail tost/' signed_tampered.eml
+anush@anusha:~/cns-pgp-smime/smime$ sed -i 's/S\/MIME secure e-mail test/S\/MIME secure e-mail tost/' signed_tampered.eml
 
-root@vm:~/cns-pgp-smime/smime$ diff signed.eml signed_tampered.eml
+anush@anusha:~/cns-pgp-smime/smime$ diff signed.eml signed_tampered.eml
 9c9
 < CNS Lab: S/MIME secure e-mail test. Message ID: CNS-SMIME-01.
 ---
 > CNS Lab: S/MIME secure e-mail tost. Message ID: CNS-SMIME-01.
 
-root@vm:~/cns-pgp-smime/smime$ openssl smime -verify -in signed_tampered.eml -CAfile ca.crt -out tampered_output.txt
+anush@anusha:~/cns-pgp-smime/smime$ openssl smime -verify -in signed_tampered.eml -CAfile ca.crt -out tampered_output.txt
 Verification failure
-4067FD7E477F0000:error:10800065:PKCS7 routines:PKCS7_signatureVerify:digest failure:../crypto/pkcs7/pk7_doit.c:1096:
-4067FD7E477F0000:error:10800069:PKCS7 routines:PKCS7_verify:signature failure:../crypto/pkcs7/pk7_smime.c:345:
+4017640876780000:error:10800065:PKCS7 routines:PKCS7_signatureVerify:digest failure:../crypto/pkcs7/pk7_doit.c:1096:
+4017640876780000:error:10800069:PKCS7 routines:PKCS7_verify:signature failure:../crypto/pkcs7/pk7_smime.c:345:
 
