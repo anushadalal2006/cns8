@@ -237,6 +237,8 @@ table(["#", "Item"],
        ["6", "Commands used and deviations caused by software versions"]], [1.2, 15.8], size=10)
 para(f"Every terminal capture shows the name and UID line and the prompt of the machine used ({WHO}). "
      "No private keys are included in this report.", italic=True, size=9.5)
+para("The PGP and S/MIME workflow diagrams, the answers to the discussion questions and the conclusion are "
+     "handwritten and attached at the marked places.", italic=True, size=9.5)
 
 # ================================================================== 1. diagrams
 section("1. Hand-drawn workflow diagrams (Part A)",
@@ -293,7 +295,7 @@ table(["Parameter", "PGP / OpenPGP", "S/MIME"],
         "Certificate issuance, chain validation and lifecycle management"]], [4.2, 6.4, 6.4])
 md_section(r"Comparative analysis", show_heading=False)
 doc.add_heading("Answers to the discussion questions", level=2)
-md_section(r"Discussion questions", show_heading=False)
+box("Answers to discussion questions 1–12", 16)
 doc.add_heading("Conclusion (150–200 words)", level=2)
 box("Conclusion", 12)
 
