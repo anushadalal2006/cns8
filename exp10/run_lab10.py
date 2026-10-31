@@ -19,6 +19,7 @@ import shutil
 import socket
 import subprocess
 import sys
+import termios
 import time
 
 NAME, UID = "Anusha Dalal", "2024300032"
@@ -72,6 +73,14 @@ def drive(cmd, responders, timeout=120):
                     continue
                 if re.search(rx + r"\s*$", tail):
                     used.add(i)
+                    if "passphrase" in rx:          # type a passphrase only once echo is off
+                        for _ in range(50):
+                            try:
+                                if not termios.tcgetattr(fd)[3] & termios.ECHO:
+                                    break
+                            except termios.error:
+                                break
+                            time.sleep(0.05)
                     time.sleep(0.1)
                     os.write(fd, (ans + "\n").encode())
                     break
@@ -80,6 +89,8 @@ def drive(cmd, responders, timeout=120):
             break
     _, status = os.waitpid(pid, 0)
     text = ANSI.sub(b"", out).decode(errors="replace").replace("\r\n", "\n").replace("\r", "")
+    for pw in PASS.values():                        # safety net: never let a passphrase reach a log
+        text = text.replace(pw, "")
     return text, os.waitstatus_to_exitcode(status)
 
 

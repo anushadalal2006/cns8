@@ -28,7 +28,11 @@ git commit -m "Lab 10 run on my PC"
 git push
 ```
 
-and tell me it's pushed — I'll check the run and build the report.
+and tell me it's pushed. I'll check the run and build the report:
+
+```bash
+python3 exp10/tools/render_terminal.py && python3 exp10/tools/make_report.py
+```
 
 ## If something goes wrong
 
