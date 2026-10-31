@@ -20,4 +20,4 @@ Step C6: signed message verified with the lab CA - Verification successful	C6_ve
 Steps C7-C8: encrypted for Bob (enveloped data) and decrypted with bob.key	C7_C8_encrypt_decrypt.png
 Step C9: sign then encrypt; Bob decrypts and verifies the recovered signed message	C9_sign_encrypt.png
 Step C10: one character of the signed body changed - Verification failure (digest failure)	C10_tamper.png
-Step C10: wrong CA / no CA file - certificate trust failure; with -noverify the signature itself is valid	C10_untrusted.png
+Step C10: wrong CA / no CA file - certificate trust failure; with -noverify the signature itself is valid	C10_untrusted_1.png,C10_untrusted_2.png
