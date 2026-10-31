@@ -1,0 +1,24 @@
+root@vm:~/cns-pgp-smime/smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+Name: Anusha Dalal | UID: 2024300032
+
+root@vm:~/cns-pgp-smime/smime$ openssl req -newkey rsa:2048 -keyout bob.key -out bob.csr -nodes -subj '/CN=Bob CNS Lab/emailAddress=bob-lab@example.test' -addext 'keyUsage=digitalSignature,keyEncipherment' -addext 'extendedKeyUsage=emailProtection'
+...+...+..+....+..+...+.......+.........+...+...+........+......+..........+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+.......+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+..................+....+......+...........+...+.......+.........+......+...+...+........+................+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.......+.....+.......+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+...+...+.......+.....+.......+..+.+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+....+...+............+..+.+..+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+
+root@vm:~/cns-pgp-smime/smime$ openssl x509 -req -in bob.csr -CA ca.crt -CAkey ca.key -CAserial ca.srl -out bob.crt -days 180 -sha256
+Certificate request self-signature ok
+subject=CN = Bob CNS Lab, emailAddress = bob-lab@example.test
+
+root@vm:~/cns-pgp-smime/smime$ openssl x509 -in alice.crt -noout -subject -issuer -dates
+subject=CN = Alice CNS Lab, emailAddress = alice-lab@example.test
+issuer=CN = CNS Lab CA
+notBefore=Oct 31 16:28:00 2026 GMT
+notAfter=Apr 29 16:28:00 2027 GMT
+
+root@vm:~/cns-pgp-smime/smime$ openssl x509 -in bob.crt -noout -subject -issuer -dates
+subject=CN = Bob CNS Lab, emailAddress = bob-lab@example.test
+issuer=CN = CNS Lab CA
+notBefore=Oct 31 16:28:00 2026 GMT
+notAfter=Apr 29 16:28:00 2027 GMT
+

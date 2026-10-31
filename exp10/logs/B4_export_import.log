@@ -1,0 +1,47 @@
+root@vm:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+Name: Anusha Dalal | UID: 2024300032
+
+root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/alice/gnupg
+
+root@vm:~/cns-pgp-smime$ gpg --armor --export alice-lab@example.test > ~/cns-pgp-smime/alice_public.asc
+
+root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/bob/gnupg
+
+root@vm:~/cns-pgp-smime$ gpg --armor --export bob-lab@example.test > ~/cns-pgp-smime/bob_public.asc
+
+root@vm:~/cns-pgp-smime$ ls -l ~/cns-pgp-smime/*.asc
+-rw-r--r-- 1 root root 2464 Oct 31 16:27 /root/cns-pgp-smime/alice_public.asc
+-rw-r--r-- 1 root root 2460 Oct 31 16:27 /root/cns-pgp-smime/bob_public.asc
+
+root@vm:~/cns-pgp-smime$ head -n 4 ~/cns-pgp-smime/alice_public.asc
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mQGNBGrmFwEBDADty5voOTmqY3AE6DiV3PtrCOqYmz5udpLZ6Ke+qFP45w2Ptgcg
+y2kdtW+OBmcsEC2Y3kTwnKRizOACh9cta4zJ49djjwn7gy/5NAUHq6VAhyqt5E0U
+
+root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/alice/gnupg
+
+root@vm:~/cns-pgp-smime$ gpg --import ~/cns-pgp-smime/bob_public.asc
+gpg: key C1905678CBE1BC88: public key "Bob CNS Lab <bob-lab@example.test>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+
+root@vm:~/cns-pgp-smime$ gpg --fingerprint bob-lab@example.test
+pub   rsa3072 2026-10-31 [SC] [expires: 2027-10-31]
+      7A85 0240 F9EC A7B0 28E8  2D4C C190 5678 CBE1 BC88
+uid           [ unknown] Bob CNS Lab <bob-lab@example.test>
+sub   rsa3072 2026-10-31 [E] [expires: 2027-10-31]
+
+root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/bob/gnupg
+
+root@vm:~/cns-pgp-smime$ gpg --import ~/cns-pgp-smime/alice_public.asc
+gpg: key 01BC8D44B88947A0: public key "Alice CNS Lab <alice-lab@example.test>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+
+root@vm:~/cns-pgp-smime$ gpg --fingerprint alice-lab@example.test
+pub   rsa3072 2026-10-31 [SC] [expires: 2027-10-31]
+      B350 D8CB 3960 E304 F4EC  D9CB 01BC 8D44 B889 47A0
+uid           [ unknown] Alice CNS Lab <alice-lab@example.test>
+sub   rsa3072 2026-10-31 [E] [expires: 2027-10-31]
+

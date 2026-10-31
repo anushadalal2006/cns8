@@ -1,0 +1,63 @@
+root@vm:~/cns-pgp-smime/smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+Name: Anusha Dalal | UID: 2024300032
+
+root@vm:~/cns-pgp-smime/smime$ openssl x509 -in alice.crt -noout -text
+Certificate:
+    Data:
+        Version: 1 (0x0)
+        Serial Number:
+            7f:f7:5b:8d:46:c7:ab:6b:a6:3d:df:51:60:0f:c0:e2:43:89:b1:de
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN = CNS Lab CA
+        Validity
+            Not Before: Oct 31 16:28:00 2026 GMT
+            Not After : Apr 29 16:28:00 2027 GMT
+        Subject: CN = Alice CNS Lab, emailAddress = alice-lab@example.test
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:ae:cd:7e:7e:2b:f4:47:46:66:f9:f2:75:ac:d7:
+                    cf:a4:19:da:dc:ac:8e:42:0e:40:47:1e:39:14:79:
+                    e8:57:b0:25:20:20:0d:a8:cd:2b:cf:72:16:9c:95:
+                    33:54:cb:31:59:13:8e:b1:93:8f:9c:c0:db:35:f8:
+                    15:ea:72:a6:08:32:b6:4d:99:f3:4a:84:c8:af:c5:
+                    51:34:2b:38:a7:55:80:b4:d0:7b:cd:cc:18:a3:82:
+                    36:d1:52:bf:36:ce:31:10:f3:b5:e3:3a:da:33:aa:
+                    c7:fa:46:35:c3:8d:29:e9:18:7a:8c:d4:a6:ce:df:
+                    c2:75:57:01:7f:9c:c7:80:8e:4c:fd:a4:11:3a:ba:
+                    fd:d7:81:24:2c:ea:30:77:f4:7a:ab:d5:54:ef:cc:
+                    8a:98:06:53:b3:74:c7:f0:c9:07:79:c7:e1:77:56:
+                    f6:73:ce:60:cb:0e:b6:22:5f:af:10:0a:38:5c:55:
+                    a6:93:37:47:32:c2:8c:01:56:13:e9:92:85:a3:15:
+                    fb:ab:35:e7:60:5f:8d:a5:cc:35:22:ab:a8:70:ad:
+                    74:4f:97:17:75:7a:8f:21:fc:84:b5:10:a5:9f:86:
+                    68:52:cb:54:96:36:b3:31:0b:88:d0:36:34:9f:19:
+                    46:aa:5d:15:61:50:5b:b9:0d:3c:bd:4a:82:0e:92:
+                    7c:47
+                Exponent: 65537 (0x10001)
+    Signature Algorithm: sha256WithRSAEncryption
+    Signature Value:
+        6a:c4:7b:98:41:eb:46:24:c1:88:69:17:f7:3f:23:37:7c:27:
+        c0:c4:89:c1:fe:3f:ce:aa:df:f7:a0:b9:f6:16:13:3a:c7:bb:
+        5f:dd:b0:9f:c8:bb:bd:5c:ce:8e:f7:4d:1d:3b:72:f8:4f:0d:
+        98:1b:56:e8:04:63:8c:bc:a2:53:87:ee:08:a9:17:06:11:d0:
+        c2:fb:0a:2e:b6:c5:a0:8f:e4:62:18:ce:36:87:42:8e:35:8e:
+        32:2f:bb:2c:85:2e:86:c7:86:2b:2d:24:21:17:62:9b:6d:38:
+        be:92:67:71:3e:5e:07:f3:fd:0e:fa:1d:eb:c5:d1:a2:07:59:
+        5d:59:11:99:ac:b6:97:3d:c6:d9:d1:86:ed:92:98:c7:30:98:
+        0f:b7:98:2d:d8:18:43:dd:11:f4:b0:74:9f:ed:48:41:86:36:
+        20:2b:51:49:6d:13:42:ae:00:1e:73:d2:d6:c5:19:b8:a8:bb:
+        51:44:68:8c:7e:15:75:2d:06:20:6d:b0:34:03:b9:9a:ce:49:
+        c5:99:c7:27:35:5e:87:8d:04:42:e1:31:08:fc:ff:1f:6d:5b:
+        7c:21:ee:71:8a:6e:01:cc:46:11:dd:1e:0e:b2:91:fe:0b:fe:
+        76:a5:9b:85:cb:42:0f:63:23:95:d0:f7:f9:0a:21:3e:da:12:
+        dd:c0:03:78:8d:a1:2e:6f:31:18:05:a1:66:1f:a2:04:28:a1:
+        ca:67:77:f8:f6:5f:34:05:4b:ee:59:fd:34:c0:f2:59:8a:9d:
+        77:2b:9c:15:0a:14:b8:ac:68:7c:67:e4:d8:85:78:a0:d5:f6:
+        33:3a:4e:66:da:25:52:d5:2c:b8:f8:75:13:c8:55:85:12:c9:
+        1b:28:e0:7a:e0:32:fa:70:f4:a5:a7:34:dd:98:f8:43:b7:ff:
+        4f:a8:e1:e8:40:a9:61:11:29:a6:e6:58:1b:86:0f:cc:42:12:
+        b7:e9:89:7e:3c:91:05:cb:b8:04:b0:ed:3d:f3:f8:3e:f1:1d:
+        78:2d:9e:0d:0c:03
+

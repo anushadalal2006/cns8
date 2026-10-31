@@ -1,0 +1,38 @@
+root@vm:~/cns-pgp-smime/smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+Name: Anusha Dalal | UID: 2024300032
+
+root@vm:~/cns-pgp-smime/smime$ openssl smime -encrypt -in message.txt -text -out encrypted.eml bob.crt
+
+root@vm:~/cns-pgp-smime/smime$ head -n 12 encrypted.eml
+MIME-Version: 1.0
+Content-Disposition: attachment; filename="smime.p7m"
+Content-Type: application/x-pkcs7-mime; smime-type=enveloped-data; name="smime.p7m"
+Content-Transfer-Encoding: base64
+
+MIIB6QYJKoZIhvcNAQcDoIIB2jCCAdYCAQAxggFJMIIBRQIBADAtMBUxEzARBgNV
+BAMMCkNOUyBMYWIgQ0ECFH/3W41Gx6trpj3fUWAPwOJDibHfMA0GCSqGSIb3DQEB
+AQUABIIBAHCl9EffmLjtT6yOLGrVl3UrOj4smbTyFMM/14hq+La8IjPZqPReO/BW
+RktY50xQxOXAfOV91RAdxF4Brq+iCQOv3+2Lii0bH6oR6HDAdK/7fZZaG/kJYydS
+y8cEz+FSTSCLuGbhbMAzkRYn2eCcx1SIahlAFa7t6BNxD37Ww4IX4TF7tk2AYOa/
+tf3V4dtmvk/b9cqWFt/W7JC0qQuib8rBgk4IBG405/9NRcZrkLcLtvuS9Gbp5pfb
+y1SIkh+hPq5qbPSrc8aRlFBaU/vWI6xy1XJ9d57U4uwxUvNjkZ+irZ6r7mt7TTC0
+
+root@vm:~/cns-pgp-smime/smime$ openssl smime -decrypt -in encrypted.eml -recip bob.crt -inkey bob.key -out smime_decrypted.txt
+
+root@vm:~/cns-pgp-smime/smime$ cat smime_decrypted.txt
+Content-Type: text/plain
+
+CNS Lab: S/MIME secure e-mail test. Message ID: CNS-SMIME-01.
+
+root@vm:~/cns-pgp-smime/smime$ diff -u message.txt smime_decrypted.txt
+--- message.txt	2026-10-31 16:28:00.627548845 +0000
++++ smime_decrypted.txt	2026-10-31 16:28:00.686483106 +0000
+@@ -1 +1,3 @@
+-CNS Lab: S/MIME secure e-mail test. Message ID: CNS-SMIME-01.
++Content-Type: text/plain
++
++CNS Lab: S/MIME secure e-mail test. Message ID: CNS-SMIME-01.
+
+root@vm:~/cns-pgp-smime/smime$ tail -n +3 smime_decrypted.txt | tr -d '\r' | diff - message.txt && echo 'message body is identical to message.txt'
+message body is identical to message.txt
+

@@ -1,0 +1,23 @@
+Table 1 evidence: operating system, kernel, GnuPG and OpenSSL versions, CPU, RAM, date	00_environment.png
+Step B1: GnuPG installed - gpg --version	B1_gnupg.png
+Step B2: separate working directories and GnuPG homes for Alice and Bob	B2_directories.png
+Step B3: Alice's key pair (RSA and RSA, 3072 bits) - gpg --full-generate-key, list-keys, list-secret-keys	B3_alice_keygen_1.png,B3_alice_keygen_2.png
+Step B3: Bob's key pair (RSA and RSA, 3072 bits) and key listing	B3_bob_keygen_1.png,B3_bob_keygen_2.png
+Step B4: export public keys only, import into the other keyring, compare fingerprints	B4_export_import.png
+Step B5: message created and signed by Alice (detached ASCII-armored signature)	B5_sign.png
+Step B6: Bob verifies Alice's detached signature - Good signature (trust warning noted separately)	B6_verify.png
+Step B7: Alice encrypts for Bob; Bob decrypts with his private key	B7_encrypt_decrypt.png
+Step B7: signed-and-encrypted message; Bob decrypts and sees the signature status	B7_sign_encrypt.png
+Step B8: tampered message checked against the original signature - BAD signature	B8_tamper.png
+Table 2 (optional row): decryption with a non-matching private key fails; transfer folder contents	B9_wrong_private_key.png
+Step C1: OpenSSL version and S/MIME workspace	C1_workspace.png
+Step C2: lab CA certificate (CA:TRUE, keyCertSign, cRLSign)	C2_ca.png
+Step C3: Alice's key, CSR and certificate signed by the lab CA	C3_alice_cert.png
+Step C4: Bob's key, CSR and certificate; subject, issuer and validity of both certificates	C4_bob_cert.png
+Certificate details: openssl x509 -text of Alice's certificate	C4b_alice_cert_text.png
+Step C5: S/MIME signed message (first 15 lines)	C5_sign.png
+Step C6: signed message verified with the lab CA - Verification successful	C6_verify.png
+Steps C7-C8: encrypted for Bob (enveloped data) and decrypted with bob.key	C7_C8_encrypt_decrypt.png
+Step C9: sign then encrypt; Bob decrypts and verifies the recovered signed message	C9_sign_encrypt.png
+Step C10: one character of the signed body changed - Verification failure (digest failure)	C10_tamper.png
+Step C10: wrong CA / no CA file - certificate trust failure; with -noverify the signature itself is valid	C10_untrusted.png

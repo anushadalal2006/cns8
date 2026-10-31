@@ -1,0 +1,34 @@
+root@vm:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+Name: Anusha Dalal | UID: 2024300032
+
+root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/alice/gnupg
+
+root@vm:~/cns-pgp-smime$ gpg --armor --sign --encrypt --local-user alice-lab@example.test --recipient bob-lab@example.test --output ~/cns-pgp-smime/transfer/signed_encrypted.pgp ~/cns-pgp-smime/message.txt
+gpg: A4EEA39E12CE23D3: There is no assurance this key belongs to the named user
+
+sub  rsa3072/A4EEA39E12CE23D3 2026-10-31 Bob CNS Lab <bob-lab@example.test>
+ Primary key fingerprint: 7A85 0240 F9EC A7B0 28E8  2D4C C190 5678 CBE1 BC88
+      Subkey fingerprint: 5DEF 144C 61CE E25E F0DE  4AD7 A4EE A39E 12CE 23D3
+
+It is NOT certain that the key belongs to the person named
+in the user ID.  If you *really* know what you are doing,
+you may answer the next question with yes.
+
+Use this key anyway? (y/N) y
+
+root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/bob/gnupg
+
+root@vm:~/cns-pgp-smime$ gpg --output ~/cns-pgp-smime/decrypted_signed.txt --decrypt ~/cns-pgp-smime/transfer/signed_encrypted.pgp
+gpg: encrypted with rsa3072 key, ID A4EEA39E12CE23D3, created 2026-10-31
+      "Bob CNS Lab <bob-lab@example.test>"
+gpg: Signature made Sat Oct 31 16:27:59 2026 UTC
+gpg:                using RSA key B350D8CB3960E304F4ECD9CB01BC8D44B88947A0
+gpg:                issuer "alice-lab@example.test"
+gpg: Good signature from "Alice CNS Lab <alice-lab@example.test>" [unknown]
+gpg: WARNING: The key's User ID is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: B350 D8CB 3960 E304 F4EC  D9CB 01BC 8D44 B889 47A0
+
+root@vm:~/cns-pgp-smime$ cat ~/cns-pgp-smime/decrypted_signed.txt
+CNS Lab: PGP secure e-mail test. Message ID: CNS-PGP-01.
+

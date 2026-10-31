@@ -1,0 +1,11 @@
+root@vm:~/cns-pgp-smime/smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+Name: Anusha Dalal | UID: 2024300032
+
+root@vm:~/cns-pgp-smime/smime$ openssl smime -verify -in signed.eml -CAfile ca.crt -out verified_message.txt
+Verification successful
+
+root@vm:~/cns-pgp-smime/smime$ cat verified_message.txt
+Content-Type: text/plain
+
+CNS Lab: S/MIME secure e-mail test. Message ID: CNS-SMIME-01.
+

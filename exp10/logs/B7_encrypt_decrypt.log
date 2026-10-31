@@ -1,0 +1,36 @@
+root@vm:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+Name: Anusha Dalal | UID: 2024300032
+
+root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/alice/gnupg
+
+root@vm:~/cns-pgp-smime$ gpg --armor --encrypt --recipient bob-lab@example.test --output ~/cns-pgp-smime/transfer/message.txt.pgp ~/cns-pgp-smime/message.txt
+gpg: A4EEA39E12CE23D3: There is no assurance this key belongs to the named user
+
+sub  rsa3072/A4EEA39E12CE23D3 2026-10-31 Bob CNS Lab <bob-lab@example.test>
+ Primary key fingerprint: 7A85 0240 F9EC A7B0 28E8  2D4C C190 5678 CBE1 BC88
+      Subkey fingerprint: 5DEF 144C 61CE E25E F0DE  4AD7 A4EE A39E 12CE 23D3
+
+It is NOT certain that the key belongs to the person named
+in the user ID.  If you *really* know what you are doing,
+you may answer the next question with yes.
+
+Use this key anyway? (y/N) y
+
+root@vm:~/cns-pgp-smime$ head -n 6 ~/cns-pgp-smime/transfer/message.txt.pgp
+-----BEGIN PGP MESSAGE-----
+
+hQGMA6Tuo54SziPTAQv+Mcq3MnXdSwRx59ceyk9PFXk6dlXcX92fLxpVAWkahf4L
+KLogTckq9wR0OxWC+83Cs2EdRtBeJ+xXD959G1H4Nm0TrQpRxCm2XV4O4grCr9N9
+xMsazWWN1XxyguP2JCl6hl6LccgCnWxxYHawHTid2bPeWnjBEg1q0fu1g6djfZ1v
+qV0veYdM/T8Mr5PFLibkL23joKNc1v7xlehTqA0EKQsFfW8LtL2ggvKHw9RgVNi9
+
+root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/bob/gnupg
+
+root@vm:~/cns-pgp-smime$ gpg --output ~/cns-pgp-smime/decrypted_message.txt --decrypt ~/cns-pgp-smime/transfer/message.txt.pgp
+gpg: encrypted with rsa3072 key, ID A4EEA39E12CE23D3, created 2026-10-31
+      "Bob CNS Lab <bob-lab@example.test>"
+Enter passphrase:                   
+
+root@vm:~/cns-pgp-smime$ cat ~/cns-pgp-smime/decrypted_message.txt
+CNS Lab: PGP secure e-mail test. Message ID: CNS-PGP-01.
+

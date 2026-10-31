@@ -1,0 +1,36 @@
+root@vm:~$ echo "Name: Anusha Dalal | UID: 2024300032"
+Name: Anusha Dalal | UID: 2024300032
+
+root@vm:~$ mkdir -p ~/cns-pgp-smime/{alice,bob,transfer}
+
+root@vm:~$ cd ~/cns-pgp-smime
+
+root@vm:~/cns-pgp-smime$ mkdir -p ~/cns-pgp-smime/alice/gnupg ~/cns-pgp-smime/bob/gnupg
+
+root@vm:~/cns-pgp-smime$ chmod 700 ~/cns-pgp-smime/alice/gnupg ~/cns-pgp-smime/bob/gnupg
+
+root@vm:~/cns-pgp-smime$ echo "pinentry-mode loopback" > ~/cns-pgp-smime/alice/gnupg/gpg.conf
+
+root@vm:~/cns-pgp-smime$ echo "pinentry-mode loopback" > ~/cns-pgp-smime/bob/gnupg/gpg.conf
+
+root@vm:~/cns-pgp-smime$ ls -la ~/cns-pgp-smime ~/cns-pgp-smime/alice ~/cns-pgp-smime/bob
+/root/cns-pgp-smime:
+total 20
+drwxr-xr-x  5 root root 4096 Oct 31 16:27 .
+drwx------ 26 root root 4096 Oct 31 16:27 ..
+drwxr-xr-x  3 root root 4096 Oct 31 16:27 alice
+drwxr-xr-x  3 root root 4096 Oct 31 16:27 bob
+drwxr-xr-x  2 root root 4096 Oct 31 16:27 transfer
+
+/root/cns-pgp-smime/alice:
+total 12
+drwxr-xr-x 3 root root 4096 Oct 31 16:27 .
+drwxr-xr-x 5 root root 4096 Oct 31 16:27 ..
+drwx------ 2 root root 4096 Oct 31 16:27 gnupg
+
+/root/cns-pgp-smime/bob:
+total 12
+drwxr-xr-x 3 root root 4096 Oct 31 16:27 .
+drwxr-xr-x 5 root root 4096 Oct 31 16:27 ..
+drwx------ 2 root root 4096 Oct 31 16:27 gnupg
+

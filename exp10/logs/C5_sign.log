@@ -1,0 +1,23 @@
+root@vm:~/cns-pgp-smime/smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+Name: Anusha Dalal | UID: 2024300032
+
+root@vm:~/cns-pgp-smime/smime$ printf 'CNS Lab: S/MIME secure e-mail test. Message ID: CNS-SMIME-01.\n' > message.txt
+
+root@vm:~/cns-pgp-smime/smime$ openssl smime -sign -in message.txt -text -signer alice.crt -inkey alice.key -out signed.eml
+
+root@vm:~/cns-pgp-smime/smime$ head -n 15 signed.eml
+MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg="sha-256"; boundary="----DB346FE8251561208FCA8F72AD20EFF7"
+
+This is an S/MIME signed message
+
+------DB346FE8251561208FCA8F72AD20EFF7
+Content-Type: text/plain
+
+CNS Lab: S/MIME secure e-mail test. Message ID: CNS-SMIME-01.
+
+------DB346FE8251561208FCA8F72AD20EFF7
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+

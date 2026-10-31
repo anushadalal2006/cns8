@@ -1,0 +1,3 @@
+Content-Type: text/plain
+
+CNS Lab: S/MIME secure e-mail tost. Message ID: CNS-SMIME-01.

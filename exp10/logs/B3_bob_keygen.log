@@ -1,0 +1,73 @@
+root@vm:~/cns-pgp-smime$ echo "Name: Anusha Dalal | UID: 2024300032"
+Name: Anusha Dalal | UID: 2024300032
+
+root@vm:~/cns-pgp-smime$ export GNUPGHOME=$HOME/cns-pgp-smime/bob/gnupg
+
+root@vm:~/cns-pgp-smime$ gpg --full-generate-key
+gpg (GnuPG) 2.4.4; Copyright (C) 2024 g10 Code GmbH
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+gpg: keybox '/root/cns-pgp-smime/bob/gnupg/pubring.kbx' created
+Please select what kind of key you want:
+   (1) RSA and RSA
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+   (9) ECC (sign and encrypt) *default*
+  (10) ECC (sign only)
+  (14) Existing key from card
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (3072) 3072
+Requested keysize is 3072 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 1y
+Key expires at Sun Oct 31 16:27:48 2027 UTC
+Is this correct? (y/N) y
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Bob CNS Lab
+Email address: bob-lab@example.test
+Comment: 
+You selected this USER-ID:
+    "Bob CNS Lab <bob-lab@example.test>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+Enter passphrase:                   
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: /root/cns-pgp-smime/bob/gnupg/trustdb.gpg: trustdb created
+gpg: directory '/root/cns-pgp-smime/bob/gnupg/openpgp-revocs.d' created
+gpg: revocation certificate stored as '/root/cns-pgp-smime/bob/gnupg/openpgp-revocs.d/7A850240F9ECA7B028E82D4CC1905678CBE1BC88.rev'
+public and secret key created and signed.
+
+pub   rsa3072 2026-10-31 [SC] [expires: 2027-10-31]
+      7A850240F9ECA7B028E82D4CC1905678CBE1BC88
+uid                      Bob CNS Lab <bob-lab@example.test>
+sub   rsa3072 2026-10-31 [E] [expires: 2027-10-31]
+
+root@vm:~/cns-pgp-smime$ gpg --list-keys
+gpg: checking the trustdb
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+gpg: next trustdb check due at 2027-10-31
+/root/cns-pgp-smime/bob/gnupg/pubring.kbx
+-----------------------------------------
+pub   rsa3072 2026-10-31 [SC] [expires: 2027-10-31]
+      7A850240F9ECA7B028E82D4CC1905678CBE1BC88
+uid           [ultimate] Bob CNS Lab <bob-lab@example.test>
+sub   rsa3072 2026-10-31 [E] [expires: 2027-10-31]
+
